@@ -87,7 +87,7 @@ const srv = http.createServer((q, r) => {
 });
 await new Promise((ok) => srv.listen(4175, ok));
 let chromium; try { ({ chromium } = require("playwright")); } catch (e) { ({ chromium } = require(path.join(process.env.NODE_PATH || "", "playwright"))); }
-const b = await chromium.launch();
+const b = await chromium.launch(fs.existsSync("/opt/pw-browsers/chromium") ? { executablePath: "/opt/pw-browsers/chromium" } : {});
 const pg = await b.newPage();
 for (const p of POSTS) {
   for (const [W, H, suf] of [[1080, 1350, "post"], [1080, 1920, "story"]]) {

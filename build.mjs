@@ -23,14 +23,49 @@ SPELLS.forEach(function(s){s.slug=gmSlug(s.n)});
 RIT.forEach(function(r){r.slug=gmSlug(r.n)});
 SAB.forEach(function(s){s.slug=s.id});
 `;
-const dataFiles = ["spells1.js", "spells2.js", "spells3.js", "history.js", "practice.js", "samhain.js", "sources.js"];
+const dataFiles = ["spells1.js", "spells2.js", "spells3.js", "history.js", "practice.js", "samhain.js", "sources.js", "ingredients.js", "images.js"];
 const dataSrc = dataFiles.map((f) => fs.readFileSync(path.join(ROOT, "src", f), "utf8")).join("\n") + "\n" + SLUG_JS;
 const ctx = { window: {} };
 ctx.window = ctx;
 vm.createContext(ctx);
 vm.runInContext(dataSrc, ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, "src", "dossiers.js"), "utf8"), ctx);
-const { CHAPTERS, SPELLS, RIT, SAB, TOOLS, RECIPES, ERAS, FIGURES, GLOSS, DOSSIERS } = ctx;
+const { CHAPTERS, SPELLS, RIT, SAB, TOOLS, RECIPES, ERAS, FIGURES, GLOSS, DOSSIERS, INGREDIENTS, IMGMETA, IMGPLACE } = ctx;
+
+/* ---------- illustrations (images-src/ -> assets/img/*.webp) ---------- */
+const sharp = require("sharp");
+const IMGSRC = path.join(ROOT, "images-src");
+const CREDITS = fs.existsSync(path.join(IMGSRC, "credits.json")) ? JSON.parse(fs.readFileSync(path.join(IMGSRC, "credits.json"), "utf8")) : {};
+const IMG = {};
+for (const [key, meta] of Object.entries(IMGMETA)) {
+  const c = CREDITS[key]; if (!c) continue;
+  const f = path.join(IMGSRC, c.file); if (!fs.existsSync(f)) continue;
+  const md = await sharp(f).metadata();
+  const w = Math.min(1400, md.width), h = Math.round(md.height * w / md.width);
+  IMG[key] = { src: `/assets/img/${key}.webp`, src2: `/assets/img/${key}-700.webp`, w, h, cap: meta.cap, page: c.page, file: f };
+}
+async function writeImages(dest) {
+  mk(path.join(dest, "assets/img"));
+  for (const [key, im] of Object.entries(IMG)) {
+    await sharp(im.file).resize({ width: im.w }).webp({ quality: 78 }).toFile(path.join(dest, `assets/img/${key}.webp`));
+    await sharp(im.file).resize({ width: Math.min(700, im.w) }).webp({ quality: 74 }).toFile(path.join(dest, `assets/img/${key}-700.webp`));
+  }
+}
+function fig(key, cls = "plate") {
+  const im = IMG[key]; if (!im) return "";
+  return `<figure class="${cls}"><img src="${im.src2}" srcset="${im.src2} 700w, ${im.src} ${im.w}w" sizes="(max-width: 760px) 100vw, 900px" width="${im.w}" height="${im.h}" loading="lazy" decoding="async" alt="${esc(im.cap)}"><figcaption>${esc(im.cap)} <a href="${im.page}" target="_blank" rel="noopener">Domaine public, Wikimedia Commons</a></figcaption></figure>`;
+}
+const IMGPUB = Object.fromEntries(Object.entries(IMG).map(([k, v]) => [k, { src: v.src, src2: v.src2, w: v.w, h: v.h, cap: v.cap, page: v.page }]));
+
+/* ---------- ingrédients : sorts qui les utilisent ---------- */
+const nrm = (s) => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+const hasKw = (txt, kws) => kws.some((k) => new RegExp("(^|[^a-z])" + k.replace(/[()]/g, "\\$&") + "([^a-z]|$)").test(txt));
+for (const ing of INGREDIENTS) {
+  ing.spells = SPELLS.filter((s) => hasKw(nrm(s.ing.join(" | ") + " | " + s.steps.join(" | ")), ing.k));
+  ing.recipes = RECIPES.filter((r) => hasKw(nrm(r.n + " " + r.ing), ing.k));
+}
+const INGBYSPELL = {};
+for (const ing of INGREDIENTS) for (const s of ing.spells) (INGBYSPELL[s.id] = INGBYSPELL[s.id] || []).push(ing);
 const CH = Object.fromEntries(CHAPTERS.map((c, i) => [c.id, { ...c, idx: i }]));
 const ORDER = SPELLS.slice().sort((a, b) => CH[a.ch].idx - CH[b.ch].idx);
 for (const arr of [SPELLS, RIT]) {
@@ -78,7 +113,8 @@ const NAV = [
 const SECTION = { sort: "sorts", rituel: "rituels", sabbat: "sabbats", dossier: "dossiers" };
 const MOONICON = `<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.2A9 9 0 1 0 20.8 15 7.2 7.2 0 0 1 15.5 3.2Z" fill="none" stroke="#d9a95b" stroke-width="1.4"/><circle cx="18.5" cy="6" r="1" fill="#d9a95b"/></svg>`;
 let VER = "1";
-const GOATCOUNTER = "grimoire-endam"; // compte GoatCounter (vide = désactivé)
+const GOATCOUNTER = "grimoire-endam";
+const NEWSLETTER = "grimoiredeminuit"; // compte Buttondown (vide = formulaire masqué) // compte GoatCounter (vide = désactivé)
 const ANALYTICS = GOATCOUNTER ? `<script data-goatcounter="https://${GOATCOUNTER}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>` : "";
 
 function header(page) {
@@ -93,8 +129,8 @@ function footer() {
   return `<footer class="site-foot">
 <div><a class="brand" href="/">${MOONICON}<span>Le Grimoire de Minuit</span></a><p>Un grimoire en ligne de sorcellerie : histoire, sorts, rituels et traditions, rassemblés et réécrits en français. Contenu à visée culturelle. Un projet <a href="https://endam-digital.com" style="color:var(--gold)">Endam Digital</a>.</p></div>
 ${col("Pratiquer", [["/livre-des-ombres/", "Livre des Ombres"], ["/sorts/", "Tous les sorts"], ["/atelier/", "Atelier du sorcier"], ["/rituels/", "Rituels"], ["/sabbats/", "Roue de l’année"]])}
-${col("Savoir", [["/outils/", "Outils"], ["/recettes/", "Recettes"], ["/divination/", "Divination & tarot"], ["/correspondances/", "Correspondances"]])}
-${col("Culture", [["/dossiers/", "Dossiers : Salem, vaudou"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"]])}
+${col("Savoir", [["/outils/", "Outils"], ["/recettes/", "Recettes"], ["/divination/", "Divination & tarot"], ["/correspondances/", "Correspondances"], ["/ingredients/", "Plantes & pierres"]])}
+${col("Culture", [["/dossiers/", "Dossiers : Salem, vaudou"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"], ["/mentions-legales/", "Mentions légales"]])}
 </footer>`;
 }
 function crumbs(list) {
@@ -141,8 +177,8 @@ ${footer()}
 </main>
 <div class="toast" id="toast" hidden></div>
 ${ANALYTICS}
-<script src="/assets/data.js?v=${VER}"></script>
-<script src="/assets/app.js?v=${VER}"></script>
+<script defer src="/assets/data.js?v=${VER}"></script>
+<script defer src="/assets/app.js?v=${VER}"></script>
 </body>
 </html>`;
 }
@@ -181,7 +217,9 @@ add({ url: "/", page: "home", title: "Le Grimoire de Minuit — sorts, rituels e
 </section>
 <section class="chap"><div class="chap-head"><p class="chap-num">Le Livre</p><div><h2>Treize chapitres de sorts</h2><p>Chaque sort a sa page : le moment, les ingrédients, le rituel pas à pas, l’incantation, les variantes et son histoire.</p></div></div>
 <div class="body-col"><div class="chapcards" id="chapcards"></div><div class="cta-line"><a class="btn" href="/livre-des-ombres/">Feuilleter le livre</a><a class="btn ghost" href="/sorts/">Voir tous les sorts</a></div></div></section>
+${fig(IMGPLACE.home, "plate wide")}
 <section class="chap"><div class="body-col" style="margin-left:0"><div class="sabteaser" id="sabteaser"></div></div></section>
+${NL()}
 <section class="chap" style="border-bottom:0"><div class="chap-head"><p class="chap-num">Explorer</p><div><h2>Tout le grimoire</h2></div></div>
 <div class="body-col"><div class="explore">
 <a href="/atelier/"><b>L’atelier</b><span>Générateur de sorts et forge à sigils</span></a>
@@ -225,7 +263,8 @@ for (const s of ORDER) {
 <div class="book-stage solo"><div class="book"><div class="ribbon" aria-hidden="true"></div><div class="spread" id="spread"></div></div></div>
 <div class="prevnext" id="prevnext"></div>
 <div class="related"><h2 class="t26" id="related-t" style="font-size:26px;margin-bottom:16px"></h2><div class="linkgrid" id="related"></div></div>
-<div class="cta-line"><a class="btn" href="/livre-des-ombres/#sort-${s.id}">Ouvrir dans le Livre des Ombres</a><a class="btn ghost" href="/atelier/">Composer mon propre sort</a></div></section>` });
+${(INGBYSPELL[s.id] || []).length ? `<div class="related"><h2 class="t26" style="font-size:26px;margin-bottom:14px">Les ingrédients de ce sort</h2><div class="ingchips">${INGBYSPELL[s.id].map((i) => `<a href="/ingredients/${i.slug}/">${esc(i.n)}</a>`).join("")}</div></div>` : ""}
+<div class="cta-line"><a class="btn" href="/livre-des-ombres/#sort-${s.id}">Ouvrir dans le Livre des Ombres</a><a class="btn ghost" href="/atelier/">Composer mon propre sort</a></div>${NL()}</section>` });
 }
 
 add({ url: "/atelier/", page: "atelier", title: "Générateur de sorts et forge à sigils | Le Grimoire de Minuit", desc: "Compose ton propre sort selon les correspondances traditionnelles (lune, jour, couleur, herbes, pierres) et crée ton sigil avec la méthode d’Austin Osman Spare.",
@@ -241,7 +280,7 @@ add({ url: "/atelier/", page: "atelier", title: "Générateur de sorts et forge 
 <div class="sigil-out"><svg id="sig-svg" viewBox="0 0 400 400" role="img" aria-label="Sigil généré"></svg></div></div></div></section>` });
 
 add({ url: "/rituels/", page: "rituels", title: `Rituels de sorcellerie pas à pas (${RIT.length}) | Le Grimoire de Minuit`, desc: "Monter son autel, tracer le cercle, auto-dédicace, consacrer ses outils, esbat de pleine lune, gâteaux et vin, bénir une maison : les rituels fondamentaux, étape par étape.",
-  body: `${crumbs([["/", "Accueil"], [null, "Rituels"]])}<section class="chap first" style="border-bottom:0">${head("Les Rituels", "Rituels, pas à pas", "Les sorts ont besoin d’un cadre. Voici les rituels fondamentaux de la sorcellerie moderne, avec le matériel, chaque étape et les paroles à dire.")}<div class="body-col"><div class="linkgrid" id="rit-index"></div></div></section>` });
+  body: `${crumbs([["/", "Accueil"], [null, "Rituels"]])}<section class="chap first" style="border-bottom:0">${head("Les Rituels", "Rituels, pas à pas", "Les sorts ont besoin d’un cadre. Voici les rituels fondamentaux de la sorcellerie moderne, avec le matériel, chaque étape et les paroles à dire.")}<div class="body-col">${fig(IMGPLACE.rituels)}<div class="linkgrid" id="rit-index"></div></div></section>` });
 for (const r of RIT) {
   const url = `/rituels/${r.slug}/`, cr = [["/", "Accueil"], ["/rituels/", "Rituels"], [null, r.n]];
   add({ url, page: "rituel", id: r.id, type: "article", title: `${r.n} — rituel de sorcellerie pas à pas | Le Grimoire de Minuit`, desc: clip(r.intro),
@@ -252,12 +291,12 @@ for (const r of RIT) {
 add({ url: "/sabbats/", page: "sabbats", title: "La roue de l’année : les 8 sabbats des sorcières | Le Grimoire de Minuit", desc: "Samhain, Yule, Imbolc, Ostara, Beltane, Litha, Lughnasadh et Mabon : dates, histoire, correspondances, rituels et recettes des huit sabbats de la roue de l’année.",
   body: `${crumbs([["/", "Accueil"], [null, "Sabbats"]])}<section class="chap first" style="border-bottom:0">${head("Les Sabbats", "La roue de l’année", "Huit fêtes rythment l’année des sorcières : les solstices et équinoxes, et les quatre grandes fêtes celtiques entre eux. Le trait doré marque aujourd’hui (dates de l’hémisphère nord).")}
 <div class="wheel-grid body-col"><div class="wheel" id="wheel"><svg viewBox="0 0 400 400" aria-hidden="true" id="wheel-svg"></svg><div class="wheel-center"><div><span class="label">Aujourd’hui</span><b id="today-label"></b></div></div></div><div class="sab-detail" id="sab-detail" aria-live="polite"></div></div>
-<div class="body-col"><nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav></div></section>` });
+<div class="body-col"><nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav>${fig(IMGPLACE.sabbats)}</div></section>` });
 for (const sb of SAB) {
   const url = `/sabbats/${sb.slug}/`;
   add({ url, page: "sabbat", id: sb.id, type: "article", title: sb.more ? `${sb.n} 2026 : rituels de la nuit du 31 octobre, sorts et histoire d’Halloween | Le Grimoire de Minuit` : `${sb.n} (${sb.when.replace(/ · .*/, "")}) — histoire, rituels et recette | Le Grimoire de Minuit`, desc: sb.more ? "Comment célébrer Samhain le 31 octobre : la nuit heure par heure, 8 sorts traditionnels (bougie à la fenêtre, repas muet, noix dans le feu, miroir de minuit), l’histoire d’Halloween et les recettes." : clip(`${sb.n}, ${sb.alias.toLowerCase()} : ${sb.t[0]}`),
     ld: [{ "@context": "https://schema.org", "@type": "Article", headline: `${sb.n} : histoire, correspondances et rituels`, inLanguage: "fr", url: SITE + url, image: SITE + "/assets/og.png", author: { "@type": "Organization", name: "Endam Digital" } }, crumbsLD(Object.assign([["/", "Accueil"], ["/sabbats/", "Sabbats"], [url, sb.n]], { url }))],
-    body: `${crumbs([["/", "Accueil"], ["/sabbats/", "Sabbats"], [null, sb.n]])}<section class="chap first" style="border-bottom:0"><div class="body-col" style="margin-left:0;max-width:900px"><div class="sab-detail solo" id="sab-detail"></div><nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav></div></section>` });
+    body: `${crumbs([["/", "Accueil"], ["/sabbats/", "Sabbats"], [null, sb.n]])}<section class="chap first" style="border-bottom:0"><div class="body-col" style="margin-left:0;max-width:900px"><div class="sab-detail solo" id="sab-detail"></div><nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav></div>${NL()}</section>` });
 }
 
 const simple = (url, page, crumb, title, desc, inner) => add({ url, page, title, desc, body: `${crumbs([["/", "Accueil"], [null, crumb]])}<section class="chap first" style="border-bottom:0">${inner}</section>` });
@@ -316,11 +355,53 @@ for (const d of DOSSIERS) {
 <div class="dgrid">
 <nav class="dtoc" aria-label="Sommaire"><p class="label">Sommaire</p><ol>${d.sections.map((s) => `<li><a href="#${s.id}">${esc(s.h)}</a></li>`).join("")}</ol></nav>
 <div class="dbody"><p class="dlede">${esc(d.lede)}</p>
-${d.sections.map((s) => `<section class="dsec" id="${s.id}"><h2>${esc(s.h)}</h2>${s.body.map(block).join("\n")}</section>`).join("\n")}
+${fig(((IMGPLACE.dossier || {})[d.slug] || [])[0])}
+${d.sections.map((s, i) => `${i === 3 ? fig(((IMGPLACE.dossier || {})[d.slug] || [])[1]) : ""}<section class="dsec" id="${s.id}"><h2>${esc(s.h)}</h2>${s.body.map(block).join("\n")}</section>`).join("\n")}
 <section class="dsec"><h2>Sources</h2><ul class="sources" style="columns:1">${d.sources.map((x) => `<li><a href="${x[1]}" target="_blank" rel="noopener">${esc(x[0])}</a> — ${esc(x[2])}</li>`).join("")}</ul></section>
 <div class="cta-line">${other.map((o) => `<a class="btn" href="/dossiers/${o.slug}/">Lire aussi : ${esc(o.n)}</a>`).join("")}<a class="btn ghost" href="/histoire/">L’histoire de la sorcellerie</a></div>
 </div></div></article>` });
 }
+
+
+/* ---------- lettre d'information ---------- */
+function NL() {
+  if (!NEWSLETTER) return "";
+  return `<section class="nl" aria-labelledby="nl-t"><div><p class="label">Lettre du samedi</p><h2 id="nl-t">Un sort chaque samedi, dans ta boîte mail</h2><p>Un sort, une légende et la lune de la semaine. Gratuit, sans publicité, désinscription en un clic.</p></div>
+<form action="https://buttondown.com/api/emails/embed-subscribe/${NEWSLETTER}" method="post" target="_blank" class="nl-form"><label class="label" for="nl-mail">Ton adresse e-mail</label><div><input id="nl-mail" type="email" name="email" required placeholder="sorciere@exemple.fr" autocomplete="email"><button class="btn" type="submit">Je m’abonne</button></div><p class="nl-legal">Adresse utilisée uniquement pour la lettre, via Buttondown. <a href="/mentions-legales/">Données personnelles</a>.</p></form></section>`;
+}
+
+/* ---------- ingrédients ---------- */
+const ITYPES = [["Plantes & épices", ["Plante", "Épice", "Fruit", "Produit"]], ["Pierres", ["Pierre"]], ["Minéraux & outils", ["Minéral", "Outil"]]];
+add({ url: "/ingredients/", page: "ingredients", title: "Plantes, pierres et ingrédients de sorcellerie : usages et sorts | Le Grimoire de Minuit", desc: "Romarin, lavande, laurier, sel, cannelle, armoise, améthyste, quartz rose, tourmaline noire… Usages magiques, histoire et tous les sorts du grimoire qui utilisent chaque ingrédient.",
+  body: `${crumbs([["/", "Accueil"], [null, "Plantes & pierres"]])}<section class="chap first" style="border-bottom:0">${head("L’Herbier", "Plantes, pierres &amp; ingrédients", "Les ingrédients les plus utilisés du grimoire : leurs correspondances, leur histoire, et tous les sorts où ils apparaissent.")}
+<div class="body-col">${ITYPES.map(([lab, ts]) => `<h2 class="sub" style="font-size:30px;margin:40px 0 18px">${lab}</h2><div class="linkgrid">${INGREDIENTS.filter((i) => ts.includes(i.t)).map((i) => `<a class="lcard" href="/ingredients/${i.slug}/"><b>${esc(i.n)}</b><span>${esc(i.use)}</span><em>${i.spells.length} sort${i.spells.length > 1 ? "s" : ""}${i.el ? " · " + esc(i.el) : ""}</em></a>`).join("")}</div>`).join("")}</div></section>` });
+for (const i of INGREDIENTS) {
+  const url = `/ingredients/${i.slug}/`;
+  add({ url, page: "ingredient", id: i.slug, type: "article", title: `${i.n} en sorcellerie : usages magiques et sorts | Le Grimoire de Minuit`, desc: clip(`${i.n} en magie : ${i.use.toLowerCase()} ${i.h[0]}`),
+    ld: [crumbsLD(Object.assign([["/", "Accueil"], ["/ingredients/", "Plantes & pierres"], [url, i.n]], { url }))],
+    body: `${crumbs([["/", "Accueil"], ["/ingredients/", "Plantes & pierres"], [null, i.n]])}<section class="chap first" style="border-bottom:0">
+<div class="chap-head"><p class="chap-num">${esc(i.t)}</p><div><h1>${esc(i.n)}</h1>${i.lat ? `<p class="dek" style="margin-top:6px">${esc(i.lat)}</p>` : ""}</div></div>
+<div class="body-col"><div class="corr ingcorr"><div><span class="label">Usages magiques</span>${esc(i.use)}</div><div><span class="label">Élément</span>${esc(i.el || "—")}</div><div><span class="label">Astre</span>${esc(i.pl || "—")}</div></div>
+<div class="dbody" style="margin-top:28px">${i.h.map((p) => `<p class="ingp">${esc(p)}</p>`).join("")}${i.warn ? `<aside class="dnote"><b>Attention.</b> ${esc(i.warn)}</aside>` : ""}</div>
+<h2 class="sub" style="font-size:30px;margin:48px 0 18px">${i.spells.length ? `Les ${i.spells.length} sort${i.spells.length > 1 ? "s" : ""} du grimoire avec ${i.t === "Pierre" ? "la pierre" : "l’ingrédient"} « ${esc(i.n.toLowerCase())} »` : "Dans le grimoire"}</h2>
+${i.spells.length ? `<div class="linkgrid">${i.spells.map((s) => `<a class="lcard" href="/sorts/${s.slug}/"><b>${esc(s.n)}</b><span>${esc(s.sub)}</span><em>${esc(CH[s.ch].n)}</em></a>`).join("")}</div>` : `<p class="subintro">Aucun sort n’utilise encore cet ingrédient.</p>`}
+${i.recipes.length ? `<h2 class="sub" style="font-size:30px;margin:48px 0 18px">Recettes</h2><div class="linkgrid">${i.recipes.map((r) => `<a class="lcard" href="/recettes/"><b>${esc(r.n)}</b><span>${esc(r.u)}</span><em>${esc(r.c)}</em></a>`).join("")}</div>` : ""}
+<div class="cta-line"><a class="btn ghost" href="/ingredients/">Tous les ingrédients</a><a class="btn ghost" href="/correspondances/">Tables de correspondances</a></div></div></section>` });
+}
+
+/* ---------- mentions légales ---------- */
+add({ url: "/mentions-legales/", page: "legal", title: "Mentions légales | Le Grimoire de Minuit", desc: "Mentions légales, hébergement, statistiques et données personnelles du site Le Grimoire de Minuit.",
+  body: `${crumbs([["/", "Accueil"], [null, "Mentions légales"]])}<section class="chap first" style="border-bottom:0">${head("Mentions", "Mentions légales", "")}
+<div class="body-col dbody legal">
+<h2>Éditeur</h2><p>Le site <b>grimoire.endam-digital.com</b> est un projet personnel et non commercial publié sous la marque <b>Endam Digital</b>. Conformément à l’article 6, III, 2 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique, l’éditeur, qui agit à titre non professionnel, a choisi de ne pas publier ses coordonnées personnelles ; son identité a été communiquée à l’hébergeur.</p>
+<p>Contact : par le <a href="https://github.com/Endam-creator/Grimoire/issues" target="_blank" rel="noopener">formulaire de signalement du dépôt GitHub</a> du site.</p>
+<h2>Hébergement</h2><p>GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. <a href="https://github.com" target="_blank" rel="noopener">github.com</a></p>
+<h2>Statistiques de visite</h2><p>Le site mesure sa fréquentation avec <b>GoatCounter</b>, un outil qui ne dépose aucun cookie, n’enregistre pas d’adresse IP complète et ne suit pas les visiteurs d’un site à l’autre. Aucune bannière de consentement n’est donc nécessaire.</p>
+<h2>Lettre d’information</h2><p>Si tu t’abonnes à la lettre du samedi, ton adresse e-mail est conservée par le service <b>Buttondown</b> uniquement pour t’envoyer la lettre. Tu peux te désabonner à tout moment par le lien présent dans chaque envoi. Conformément au RGPD, tu peux demander l’accès à tes données ou leur suppression en écrivant par le contact ci-dessus.</p>
+<h2>Polices et ressources</h2><p>Les polices de caractères sont hébergées sur le site lui-même : aucune donnée n’est transmise à un service tiers comme Google Fonts lors de la consultation.</p>
+<h2>Propriété intellectuelle</h2><p>Les textes du site sont rédigés pour Le Grimoire de Minuit à partir des sources citées sur la page <a href="/a-propos/">À propos</a>. Les illustrations sont des œuvres du domaine public, reproduites depuis Wikimedia Commons ; leurs références sont indiquées sous chaque image.</p>
+<h2>Avertissement</h2><p>Les contenus du site ont une visée culturelle, historique et récréative. Les rituels et les sorts relèvent de traditions et de croyances et ne remplacent en aucun cas un avis médical, juridique ou psychologique.</p>
+</div></section>` });
 
 add({ url: "/404.html", page: "404", title: "Page introuvable | Le Grimoire de Minuit", desc: "Cette page s’est évaporée comme une fumée d’encens.", noindex: true,
   body: `<section class="lost"><p class="label">Erreur 404</p><h1>Cette page s’est évaporée</h1><p>Comme une fumée d’encens, la page que tu cherches a disparu. Le sort a peut-être été déplacé dans un autre chapitre.</p><div class="hero-links" style="justify-content:center"><a class="btn" href="/">Retour à l’accueil</a><a class="btn ghost" href="/sorts/">Tous les sorts</a></div></section>` });
@@ -331,9 +412,12 @@ const appSrc = fs.readFileSync(path.join(ROOT, "src/app.js"), "utf8");
 const styleSrc = fs.readFileSync(path.join(ROOT, "assets/style.css"), "utf8");
 VER = crypto.createHash("md5").update(dataSrc + appSrc + styleSrc).digest("hex").slice(0, 8);
 buildFonts(RAW);
-write(path.join(RAW, "assets/data.js"), dataSrc);
+await writeImages(RAW);
+write(path.join(RAW, "assets/data.js"), dataSrc + "\nwindow.IMG=" + JSON.stringify(IMGPUB) + ";\nwindow.INGLINK=" + JSON.stringify(Object.fromEntries(INGREDIENTS.map((i) => [nrm(i.n), i.slug]))) + ";");
 write(path.join(RAW, "assets/app.js"), appSrc);
 write(path.join(RAW, "assets/style.css"), styleSrc);
+const esb = require("esbuild");
+for (const f of ["assets/app.js", "assets/data.js", "assets/style.css"]) { const p = path.join(RAW, f); const r = await esb.transform(fs.readFileSync(p, "utf8"), { loader: f.endsWith(".css") ? "css" : "js", minify: true, charset: "utf8" }); fs.writeFileSync(p, r.code); }
 for (const p of pages) {
   let html = shell(p);
   if (p.noindex) html = html.replace("<link rel=\"canonical\"", '<meta name="robots" content="noindex">\n<link rel="canonical"');
@@ -354,7 +438,7 @@ const server = http.createServer((req, res) => {
 await new Promise((r) => server.listen(4173, r));
 let chromium;
 try { ({ chromium } = require("playwright")); } catch (e) { ({ chromium } = require(path.join(process.env.NODE_PATH || "", "playwright"))); }
-const browser = await chromium.launch();
+const browser = await chromium.launch(fs.existsSync("/opt/pw-browsers/chromium") ? { executablePath: "/opt/pw-browsers/chromium" } : {});
 const ctxB = await browser.newContext({ viewport: { width: 1280, height: 900 } });
 const errors = [];
 fs.cpSync(RAW, OUT, { recursive: true });

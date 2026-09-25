@@ -1,0 +1,155 @@
+{
+ "goya-vol": {
+  "file": "goya-vol.jpg",
+  "commons": "File:Francisco_de_Goya_-_Vuelo_de_brujas_(1798).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Francisco_de_Goya_-_Vuelo_de_brujas_(1798).jpg",
+  "artist": "Francisco Goya",
+  "title": "The Witches' Flightlabel QS:Les,\"Vuelo de brujas\"label QS:Len,\"The Witches' Flight\"",
+  "date": "1798date QS:P571,+1798-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "circe": {
+  "file": "circe.jpg",
+  "commons": "File:Circe_Offering_the_Cup_to_Odysseus_(2457_x_4023px_ed.).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Circe_Offering_the_Cup_to_Odysseus_(2457_x_4023px_ed.).jpg",
+  "artist": "John William Waterhouse",
+  "title": "Circe Offering the Cup to Odysseus",
+  "date": "1891",
+  "license": "Public domain"
+ },
+ "baba-yaga": {
+  "file": "baba-yaga.jpg",
+  "commons": "File:Сказка_Баба-яга_3.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%BA%D0%B0%D0%B7%D0%BA%D0%B0_%D0%91%D0%B0%D0%B1%D0%B0-%D1%8F%D0%B3%D0%B0_3.jpg",
+  "artist": "Богатов Николай Алексеевич",
+  "title": "Сказка Баба-яга 3",
+  "date": "1894",
+  "license": "Public domain"
+ },
+ "salem": {
+  "file": "salem.jpg",
+  "commons": "File:Salem_witch2.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Salem_witch2.jpg",
+  "artist": "Joseph E., ca. 1837-1914, artist.",
+  "title": "Salem witch2",
+  "date": "1892-02-29",
+  "license": "Public domain"
+ },
+ "malleus": {
+  "file": "malleus.jpg",
+  "commons": "File:Malleus_maleficarum,_Köln_1520,_Titelseite.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Malleus_maleficarum,_K%C3%B6ln_1520,_Titelseite.jpg",
+  "artist": "Unknown authorUnknown author",
+  "title": "Malleus maleficarum, Köln 1520, Titelseite",
+  "date": "1520",
+  "license": "Public domain"
+ },
+ "north-berwick": {
+  "file": "north-berwick.jpg",
+  "commons": "File:North_Berwick_witches.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:North_Berwick_witches.jpg",
+  "artist": "Unknown authorUnknown author",
+  "title": "North Berwick witches",
+  "date": "",
+  "license": "Public domain"
+ },
+ "tarot": {
+  "file": "tarot.jpg",
+  "commons": "File:Tarockspiel_1751_MHQ.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Tarockspiel_1751_MHQ.jpg",
+  "artist": "Photo: Andreas Praefcke",
+  "title": "Tarockspiel 1751 MHQ",
+  "date": "2009-10",
+  "license": "Public domain"
+ },
+ "kohler": {
+  "file": "kohler.jpg",
+  "commons": "File:Koehlers_titel.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Koehlers_titel.jpg",
+  "artist": "Artmax",
+  "title": "Koehlers titel",
+  "date": "1887",
+  "license": "CC0"
+ },
+ "grandier": {
+  "file": "grandier.jpg",
+  "commons": "File:Urbain_Grandier.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Urbain_Grandier.jpg",
+  "artist": "",
+  "title": "Urbain Grandier",
+  "date": "",
+  "license": "Public domain"
+ },
+ "goya-aquelarre": {
+  "file": "goya-aquelarre.jpg",
+  "commons": "File:El Aquelarre (1797-1798).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:El_Aquelarre_(1797-1798).jpg",
+  "artist": "Francisco Goya",
+  "title": "Spanish:  El aquelarreThe Sabbath of witchestitle QS:P1476,es:\"El aquelarre\"label QS:Les,\"El aquelarre\"label QS:Len,\"The Sabbath of witches\"",
+  "date": "between 1797 and 1798date QS:P571,+1797-00-00T00:00:00Z/8,P1319,+1797-00-00T00:00:00Z/9,P1326,+1798-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "snap-apple": {
+  "file": "snap-apple.png",
+  "commons": "File:Snap-Apple Night globalphilosophy.PNG",
+  "page": "https://commons.wikimedia.org/wiki/File:Snap-Apple_Night_globalphilosophy.PNG",
+  "artist": "Daniel Maclise",
+  "title": "Snap-Apple Nightlabel QS:Len,\"Snap-Apple Night\"",
+  "date": "1833date QS:P571,+1833-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "magic-circle": {
+  "file": "magic-circle.jpg",
+  "commons": "File:John William Waterhouse - The Magic Circle (study).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:John_William_Waterhouse_-_The_Magic_Circle_(study).jpg",
+  "artist": "John William Waterhouse",
+  "title": "Study for The Magic Circle",
+  "date": "circa 1886date QS:P571,+1886-00-00T00:00:00Z/9,P1480,Q5727902",
+  "license": "Public domain"
+ },
+ "morgan": {
+  "file": "morgan.jpg",
+  "commons": "File:Sandys, Frederick - Morgan le Fay.JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:Sandys,_Frederick_-_Morgan_le_Fay.JPG",
+  "artist": "Frederick Sandys",
+  "title": "Morgan-le-Fay title QS:P1476,en:\"Morgan-le-Fay \"label QS:Len,\"Morgan-le-Fay \"label QS:Les,\"Morgan le Fay\"label QS:Lff,\"Morgan le Fay (painting)\"label QS:Lko,\"모르간 르 페이\"label QS:Lml,\"മോർഗൻ ലെ ഫേ (പെയിന്റിംഗ്)\"",
+  "date": "1864 / between 1863 and 1864date QS:P,+1863-00-00T00:00:00Z/8,P1319,+1863-00-00T00:00:00Z/9,P1326,+1864-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "hecate": {
+  "file": "hecate.jpg",
+  "commons": "File:William Blake 006.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:William_Blake_006.jpg",
+  "artist": "William Blake",
+  "title": "The Night of Enitharmon's Joy",
+  "date": "1795date QS:P571,+1795-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "salem-examination": {
+  "file": "salem-examination.jpg",
+  "commons": "File:Examination of a Witch - Tompkins Matteson.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Examination_of_a_Witch_-_Tompkins_Matteson.jpg",
+  "artist": "T. H. Matteson",
+  "title": "Examination of a Witch label QS:Len,\"Examination of a Witch\"",
+  "date": "1853date QS:P571,+1853-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "hopkins": {
+  "file": "hopkins.jpg",
+  "commons": "File:Matthew Hopkins Witch Finder Generall (BM 1868,0808.3233).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Matthew_Hopkins_Witch_Finder_Generall_(BM_1868,0808.3233).jpg",
+  "artist": "Print made by: Anonymous\n\nPublished by: Richard Royston",
+  "title": "Matthew Hopkins Witch Finder Generall",
+  "date": "1647date QS:P571,+1647-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "la-voisin": {
+  "file": "la-voisin.jpg",
+  "commons": "File:Catherine Deshayes, femme Monvoisin, dite la Voisin. G.38607.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Catherine_Deshayes,_femme_Monvoisin,_dite_la_Voisin._G.38607.jpg",
+  "artist": "Anonyme, graveur",
+  "title": "Catherine Deshayes, femme Monvoisin, dite la Voisin. G.38607",
+  "date": "Unknown date",
+  "license": "CC0"
+ }
+}
