@@ -44,3 +44,14 @@ npm run build
 Le site complet est réécrit dans `docs/` (pages pré-rendues pour Google, polices auto-hébergées, `sitemap.xml`, `robots.txt`, `CNAME`, `og.png`). Il suffit ensuite de commit + push.
 
 Un nouveau sort ajouté dans `src/spells*.js` obtient automatiquement sa page `/sorts/<nom-du-sort>/`, son entrée dans le sitemap et ses données structurées.
+
+## Statistiques de visite
+
+Le site envoie ses statistiques (sans cookies, conforme RGPD) à **GoatCounter**, sur le compte `grimoire-endam`.
+Pour voir les chiffres : crée un compte gratuit sur https://www.goatcounter.com/signup avec le code **grimoire-endam**.
+Pour changer de compte ou désactiver : constante `GOATCOUNTER` en haut de `build.mjs`, puis `npm run build`.
+
+## Réseaux sociaux
+
+`social/make.mjs` génère les visuels (posts 4:5 et stories 9:16) dans `social/out/`.
+Le calendrier de publication et les légendes sont dans `social/LEGENDES.md`.

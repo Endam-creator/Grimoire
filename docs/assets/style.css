@@ -474,3 +474,21 @@ ol.steps .st{font-family:var(--fell);font-weight:400;font-size:20px;margin-botto
 .inkbtn{text-decoration:none;display:inline-block}
 .cta-line{margin-top:40px;display:flex;flex-wrap:wrap;gap:12px}
 .about p{color:var(--bone-dim);max-width:44em;margin-bottom:14px}
+.countdown{margin-top:30px;display:grid;grid-template-columns:auto 1fr;gap:4px 22px;align-items:center;padding:20px 24px;border:1px solid var(--gold);border-radius:4px;background:var(--ink-2)}
+.countdown .label{grid-column:1/-1}
+.countdown b{font-family:var(--display);font-weight:400;font-size:52px;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums}
+.countdown span:last-child{color:var(--bone-dim)}
+.sab-detail .t30{font-size:30px;margin:56px 0 20px}
+.timeline.night::before{left:132px}
+.timeline.night li{grid-template-columns:132px 1fr}
+.timeline.night li::before{left:128px}
+.timeline.night p a{color:var(--gold);white-space:nowrap}
+@media (max-width:560px){.timeline.night::before{left:6px}.timeline.night li{grid-template-columns:1fr}.timeline.night li::before{left:2px}}
+.hist{display:grid;grid-template-columns:1fr 1fr;gap:22px 36px}
+.hist p{color:var(--bone-dim);font-size:15.5px}
+@media (max-width:700px){.hist{grid-template-columns:1fr}}
+.sab-detail .recs{grid-template-columns:repeat(3,1fr)}
+@media (max-width:860px){.sab-detail .recs{grid-template-columns:1fr}}
+.chapcards .chapcard.season{grid-column:1/-1;border-color:var(--gold);background:linear-gradient(120deg,rgba(176,96,42,.18),var(--ink) 60%)}
+@media (max-width:480px){.chapcards .chapcard.season{grid-column:auto}}
+.hist .t21{font-family:var(--fell);font-weight:400;font-size:21px;margin-bottom:4px;color:var(--bone)}

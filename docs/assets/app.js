@@ -161,7 +161,15 @@ function sabHTML(sb,h1){var T=h1?"h1":"h2";
   return'<p class="label">Sabbat</p><'+T+' class="rt46">'+esc(sb.n)+'</'+T+'><p class="when">'+esc(sb.when)+'</p><p class="alias">'+esc(sb.alias)+'</p><div class="txt">'+sb.t.map(function(p){return"<p>"+esc(p)+"</p>"}).join("")+'</div>'
    +'<div class="corr"><div><span class="label">Couleurs</span>'+esc(sb.cols)+'</div><div><span class="label">Herbes</span>'+esc(sb.herbs)+'</div><div><span class="label">Pierres</span>'+esc(sb.stones)+'</div><div><span class="label">À table</span>'+esc(sb.food)+'</div><div><span class="label">Divinités</span>'+esc(sb.gods)+'</div><div><span class="label">Symboles</span>'+esc(sb.sym)+'</div></div>'
    +'<div class="two"><div><h3 class="t4">Célébrer '+esc(sb.n)+'</h3><ol>'+sb.rit.map(function(r){return"<li>"+esc(r)+"</li>"}).join("")+'</ol></div><div class="cook"><p class="label" style="color:var(--sepia-3)">Recette de saison</p><h3 class="t4" style="margin:4px 0 6px">'+esc(sb.rec[0])+'</h3><p>'+esc(sb.rec[1])+'</p></div></div>'
-   +(h1?'':'<p class="more"><a class="btn small" href="/sabbats/'+sb.slug+'/">Lire la page de '+esc(sb.n)+' →</a></p>')}
+   +(h1?'':'<p class="more"><a class="btn small" href="/sabbats/'+sb.slug+'/">Lire la page de '+esc(sb.n)+' →</a></p>')
+   +(h1&&sb.more?moreHTML(sb):'')}
+function daysTo(m,d){var now=new Date(),t=new Date(now.getFullYear(),m,d),today=new Date(now.getFullYear(),now.getMonth(),now.getDate());if(t<today)t=new Date(now.getFullYear()+1,m,d);return Math.round((t-today)/864e5)}
+function moreHTML(sb){var M=sb.more,n=daysTo(sb.m,sb.d),lk=function(id){var s=byId(SPELLS,id);return s?' <a href="'+spellUrl(s)+'">'+esc(s.n)+' →</a>':''};
+  return'<div class="countdown"><span class="label">Compte à rebours</span><b id="cd">'+(n===0?"C’est ce soir":"J – "+n)+'</b><span>'+(n===0?"La nuit de "+esc(sb.n)+" commence au coucher du soleil.":n+" jour"+(n>1?"s":"")+" avant la nuit de "+esc(sb.n)+", le 31 octobre.")+'</span></div>'
+  +'<h2 class="sub t30">La nuit du 31, heure par heure</h2><ol class="timeline night">'+M.night.map(function(x){return'<li><span class="yr">'+esc(x[0])+'</span><div><p>'+esc(x[1])+lk(x[2])+'</p></div></li>'}).join("")+'</ol>'
+  +'<h2 class="sub t30">Les sorts de Samhain</h2><div class="linkgrid">'+SPELLS.filter(function(s){return s.ch==="samhain"}).concat(SPELLS.filter(function(s){return s.id==="pelure"})).map(function(s){return'<a class="lcard" href="'+spellUrl(s)+'"><b>'+esc(s.n)+'</b><span>'+esc(s.sub)+'</span><em>'+stars(s.lvl)+' · '+esc(s.dur)+'</em></a>'}).join("")+'</div>'
+  +'<h2 class="sub t30">De Samhain à Halloween</h2><div class="hist">'+M.history.map(function(h){return'<div><h3 class="t21">'+esc(h[0])+'</h3><p>'+esc(h[1])+'</p></div>'}).join("")+'</div>'
+  +'<h2 class="sub t30">À table pour Samhain</h2><div class="recs">'+M.recipes.map(function(r){return'<article class="rec"><p class="label">Recette</p><h3 class="t24">'+esc(r[0])+'</h3><p style="font-size:15px">'+esc(r[1])+'</p>'+(r[2]?'<p style="margin-top:8px"><a style="color:var(--redink)" href="'+spellUrl(byId(SPELLS,r[2]))+'">Voir la recette →</a></p>':'')+'</article>'}).join("")+'</div>'}
 function initWheel(){
   var wheel=$("#wheel"),s='<circle cx="200" cy="200" r="168" fill="none" stroke="#3a3249"/><circle cx="200" cy="200" r="120" fill="none" stroke="#3a3249" stroke-dasharray="2 5"/><circle cx="200" cy="200" r="74" fill="#1d1928" stroke="#3a3249"/>';
   SAB.forEach(function(sb){var a=doyAngle(sb.m,sb.d)*Math.PI/180;s+='<line x1="'+(200+74*Math.sin(a)).toFixed(1)+'" y1="'+(200-74*Math.cos(a)).toFixed(1)+'" x2="'+(200+168*Math.sin(a)).toFixed(1)+'" y2="'+(200-168*Math.cos(a)).toFixed(1)+'" stroke="#3a3249"/>'});
@@ -186,7 +194,8 @@ var R={
  home:function(){
   renderMoon();
   $("#hero-count").innerHTML='<span><b>'+SPELLS.length+'</b>sorts</span><span><b>'+CHAPTERS.length+'</b>chapitres</span><span><b>'+RIT.length+'</b>rituels</span><span><b>8</b>sabbats</span><span><b>'+RECIPES.length+'</b>recettes</span>';
-  $("#chapcards").innerHTML=CHAPTERS.map(function(c){var n=SPELLS.filter(function(s){return s.ch===c.id}).length;return'<a class="chapcard" href="/sorts/#'+c.id+'"><i style="background:'+c.c+'">'+c.r+'</i><span><b>'+esc(c.n)+'</b><span>'+n+' sorts</span></span></a>'}).join("");
+  var cs=CHAPTERS.filter(function(c){return c.id==="samhain"}).concat(CHAPTERS.filter(function(c){return c.id!=="samhain"}));
+  $("#chapcards").innerHTML=cs.map(function(c){var n=SPELLS.filter(function(s){return s.ch===c.id}).length,se=c.id==="samhain";return'<a class="chapcard'+(se?' season':'')+'" href="'+(se?'/sabbats/samhain/':'/sorts/#'+c.id)+'"><i style="background:'+c.c+'">'+c.r+'</i><span><b>'+esc(c.n)+'</b><span>'+(se?'De saison · '+n+' sorts pour la nuit du 31 octobre':n+' sorts')+'</span></span></a>'}).join("");
   var ns=nextSabbat();$("#sabteaser").innerHTML='<div><p class="label">Prochain sabbat</p><h3>'+esc(ns.sb.n)+'</h3></div><p>'+esc(ns.sb.when)+(ns.days>0?" · dans "+ns.days+" jour"+(ns.days>1?"s":""):" · aujourd’hui")+'. '+esc(ns.sb.t[0])+'</p><a class="btn" href="/sabbats/'+ns.sb.slug+'/">Préparer '+esc(ns.sb.n)+'</a>';
  },
  livre:initBook,

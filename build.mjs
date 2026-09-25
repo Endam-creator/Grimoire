@@ -23,7 +23,7 @@ SPELLS.forEach(function(s){s.slug=gmSlug(s.n)});
 RIT.forEach(function(r){r.slug=gmSlug(r.n)});
 SAB.forEach(function(s){s.slug=s.id});
 `;
-const dataFiles = ["spells1.js", "spells2.js", "history.js", "practice.js", "sources.js"];
+const dataFiles = ["spells1.js", "spells2.js", "spells3.js", "history.js", "practice.js", "samhain.js", "sources.js"];
 const dataSrc = dataFiles.map((f) => fs.readFileSync(path.join(ROOT, "src", f), "utf8")).join("\n") + "\n" + SLUG_JS;
 const ctx = { window: {} };
 ctx.window = ctx;
@@ -77,6 +77,8 @@ const NAV = [
 const SECTION = { sort: "sorts", rituel: "rituels", sabbat: "sabbats" };
 const MOONICON = `<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.2A9 9 0 1 0 20.8 15 7.2 7.2 0 0 1 15.5 3.2Z" fill="none" stroke="#d9a95b" stroke-width="1.4"/><circle cx="18.5" cy="6" r="1" fill="#d9a95b"/></svg>`;
 let VER = "1";
+const GOATCOUNTER = "grimoire-endam"; // compte GoatCounter (vide = désactivé)
+const ANALYTICS = GOATCOUNTER ? `<script data-goatcounter="https://${GOATCOUNTER}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>` : "";
 
 function header(page) {
   const cur = SECTION[page] || page;
@@ -137,6 +139,7 @@ ${body}
 ${footer()}
 </main>
 <div class="toast" id="toast" hidden></div>
+${ANALYTICS}
 <script src="/assets/data.js?v=${VER}"></script>
 <script src="/assets/app.js?v=${VER}"></script>
 </body>
@@ -155,7 +158,7 @@ const WARN = `<div class="warn" role="note"><span class="ico" aria-hidden="true"
 <li>Dilue toujours les huiles essentielles, et évite-les près des enfants, des femmes enceintes et des animaux. L’armoise est déconseillée pendant la grossesse.</li>
 <li>La sauge blanche est surexploitée et sacrée pour plusieurs peuples autochtones d’Amérique. Le romarin, le laurier ou le thym la remplacent très bien.</li>
 <li>Un rituel accompagne une démarche. Il ne remplace ni un médecin, ni un avocat, ni la police en cas de danger.</li></ul></div></div>`;
-const CHAPWORD = { protection: "sort de protection", purification: "sort de purification", liaison: "sort de liaison", amour: "sort d’amour", prosperite: "sort de prospérité", bienetre: "sort de bien-être", reves: "sort pour les rêves", divination: "divination", glamour: "sort de glamour", elements: "sort des éléments", lune: "magie lunaire", sceaux: "magie des sceaux" };
+const CHAPWORD = { samhain: "rituel de Samhain et d’Halloween", protection: "sort de protection", purification: "sort de purification", liaison: "sort de liaison", amour: "sort d’amour", prosperite: "sort de prospérité", bienetre: "sort de bien-être", reves: "sort pour les rêves", divination: "divination", glamour: "sort de glamour", elements: "sort des éléments", lune: "magie lunaire", sceaux: "magie des sceaux" };
 const clip = (s, n = 158) => (s.length <= n ? s : s.slice(0, s.lastIndexOf(" ", n - 1)) + "…");
 const howto = (name, desc, supplies, steps, url) => ({ "@context": "https://schema.org", "@type": "HowTo", name, description: desc, inLanguage: "fr", url: SITE + url, supply: supplies.map((x) => ({ "@type": "HowToSupply", name: x })), step: steps.map((t, i) => ({ "@type": "HowToStep", position: i + 1, text: t })) });
 
@@ -175,7 +178,7 @@ add({ url: "/", page: "home", title: "Le Grimoire de Minuit — sorts, rituels e
 <div class="moon-fig"><svg id="moon-svg" viewBox="-4 -4 108 108" role="img" aria-label="Phase actuelle de la lune"></svg></div>
 <p class="moon-name" id="moon-name"></p><p class="moon-meta" id="moon-meta"></p><p class="moon-advice" id="moon-advice"></p><div class="tonight" id="tonight" aria-label="Sorts conseillés ce soir"></div></aside>
 </section>
-<section class="chap"><div class="chap-head"><p class="chap-num">Le Livre</p><div><h2>Douze chapitres de sorts</h2><p>Chaque sort a sa page : le moment, les ingrédients, le rituel pas à pas, l’incantation, les variantes et son histoire.</p></div></div>
+<section class="chap"><div class="chap-head"><p class="chap-num">Le Livre</p><div><h2>Treize chapitres de sorts</h2><p>Chaque sort a sa page : le moment, les ingrédients, le rituel pas à pas, l’incantation, les variantes et son histoire.</p></div></div>
 <div class="body-col"><div class="chapcards" id="chapcards"></div><div class="cta-line"><a class="btn" href="/livre-des-ombres/">Feuilleter le livre</a><a class="btn ghost" href="/sorts/">Voir tous les sorts</a></div></div></section>
 <section class="chap"><div class="body-col" style="margin-left:0"><div class="sabteaser" id="sabteaser"></div></div></section>
 <section class="chap" style="border-bottom:0"><div class="chap-head"><p class="chap-num">Explorer</p><div><h2>Tout le grimoire</h2></div></div>
@@ -193,7 +196,7 @@ add({ url: "/", page: "home", title: "Le Grimoire de Minuit — sorts, rituels e
 
 add({ url: "/livre-des-ombres/", page: "livre", title: "Le Livre des Ombres — grimoire de sorts à feuilleter | Le Grimoire de Minuit", desc: `Feuillette un Livre des Ombres de ${SPELLS.length} sorts : protection, amour, prospérité, bannissement, divination, magie lunaire. Recherche par ingrédient, lune ou niveau.`,
   body: `<section class="chap first" id="livre" style="border-bottom:0">
-${head("Le Livre", "Le Livre des Ombres", "Douze chapitres, près de cinquante sorts tirés de la magie populaire européenne, de la Wicca et de la sorcellerie moderne américaine. Feuillette-le page par page, ou cherche dans l’index.")}
+${head("Le Livre", "Le Livre des Ombres", "Treize chapitres, près de soixante sorts tirés de la magie populaire européenne, de la Wicca et de la sorcellerie moderne américaine. Feuillette-le page par page, ou cherche dans l’index.")}
 ${RULES}
 <div class="bookbar">
 <input id="q" type="search" placeholder="Chercher un sort, un ingrédient…" aria-label="Chercher dans le Livre des Ombres">
@@ -251,7 +254,7 @@ add({ url: "/sabbats/", page: "sabbats", title: "La roue de l’année : les 8 s
 <div class="body-col"><nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav></div></section>` });
 for (const sb of SAB) {
   const url = `/sabbats/${sb.slug}/`;
-  add({ url, page: "sabbat", id: sb.id, type: "article", title: `${sb.n} (${sb.when.replace(/ · .*/, "")}) — histoire, rituels et recette | Le Grimoire de Minuit`, desc: clip(`${sb.n}, ${sb.alias.toLowerCase()} : ${sb.t[0]}`),
+  add({ url, page: "sabbat", id: sb.id, type: "article", title: sb.more ? `${sb.n} 2026 : rituels de la nuit du 31 octobre, sorts et histoire d’Halloween | Le Grimoire de Minuit` : `${sb.n} (${sb.when.replace(/ · .*/, "")}) — histoire, rituels et recette | Le Grimoire de Minuit`, desc: sb.more ? "Comment célébrer Samhain le 31 octobre : la nuit heure par heure, 8 sorts traditionnels (bougie à la fenêtre, repas muet, noix dans le feu, miroir de minuit), l’histoire d’Halloween et les recettes." : clip(`${sb.n}, ${sb.alias.toLowerCase()} : ${sb.t[0]}`),
     ld: [{ "@context": "https://schema.org", "@type": "Article", headline: `${sb.n} : histoire, correspondances et rituels`, inLanguage: "fr", url: SITE + url, image: SITE + "/assets/og.png", author: { "@type": "Organization", name: "Endam Digital" } }, crumbsLD(Object.assign([["/", "Accueil"], ["/sabbats/", "Sabbats"], [url, sb.n]], { url }))],
     body: `${crumbs([["/", "Accueil"], ["/sabbats/", "Sabbats"], [null, sb.n]])}<section class="chap first" style="border-bottom:0"><div class="body-col" style="margin-left:0;max-width:900px"><div class="sab-detail solo" id="sab-detail"></div><nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav></div></section>` });
 }
