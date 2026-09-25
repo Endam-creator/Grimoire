@@ -29,7 +29,8 @@ const ctx = { window: {} };
 ctx.window = ctx;
 vm.createContext(ctx);
 vm.runInContext(dataSrc, ctx);
-const { CHAPTERS, SPELLS, RIT, SAB, TOOLS, RECIPES, ERAS, FIGURES, GLOSS } = ctx;
+vm.runInContext(fs.readFileSync(path.join(ROOT, "src", "dossiers.js"), "utf8"), ctx);
+const { CHAPTERS, SPELLS, RIT, SAB, TOOLS, RECIPES, ERAS, FIGURES, GLOSS, DOSSIERS } = ctx;
 const CH = Object.fromEntries(CHAPTERS.map((c, i) => [c.id, { ...c, idx: i }]));
 const ORDER = SPELLS.slice().sort((a, b) => CH[a.ch].idx - CH[b.ch].idx);
 for (const arr of [SPELLS, RIT]) {
@@ -71,10 +72,10 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 const NAV = [
   ["/livre-des-ombres/", "Livre des Ombres", "livre", true], ["/sorts/", "Sorts", "sorts"], ["/atelier/", "Atelier", "atelier"],
   ["/rituels/", "Rituels", "rituels"], ["/sabbats/", "Sabbats", "sabbats"], ["/outils/", "Outils", "outils"], ["/recettes/", "Recettes", "recettes"],
-  ["/divination/", "Divination", "divination"], ["/correspondances/", "Correspondances", "correspondances"], ["/histoire/", "Histoire", "histoire"],
+  ["/divination/", "Divination", "divination"], ["/correspondances/", "Correspondances", "correspondances"], ["/dossiers/", "Dossiers", "dossiers"], ["/histoire/", "Histoire", "histoire"],
   ["/figures/", "Figures", "figures"], ["/glossaire/", "Glossaire", "glossaire"],
 ];
-const SECTION = { sort: "sorts", rituel: "rituels", sabbat: "sabbats" };
+const SECTION = { sort: "sorts", rituel: "rituels", sabbat: "sabbats", dossier: "dossiers" };
 const MOONICON = `<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.2A9 9 0 1 0 20.8 15 7.2 7.2 0 0 1 15.5 3.2Z" fill="none" stroke="#d9a95b" stroke-width="1.4"/><circle cx="18.5" cy="6" r="1" fill="#d9a95b"/></svg>`;
 let VER = "1";
 const GOATCOUNTER = "grimoire-endam"; // compte GoatCounter (vide = désactivé)
@@ -93,7 +94,7 @@ function footer() {
 <div><a class="brand" href="/">${MOONICON}<span>Le Grimoire de Minuit</span></a><p>Un grimoire en ligne de sorcellerie : histoire, sorts, rituels et traditions, rassemblés et réécrits en français. Contenu à visée culturelle. Un projet <a href="https://endam-digital.com" style="color:var(--gold)">Endam Digital</a>.</p></div>
 ${col("Pratiquer", [["/livre-des-ombres/", "Livre des Ombres"], ["/sorts/", "Tous les sorts"], ["/atelier/", "Atelier du sorcier"], ["/rituels/", "Rituels"], ["/sabbats/", "Roue de l’année"]])}
 ${col("Savoir", [["/outils/", "Outils"], ["/recettes/", "Recettes"], ["/divination/", "Divination & tarot"], ["/correspondances/", "Correspondances"]])}
-${col("Culture", [["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"]])}
+${col("Culture", [["/dossiers/", "Dossiers : Salem, vaudou"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"]])}
 </footer>`;
 }
 function crumbs(list) {
@@ -189,7 +190,7 @@ add({ url: "/", page: "home", title: "Le Grimoire de Minuit — sorts, rituels e
 <a href="/divination/"><b>La divination</b><span>Tarot, flamme, cire et feuilles de thé</span></a>
 <a href="/correspondances/"><b>Les correspondances</b><span>Jours, couleurs, plantes, pierres, lunes</span></a>
 <a href="/recettes/"><b>Les recettes</b><span>Sel noir, eau de lune, encens, huiles</span></a>
-<a href="/outils/"><b>Les outils</b><span>Athamé, baguette, chaudron, balai…</span></a>
+<a href="/dossiers/"><b>Les dossiers</b><span>Les sorcières de Salem, le vaudou</span></a>
 <a href="/histoire/"><b>L’histoire</b><span>Quatre mille ans de magie et de procès</span></a>
 <a href="/figures/"><b>Les figures</b><span>De Circé à Doreen Valiente</span></a>
 </div></div></section>` });
@@ -290,6 +291,37 @@ simple("/a-propos/", "apropos", "À propos", "À propos et sources | Le Grimoire
   `${head("À propos", "À propos du grimoire", "")}<div class="body-col about"><p>Le Grimoire de Minuit est un projet d’<a href="https://endam-digital.com">Endam Digital</a>. Il rassemble l’histoire de la sorcellerie européenne, les pratiques de la sorcellerie moderne (Wicca, sorcellerie solitaire, magie populaire) et les traditions qui les nourrissent, réécrites en français à partir de sources historiques et de sites de référence français et américains.</p><p>Les rituels et les sorts relèvent de traditions et de croyances. Ils sont présentés pour leur intérêt culturel, historique et personnel, sans prétention scientifique.</p>
 <div style="margin-block:36px">${WARN}</div><h2 class="sub" style="font-size:30px;margin-bottom:22px">Sources</h2><ul class="sources" id="sources-list"></ul></div>`);
 
+
+/* ---------- dossiers ---------- */
+function block(bk) {
+  if (bk.p) return `<p>${esc(bk.p)}</p>`;
+  if (bk.note) return `<aside class="dnote">${esc(bk.note)}</aside>`;
+  if (bk.quote) return `<blockquote class="dquote"><p>« ${esc(bk.quote)} »</p><cite>${esc(bk.by)}</cite></blockquote>`;
+  if (bk.timeline) return `<ol class="timeline dtl">${bk.timeline.map((x) => `<li><span class="yr">${esc(x[0])}</span><div><h3 class="t21">${esc(x[1])}</h3><p>${esc(x[2])}</p></div></li>`).join("")}</ol>`;
+  if (bk.people) return `<div class="people">${bk.people.map((x) => `<div class="person"><p class="label">${esc(x[1])} 1692</p><h3>${esc(x[0])}</h3><p>${esc(x[2])}</p></div>`).join("")}</div>`;
+  if (bk.cards) return `<div class="dcards">${bk.cards.map((x) => `<div class="dcard"><h3>${esc(x[0])}</h3><p class="dsub">${esc(x[1])}</p><p>${esc(x[2])}</p></div>`).join("")}</div>`;
+  return "";
+}
+add({ url: "/dossiers/", page: "dossiers", title: "Dossiers : les sorcières de Salem, le vaudou | Le Grimoire de Minuit", desc: "Les grands dossiers du Grimoire de Minuit : l’affaire des sorcières de Salem en 1692 et le vaudou, du Bénin à Haïti et à La Nouvelle-Orléans.",
+  body: `${crumbs([["/", "Accueil"], [null, "Dossiers"]])}<section class="chap first" style="border-bottom:0">${head("Les Dossiers", "Les grands dossiers", "Des enquêtes longues pour comprendre les affaires et les traditions qui ont façonné l’image de la sorcière.")}
+<div class="body-col dlist">${DOSSIERS.map((d) => `<a class="dteaser" href="/dossiers/${d.slug}/"><p class="label">${esc(d.kicker)}</p><h2>${esc(d.n)}</h2><p>${esc(d.dek)}</p><span class="btn small">Lire le dossier →</span></a>`).join("")}</div></section>` });
+for (const d of DOSSIERS) {
+  const url = `/dossiers/${d.slug}/`, other = DOSSIERS.filter((x) => x !== d);
+  add({ url, page: "dossier", id: d.slug, type: "article", title: `${d.title} | Le Grimoire de Minuit`, desc: d.desc,
+    ld: [{ "@context": "https://schema.org", "@type": "Article", headline: d.n, description: d.desc, inLanguage: "fr", url: SITE + url, image: SITE + "/assets/og.png", author: { "@type": "Organization", name: "Endam Digital" }, publisher: { "@type": "Organization", name: "Le Grimoire de Minuit" } }, crumbsLD(Object.assign([["/", "Accueil"], ["/dossiers/", "Dossiers"], [url, d.n]], { url }))],
+    body: `${crumbs([["/", "Accueil"], ["/dossiers/", "Dossiers"], [null, d.n]])}
+<article class="dossier">
+<header class="dhead"><p class="label">${esc(d.kicker)}</p><h1>${esc(d.n)}</h1><p class="dek">${esc(d.dek)}</p></header>
+<div class="stat-row dfacts">${d.facts.map((f) => `<div class="stat"><b>${esc(f[0])}</b><span>${esc(f[1])}</span></div>`).join("")}</div>
+<div class="dgrid">
+<nav class="dtoc" aria-label="Sommaire"><p class="label">Sommaire</p><ol>${d.sections.map((s) => `<li><a href="#${s.id}">${esc(s.h)}</a></li>`).join("")}</ol></nav>
+<div class="dbody"><p class="dlede">${esc(d.lede)}</p>
+${d.sections.map((s) => `<section class="dsec" id="${s.id}"><h2>${esc(s.h)}</h2>${s.body.map(block).join("\n")}</section>`).join("\n")}
+<section class="dsec"><h2>Sources</h2><ul class="sources" style="columns:1">${d.sources.map((x) => `<li><a href="${x[1]}" target="_blank" rel="noopener">${esc(x[0])}</a> — ${esc(x[2])}</li>`).join("")}</ul></section>
+<div class="cta-line">${other.map((o) => `<a class="btn" href="/dossiers/${o.slug}/">Lire aussi : ${esc(o.n)}</a>`).join("")}<a class="btn ghost" href="/histoire/">L’histoire de la sorcellerie</a></div>
+</div></div></article>` });
+}
+
 add({ url: "/404.html", page: "404", title: "Page introuvable | Le Grimoire de Minuit", desc: "Cette page s’est évaporée comme une fumée d’encens.", noindex: true,
   body: `<section class="lost"><p class="label">Erreur 404</p><h1>Cette page s’est évaporée</h1><p>Comme une fumée d’encens, la page que tu cherches a disparu. Le sort a peut-être été déplacé dans un autre chapitre.</p><div class="hero-links" style="justify-content:center"><a class="btn" href="/">Retour à l’accueil</a><a class="btn ghost" href="/sorts/">Tous les sorts</a></div></section>` });
 
@@ -366,7 +398,7 @@ server.close();
 write(path.join(OUT, "CNAME"), "grimoire.endam-digital.com\n");
 write(path.join(OUT, ".nojekyll"), "");
 write(path.join(OUT, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
-const prio = (u) => (u === "/" ? "1.0" : /^\/(livre-des-ombres|sorts|rituels|sabbats)\/$/.test(u) ? "0.9" : u.startsWith("/sorts/") ? "0.8" : "0.7");
+const prio = (u) => (u === "/" ? "1.0" : /^\/(livre-des-ombres|sorts|rituels|sabbats|dossiers)\/$/.test(u) || u.startsWith("/dossiers/") ? "0.9" : u.startsWith("/sorts/") ? "0.8" : "0.7");
 write(path.join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.filter((p) => !p.noindex).map((p) => `  <url><loc>${SITE}${p.url}</loc><lastmod>${TODAY}</lastmod><priority>${prio(p.url)}</priority></url>`).join("\n")}\n</urlset>\n`);
 rm(RAW);
 console.log(`${pages.length} pages générées dans docs/`);

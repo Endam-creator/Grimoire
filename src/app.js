@@ -10,6 +10,7 @@ function copyText(txt,ok){try{navigator.clipboard.writeText(txt).then(function()
 var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 function on(sel,fn){var el=$(sel);if(el)fn(el)}
 var CH={};CHAPTERS.forEach(function(c,i){c.idx=i;CH[c.id]=c});
+var DLINK={"Salem":"/dossiers/salem/","Tituba":"/dossiers/salem/#tituba","Marie Laveau":"/dossiers/vaudou/#louisiane"};
 var LVL=["","Novice","Initiée","Adepte"];
 function stars(n){return "✦".repeat(n)+"✧".repeat(3-n)}
 var ORDER=SPELLS.slice().sort(function(a,b){return CH[a.ch].idx-CH[b.ch].idx});
@@ -232,10 +233,10 @@ var R={
   $("#stones").innerHTML=STONES.map(function(h){return"<dt>"+esc(h[0])+"</dt><dd>"+esc(h[1])+"</dd>"}).join("");
   $("#phases").innerHTML=[[0.02,"Nouvelle lune","Intentions, commencements, silence"],[0.14,"Premier croissant","Attirer, faire grandir, oser"],[0.25,"Premier quartier","Décider, persévérer, agir"],[0.37,"Gibbeuse croissante","Peaufiner, nourrir, patienter"],[0.5,"Pleine lune","Charger, remercier, deviner"],[0.63,"Gibbeuse décroissante","Partager, transmettre, trier"],[0.75,"Dernier quartier","Couper, bannir, pardonner"],[0.87,"Dernier croissant","Purifier, se reposer, lâcher"]].map(function(l){return'<div class="phase"><svg viewBox="-2 -2 104 104" aria-hidden="true">'+moonSVG(l[0],false)+'</svg><h3 class="t18">'+l[1]+'</h3><p>'+l[2]+'</p></div>'}).join("");
   $("#moons").innerHTML=MOONS.map(function(m){return'<div><span class="label">'+m[0]+'</span><b>'+esc(m[1])+'</b><span>'+esc(m[2])+'</span></div>'}).join("")},
- histoire:function(){$("#eras").innerHTML=ERAS.map(function(e){return'<div class="era"><div class="era-h"><h2 class="t32">'+esc(e.n)+'</h2><span>'+esc(e.d)+'</span></div><ol class="timeline">'+e.items.map(function(it){return'<li><span class="yr">'+esc(it[0])+'</span><div><h3 class="t21">'+esc(it[1])+'</h3><p>'+esc(it[2])+'</p></div></li>'}).join("")+'</ol></div>'}).join("")},
+ histoire:function(){$("#eras").innerHTML=ERAS.map(function(e){return'<div class="era"><div class="era-h"><h2 class="t32">'+esc(e.n)+'</h2><span>'+esc(e.d)+'</span></div><ol class="timeline">'+e.items.map(function(it){return'<li><span class="yr">'+esc(it[0])+'</span><div><h3 class="t21">'+esc(it[1])+'</h3><p>'+esc(it[2])+(DLINK[it[1]]?' <a href="'+DLINK[it[1]]+'">Lire le dossier →</a>':'')+'</p></div></li>'}).join("")+'</ol></div>'}).join("")},
  figures:function(){
   var G=[["","Toutes"],["mythe","Mythes & légendes"],["histoire","Accusées & devineresses"],["renouveau","Le renouveau"]],cur="";
-  function render(){$("#figs").innerHTML=FIGURES.filter(function(f){return!cur||f.g===cur}).map(function(f){return'<article class="card"><p class="label">'+esc(f.o)+'</p><h2 class="t25">'+esc(f.n)+'</h2><p>'+esc(f.t)+'</p><p class="k">'+esc(f.k)+'</p></article>'}).join("");document.querySelectorAll("#fig-tabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.g===cur?"true":"false")})}
+  function render(){$("#figs").innerHTML=FIGURES.filter(function(f){return!cur||f.g===cur}).map(function(f){return'<article class="card"><p class="label">'+esc(f.o)+'</p><h2 class="t25">'+esc(f.n)+'</h2><p>'+esc(f.t)+'</p><p class="k">'+esc(f.k)+'</p>'+(DLINK[f.n]?'<p class="k"><a href="'+DLINK[f.n]+'">Lire le dossier →</a></p>':'')+'</article>'}).join("");document.querySelectorAll("#fig-tabs button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.g===cur?"true":"false")})}
   $("#fig-tabs").innerHTML=G.map(function(g){return'<button type="button" data-g="'+g[0]+'">'+g[1]+'</button>'}).join("");
   $("#fig-tabs").onclick=function(e){var b=e.target.closest("button");if(!b)return;cur=b.dataset.g;render()};render()},
  glossaire:function(){$("#gloss").innerHTML=GLOSS.slice().sort(function(a,b){return a[0].localeCompare(b[0],"fr")}).map(function(g){return"<div><dt>"+esc(g[0])+"</dt><dd>"+esc(g[1])+"</dd></div>"}).join("")},
