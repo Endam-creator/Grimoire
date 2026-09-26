@@ -189,8 +189,9 @@ function initWheel(){
 /* ================= DIVINATION ================= */
 function cardArt(num){var n=(num%5)+5,pts=[];for(var i=0;i<n*2;i++){var a=i/(n*2)*2*Math.PI-Math.PI/2,r=i%2?17:38;pts.push((50+r*Math.cos(a)).toFixed(1)+","+(50+r*Math.sin(a)).toFixed(1))}
   return'<svg class="art" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="#8c2f2a" stroke-width="1.2" stroke-dasharray="1 3"/><polygon points="'+pts.join(" ")+'" fill="rgba(140,47,42,.12)" stroke="#2e2116" stroke-width="1.4"/><circle cx="50" cy="50" r="7" fill="#8c2f2a"/></svg>'}
+var TIMG=window.TAROTIMG||{};
 function draw(){var idx=[],pos=["Le passé","Le présent","L’avenir"];while(idx.length<3){var k=Math.floor(Math.random()*22);if(idx.indexOf(k)<0)idx.push(k)}
-  $("#tarot").innerHTML=idx.map(function(k,j){var c=TAROT[k],rev=Math.random()<0.3;return'<div class="tcard"><p class="pos">'+pos[j]+'</p><div class="tface'+(rev?" rev":"")+'"><span class="num">'+c[0]+'</span>'+cardArt(k)+'<span class="nm">'+esc(c[1])+'</span></div><p class="tread"><b>'+esc(c[1])+(rev?" (renversée)":"")+'</b><br>'+esc(rev?c[3]:c[2])+'</p></div>'}).join("")}
+  $("#tarot").innerHTML=idx.map(function(k,j){var c=TAROT[k],rev=Math.random()<0.3;return'<div class="tcard"><p class="pos">'+pos[j]+'</p>'+(TIMG[k]?'<div class="tface hasimg'+(rev?" rev":"")+'"><img src="'+TIMG[k]+'" width="240" height="440" alt="'+esc(c[1])+', tarot de Jean Dodal"></div>':'<div class="tface'+(rev?" rev":"")+'"><span class="num">'+c[0]+'</span>'+cardArt(k)+'<span class="nm">'+esc(c[1])+'</span></div>')+'<p class="tread"><b>'+esc(c[1])+(rev?" (renversée)":"")+'</b><br>'+esc(rev?c[3]:c[2])+'</p></div>'}).join("")}
 
 /* ================= RENDUS PAR PAGE ================= */
 var R={
@@ -224,7 +225,7 @@ var R={
  recettes:function(){$("#recs").innerHTML=RECIPES.map(function(r){return'<article class="rec"><p class="label">'+esc(r.c)+'</p><h2 class="t24">'+esc(r.n)+'</h2><dl><div><dt>Ingrédients</dt><dd>'+esc(r.ing)+'</dd></div><div><dt>Préparation</dt><dd>'+esc(r.m)+'</dd></div><div><dt>Usages</dt><dd>'+esc(r.u)+'</dd></div></dl></article>'}).join("")},
  divination:function(){
   $("#draw").onclick=draw;draw();
-  $("#arcana").innerHTML=TAROT.map(function(c){return'<div><i>'+c[0]+'</i><span><b>'+esc(c[1])+'</b><br>'+esc(c[2])+'<small>Renversée : '+esc(c[3])+'</small></span></div>'}).join("");
+  $("#arcana").innerHTML=TAROT.map(function(c,n){return'<div><i>'+(TIMG[n]?'<img src="'+TIMG[n]+'" width="44" height="81" loading="lazy" alt="">':c[0])+'</i><span><b>'+esc(c[1])+'</b><br>'+esc(c[2])+'<small>Renversée : '+esc(c[3])+'</small></span></div>'}).join("");
   $("#candle").innerHTML=CANDLE.map(function(c){return"<tr><td>"+esc(c[0])+"</td><td>"+esc(c[1])+"</td></tr>"}).join("");
   $("#symbols").innerHTML=SYMBOLS.map(function(s){return"<div><b>"+esc(s[0])+"</b>"+esc(s[1])+"</div>"}).join("")},
  correspondances:function(){

@@ -21,5 +21,5 @@ window.IMGPLACE={
  home:"goya-vol", sabbats:"goya-aquelarre", rituels:"magic-circle", samhain:"snap-apple",
  hist:{"Le Malleus Maleficarum":"malleus","North Berwick":"north-berwick","Les possédées de Loudun":"grandier","Salem":"salem","L’affaire des poisons":"la-voisin","Le « Witchfinder General »":"hopkins"},
  fig:{"Circé":"circe","Baba Yaga":"baba-yaga","Morgane":"morgan","Hécate":"hecate"},
- dossier:{salem:["salem","salem-examination"]}
+ dossier:{salem:["salem","salem-examination"],france:["la-voisin","grandier"]}
 };

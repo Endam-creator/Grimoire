@@ -18,15 +18,17 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="stylesheet" href="/assets/fonts.css?v=735f3350">
-<link rel="stylesheet" href="/assets/style.css?v=735f3350">
+<link rel="stylesheet" href="/assets/fonts.css?v=78a70c51">
+<link rel="stylesheet" href="/assets/style.css?v=78a70c51">
 
 </head>
 <body data-page="apropos">
 <header class="topbar"><div class="topbar-in">
 <a class="brand" href="/" aria-label="Le Grimoire de Minuit, accueil"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.2A9 9 0 1 0 20.8 15 7.2 7.2 0 0 1 15.5 3.2Z" fill="none" stroke="#d9a95b" stroke-width="1.4"></path><circle cx="18.5" cy="6" r="1" fill="#d9a95b"></circle></svg><span>Le Grimoire de Minuit</span></a>
-<nav class="nav" aria-label="Sections"><a class="hl" href="/livre-des-ombres/">Livre des Ombres</a><a href="/sorts/">Sorts</a><a href="/atelier/">Atelier</a><a href="/rituels/">Rituels</a><a href="/sabbats/">Sabbats</a><a href="/outils/">Outils</a><a href="/recettes/">Recettes</a><a href="/divination/">Divination</a><a href="/correspondances/">Correspondances</a><a href="/dossiers/">Dossiers</a><a href="/histoire/">Histoire</a><a href="/figures/">Figures</a><a href="/glossaire/">Glossaire</a></nav>
+<div class="tb-actions"><button class="icon-btn" id="srch-btn" type="button" aria-label="Rechercher dans le grimoire" title="Rechercher (touche /)"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"></circle><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></button><button class="icon-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg></button></div>
+<nav class="nav" id="nav" aria-label="Sections"><a class="hl" href="/livre-des-ombres/">Livre des Ombres</a><a href="/sorts/">Sorts</a><a class="sec" href="/atelier/">Atelier</a><a href="/rituels/">Rituels</a><a href="/sabbats/">Sabbats</a><a class="sec" href="/outils/">Outils</a><a class="sec" href="/recettes/">Recettes</a><a href="/divination/">Divination</a><a class="sec" href="/correspondances/">Correspondances</a><a href="/dossiers/">Dossiers</a><a href="/histoire/">Histoire</a><a class="sec" href="/figures/">Figures</a><a class="sec" href="/glossaire/">Glossaire</a></nav>
 </div></header>
+<div class="srch" id="srch" hidden="" role="dialog" aria-modal="true" aria-label="Recherche"><div class="srch-box"><div class="srch-top"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#d9a95b" stroke-width="1.8"></circle><path d="m15.5 15.5 5 5" stroke="#d9a95b" stroke-width="1.8" stroke-linecap="round"></path></svg><input id="srch-in" type="search" placeholder="Sort, plante, sabbat, sorcière…" aria-label="Rechercher dans tout le grimoire" autocomplete="off"><button class="icon-btn" id="srch-close" type="button" aria-label="Fermer la recherche">✕</button></div><div id="srch-res" aria-live="polite"></div></div></div>
 <main class="wrap" id="haut">
 <nav class="crumbs" aria-label="Fil d’Ariane"><a href="/">Accueil</a><span aria-hidden="true">›</span><span aria-current="page">À propos</span></nav><section class="chap first" style="border-bottom:0"><div class="chap-head"><p class="chap-num">À propos</p><div><h1>À propos du grimoire</h1></div></div><div class="body-col about"><p>Le Grimoire de Minuit est un projet d’<a href="https://endam-digital.com">Endam Digital</a>. Il rassemble l’histoire de la sorcellerie européenne, les pratiques de la sorcellerie moderne (Wicca, sorcellerie solitaire, magie populaire) et les traditions qui les nourrissent, réécrites en français à partir de sources historiques et de sites de référence français et américains.</p><p>Les rituels et les sorts relèvent de traditions et de croyances. Ils sont présentés pour leur intérêt culturel, historique et personnel, sans prétention scientifique.</p>
 <div style="margin-block:36px"><div class="warn" role="note"><span class="ico" aria-hidden="true">✠</span><div><h2 class="t4" style="color:var(--bone);font-family:var(--fell);font-size:20px;margin-bottom:6px">Précautions de la bonne sorcière</h2><ul>
@@ -39,12 +41,13 @@
 <div><a class="brand" href="/"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.2A9 9 0 1 0 20.8 15 7.2 7.2 0 0 1 15.5 3.2Z" fill="none" stroke="#d9a95b" stroke-width="1.4"></path><circle cx="18.5" cy="6" r="1" fill="#d9a95b"></circle></svg><span>Le Grimoire de Minuit</span></a><p>Un grimoire en ligne de sorcellerie : histoire, sorts, rituels et traditions, rassemblés et réécrits en français. Contenu à visée culturelle. Un projet <a href="https://endam-digital.com" style="color:var(--gold)">Endam Digital</a>.</p></div>
 <div><h2>Pratiquer</h2><ul><li><a href="/livre-des-ombres/">Livre des Ombres</a></li><li><a href="/sorts/">Tous les sorts</a></li><li><a href="/atelier/">Atelier du sorcier</a></li><li><a href="/rituels/">Rituels</a></li><li><a href="/sabbats/">Roue de l’année</a></li></ul></div>
 <div><h2>Savoir</h2><ul><li><a href="/outils/">Outils</a></li><li><a href="/recettes/">Recettes</a></li><li><a href="/divination/">Divination &amp; tarot</a></li><li><a href="/correspondances/">Correspondances</a></li><li><a href="/ingredients/">Plantes &amp; pierres</a></li></ul></div>
-<div><h2>Culture</h2><ul><li><a href="/dossiers/">Dossiers : Salem, vaudou</a></li><li><a href="/histoire/">Histoire</a></li><li><a href="/figures/">Figures</a></li><li><a href="/glossaire/">Glossaire</a></li><li><a href="/a-propos/">À propos &amp; sources</a></li><li><a href="/mentions-legales/">Mentions légales</a></li></ul></div>
+<div><h2>Culture</h2><ul><li><a href="/dossiers/">Dossiers : France, Salem, vaudou</a></li><li><a href="/histoire/">Histoire</a></li><li><a href="/figures/">Figures</a></li><li><a href="/glossaire/">Glossaire</a></li><li><a href="/a-propos/">À propos &amp; sources</a></li><li><a href="/lettre/">La lettre du samedi</a></li><li><a href="/mentions-legales/">Mentions légales</a></li></ul></div>
 </footer>
 </main>
 <div class="toast" id="toast" hidden=""></div>
 <script data-goatcounter="https://grimoire-endam.goatcounter.com/count" async="" src="https://gc.zgo.at/count.js"></script>
-<script defer="" src="/assets/data.js?v=735f3350"></script>
-<script defer="" src="/assets/app.js?v=735f3350"></script>
+<script defer="" src="/assets/data.js?v=78a70c51"></script>
+<script defer="" src="/assets/app.js?v=78a70c51"></script>
+<script defer="" src="/assets/ui.js?v=78a70c51"></script>
 
 </body></html>

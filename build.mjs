@@ -30,7 +30,8 @@ ctx.window = ctx;
 vm.createContext(ctx);
 vm.runInContext(dataSrc, ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, "src", "dossiers.js"), "utf8"), ctx);
-const { CHAPTERS, SPELLS, RIT, SAB, TOOLS, RECIPES, ERAS, FIGURES, GLOSS, DOSSIERS, INGREDIENTS, IMGMETA, IMGPLACE } = ctx;
+vm.runInContext(fs.readFileSync(path.join(ROOT, "src", "lettres.js"), "utf8"), ctx);
+const { CHAPTERS, SPELLS, RIT, SAB, TOOLS, RECIPES, ERAS, FIGURES, GLOSS, DOSSIERS, INGREDIENTS, IMGMETA, IMGPLACE, LETTRES, ERAS: ERAS_, TAROT } = ctx;
 
 /* ---------- illustrations (images-src/ -> assets/img/*.webp) ---------- */
 const sharp = require("sharp");
@@ -54,6 +55,15 @@ async function writeImages(dest) {
 function fig(key, cls = "plate") {
   const im = IMG[key]; if (!im) return "";
   return `<figure class="${cls}"><img src="${im.src2}" srcset="${im.src2} 700w, ${im.src} ${im.w}w" sizes="(max-width: 760px) 100vw, 900px" width="${im.w}" height="${im.h}" loading="lazy" decoding="async" alt="${esc(im.cap)}"><figcaption>${esc(im.cap)} <a href="${im.page}" target="_blank" rel="noopener">Domaine public, Wikimedia Commons</a></figcaption></figure>`;
+}
+/* tarot : images-src/tarot/NN.jpg -> assets/img/tarot/NN.webp */
+const TAROTDIR = path.join(IMGSRC, "tarot");
+const TAROTCRED = fs.existsSync(path.join(TAROTDIR, "credits.json")) ? JSON.parse(fs.readFileSync(path.join(TAROTDIR, "credits.json"), "utf8")) : {};
+const TAROTIMG = {};
+for (let n = 0; n < 22; n++) { const k = String(n).padStart(2, "0"); if (fs.existsSync(path.join(TAROTDIR, k + ".jpg"))) TAROTIMG[n] = `/assets/img/tarot/${k}.webp`; }
+async function writeTarot(dest) {
+  mk(path.join(dest, "assets/img/tarot"));
+  for (const n of Object.keys(TAROTIMG)) { const k = String(n).padStart(2, "0"); await sharp(path.join(TAROTDIR, k + ".jpg")).resize({ width: 240 }).webp({ quality: 80 }).toFile(path.join(dest, `assets/img/tarot/${k}.webp`)); }
 }
 const IMGPUB = Object.fromEntries(Object.entries(IMG).map(([k, v]) => [k, { src: v.src, src2: v.src2, w: v.w, h: v.h, cap: v.cap, page: v.page }]));
 
@@ -110,9 +120,13 @@ const NAV = [
   ["/divination/", "Divination", "divination"], ["/correspondances/", "Correspondances", "correspondances"], ["/dossiers/", "Dossiers", "dossiers"], ["/histoire/", "Histoire", "histoire"],
   ["/figures/", "Figures", "figures"], ["/glossaire/", "Glossaire", "glossaire"],
 ];
+// rubriques secondaires : dans le menu déroulant sur ordinateur
+const NAVSEC = new Set(["atelier", "outils", "recettes", "correspondances", "figures", "glossaire"]);
 const SECTION = { sort: "sorts", rituel: "rituels", sabbat: "sabbats", dossier: "dossiers" };
 const MOONICON = `<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 3.2A9 9 0 1 0 20.8 15 7.2 7.2 0 0 1 15.5 3.2Z" fill="none" stroke="#d9a95b" stroke-width="1.4"/><circle cx="18.5" cy="6" r="1" fill="#d9a95b"/></svg>`;
 let VER = "1";
+// pages qui ont besoin des données et du moteur de rendu (les autres sont entièrement statiques)
+const APPPAGES = new Set(["home", "livre", "sorts", "sort", "atelier", "rituels", "rituel", "sabbats", "sabbat", "outils", "recettes", "divination", "correspondances", "histoire", "figures", "glossaire", "apropos"]);
 const GOATCOUNTER = "grimoire-endam";
 const NEWSLETTER = "grimoiredeminuit"; // compte Buttondown (vide = formulaire masqué) // compte GoatCounter (vide = désactivé)
 const ANALYTICS = GOATCOUNTER ? `<script data-goatcounter="https://${GOATCOUNTER}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>` : "";
@@ -121,8 +135,10 @@ function header(page) {
   const cur = SECTION[page] || page;
   return `<header class="topbar"><div class="topbar-in">
 <a class="brand" href="/" aria-label="Le Grimoire de Minuit, accueil">${MOONICON}<span>Le Grimoire de Minuit</span></a>
-<nav class="nav" aria-label="Sections">${NAV.map(([h, t, k, hl]) => `<a${hl ? ' class="hl"' : ""} href="${h}"${k === cur ? ' aria-current="page"' : ""}>${t}</a>`).join("")}</nav>
-</div></header>`;
+<div class="tb-actions"><button class="icon-btn" id="srch-btn" type="button" aria-label="Rechercher dans le grimoire" title="Rechercher (touche /)"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button><button class="icon-btn" id="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>
+<nav class="nav" id="nav" aria-label="Sections">${NAV.map(([h, t, k, hl]) => `<a${hl ? ' class="hl"' : NAVSEC.has(k) ? ' class="sec"' : ""} href="${h}"${k === cur ? ' aria-current="page"' : ""}>${t}</a>`).join("")}</nav>
+</div></header>
+<div class="srch" id="srch" hidden role="dialog" aria-modal="true" aria-label="Recherche"><div class="srch-box"><div class="srch-top"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#d9a95b" stroke-width="1.8"/><path d="m15.5 15.5 5 5" stroke="#d9a95b" stroke-width="1.8" stroke-linecap="round"/></svg><input id="srch-in" type="search" placeholder="Sort, plante, sabbat, sorcière…" aria-label="Rechercher dans tout le grimoire" autocomplete="off"><button class="icon-btn" id="srch-close" type="button" aria-label="Fermer la recherche">✕</button></div><div id="srch-res" aria-live="polite"></div></div></div>`;
 }
 function footer() {
   const col = (t, l) => `<div><h2>${t}</h2><ul>${l.map(([h, x]) => `<li><a href="${h}">${x}</a></li>`).join("")}</ul></div>`;
@@ -130,7 +146,7 @@ function footer() {
 <div><a class="brand" href="/">${MOONICON}<span>Le Grimoire de Minuit</span></a><p>Un grimoire en ligne de sorcellerie : histoire, sorts, rituels et traditions, rassemblés et réécrits en français. Contenu à visée culturelle. Un projet <a href="https://endam-digital.com" style="color:var(--gold)">Endam Digital</a>.</p></div>
 ${col("Pratiquer", [["/livre-des-ombres/", "Livre des Ombres"], ["/sorts/", "Tous les sorts"], ["/atelier/", "Atelier du sorcier"], ["/rituels/", "Rituels"], ["/sabbats/", "Roue de l’année"]])}
 ${col("Savoir", [["/outils/", "Outils"], ["/recettes/", "Recettes"], ["/divination/", "Divination & tarot"], ["/correspondances/", "Correspondances"], ["/ingredients/", "Plantes & pierres"]])}
-${col("Culture", [["/dossiers/", "Dossiers : Salem, vaudou"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"], ["/mentions-legales/", "Mentions légales"]])}
+${col("Culture", [["/dossiers/", "Dossiers : France, Salem, vaudou"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"], ["/lettre/", "La lettre du samedi"], ["/mentions-legales/", "Mentions légales"]])}
 </footer>`;
 }
 function crumbs(list) {
@@ -177,8 +193,9 @@ ${footer()}
 </main>
 <div class="toast" id="toast" hidden></div>
 ${ANALYTICS}
-<script defer src="/assets/data.js?v=${VER}"></script>
+${APPPAGES.has(page) ? `<script defer src="/assets/data.js?v=${VER}"></script>
 <script defer src="/assets/app.js?v=${VER}"></script>
+` : ""}<script defer src="/assets/ui.js?v=${VER}"></script>
 </body>
 </html>`;
 }
@@ -228,7 +245,7 @@ ${NL()}
 <a href="/divination/"><b>La divination</b><span>Tarot, flamme, cire et feuilles de thé</span></a>
 <a href="/correspondances/"><b>Les correspondances</b><span>Jours, couleurs, plantes, pierres, lunes</span></a>
 <a href="/recettes/"><b>Les recettes</b><span>Sel noir, eau de lune, encens, huiles</span></a>
-<a href="/dossiers/"><b>Les dossiers</b><span>Les sorcières de Salem, le vaudou</span></a>
+<a href="/dossiers/"><b>Les dossiers</b><span>La France, Salem, le vaudou</span></a>
 <a href="/histoire/"><b>L’histoire</b><span>Quatre mille ans de magie et de procès</span></a>
 <a href="/figures/"><b>Les figures</b><span>De Circé à Doreen Valiente</span></a>
 </div></div></section>` });
@@ -307,7 +324,7 @@ simple("/recettes/", "recettes", "Recettes", "Recettes de sorcière : sel noir, 
 simple("/divination/", "divination", "Divination", "Divination : tirage de tarot, flamme, cire et feuilles de thé | Le Grimoire de Minuit", "Tire trois cartes du tarot de Marseille, découvre les 22 arcanes majeurs, le langage de la flamme des bougies et le dictionnaire des formes pour lire le thé et la cire.",
   `${head("La Divination", "Lire les signes", "Le tarot, la flamme, la cire, les feuilles de thé. Pose une question claire, respire, et laisse venir la première impression.")}
 <div class="body-col"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Tirage des trois cartes</h2><p class="subintro">Pense à ta question, puis tire trois arcanes majeurs du tarot de Marseille : le passé, le présent, l’avenir. Une carte renversée nuance ou retourne son sens.</p>
-<div class="actions" style="margin-bottom:22px"><button class="btn" type="button" id="draw">Tirer les cartes</button></div><div class="tarot" id="tarot"></div>
+<div class="actions" style="margin-bottom:22px"><button class="btn" type="button" id="draw">Tirer les cartes</button></div><div class="tarot" id="tarot"></div>${Object.keys(TAROTIMG).length ? `<p class="tcredit">Cartes : ${esc(TAROTCRED.deck || "Tarot de Jean Dodal, Lyon, vers 1701")}. Domaine public, <a href="https://commons.wikimedia.org/wiki/Category:Jean_Dodal_tarot" target="_blank" rel="noopener">Wikimedia Commons</a>.${TAROTIMG[0] ? "" : " Le Mat, dont aucune reproduction libre n’existe, garde son dessin."}</p>` : ""}
 <div class="block"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Les vingt-deux arcanes majeurs</h2><div class="arcana" id="arcana"></div></div>
 <div class="block"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Le langage de la flamme</h2><p class="subintro">Pendant un sort de bougie, les sorcières observent la flamme, la fumée et la cire. Vérifie d’abord qu’il n’y a ni courant d’air ni mèche trop longue.</p><div class="tbl-wrap"><table><thead><tr><th>Signe</th><th>Ce qu’on y lit</th></tr></thead><tbody id="candle"></tbody></table></div></div>
 <div class="block"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Dictionnaire des formes</h2><p class="subintro">Pour lire les feuilles de thé, le marc de café ou la cire figée dans l’eau froide. Voir aussi <a href="/sorts/tasse-de-the/">la tasse de thé</a> et <a href="/sorts/ceromancie/">la céromancie</a>.</p><div class="symgrid" id="symbols"></div></div></div>`);
@@ -341,7 +358,7 @@ function block(bk) {
   if (bk.cards) return `<div class="dcards">${bk.cards.map((x) => `<div class="dcard"><h3>${esc(x[0])}</h3><p class="dsub">${esc(x[1])}</p><p>${esc(x[2])}</p></div>`).join("")}</div>`;
   return "";
 }
-add({ url: "/dossiers/", page: "dossiers", title: "Dossiers : les sorcières de Salem, le vaudou | Le Grimoire de Minuit", desc: "Les grands dossiers du Grimoire de Minuit : l’affaire des sorcières de Salem en 1692 et le vaudou, du Bénin à Haïti et à La Nouvelle-Orléans.",
+add({ url: "/dossiers/", page: "dossiers", title: "Dossiers : la sorcellerie en France, Salem, le vaudou | Le Grimoire de Minuit", desc: "Les grands dossiers du Grimoire de Minuit : la sorcellerie en France, des bûchers de Lorraine aux leveurs de sorts, l’affaire des sorcières de Salem en 1692 et le vaudou, du Bénin à Haïti.",
   body: `${crumbs([["/", "Accueil"], [null, "Dossiers"]])}<section class="chap first" style="border-bottom:0">${head("Les Dossiers", "Les grands dossiers", "Des enquêtes longues pour comprendre les affaires et les traditions qui ont façonné l’image de la sorcière.")}
 <div class="body-col dlist">${DOSSIERS.map((d) => `<a class="dteaser" href="/dossiers/${d.slug}/"><p class="label">${esc(d.kicker)}</p><h2>${esc(d.n)}</h2><p>${esc(d.dek)}</p><span class="btn small">Lire le dossier →</span></a>`).join("")}</div></section>` });
 for (const d of DOSSIERS) {
@@ -403,21 +420,51 @@ add({ url: "/mentions-legales/", page: "legal", title: "Mentions légales | Le G
 <h2>Avertissement</h2><p>Les contenus du site ont une visée culturelle, historique et récréative. Les rituels et les sorts relèvent de traditions et de croyances et ne remplacent en aucun cas un avis médical, juridique ou psychologique.</p>
 </div></section>` });
 
+/* ---------- archives de la lettre ---------- */
+const frDate = (d) => new Date(d + "T12:00:00Z").toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+const LSORTED = LETTRES.slice().sort((a, b) => b.date.localeCompare(a.date));
+add({ url: "/lettre/", page: "lettre", title: "La lettre du samedi : archives | Le Grimoire de Minuit", desc: "Toutes les lettres du samedi du Grimoire de Minuit : un sort, une légende et la lune de la semaine. Abonnement gratuit.",
+  body: `${crumbs([["/", "Accueil"], [null, "La lettre du samedi"]])}<section class="chap first" style="border-bottom:0">${head("La Lettre", "La lettre du samedi", "Chaque samedi, un sort, une légende et la lune de la semaine. Voici les lettres déjà envoyées.")}
+<div class="body-col">${NL()}
+<p class="subintro" id="lettre-vide"${LSORTED.some((l) => l.date <= TODAY) ? " hidden" : ""}>La première lettre part bientôt. Abonne-toi pour la recevoir.</p>
+${LSORTED.map((l) => { const sp = SPELLS.find((x) => x.id === l.sort); return `<article class="lettre" id="${l.slug}" data-date="${l.date}"${l.date > TODAY ? " hidden" : ""}><p class="label">Lettre du ${frDate(l.date)}</p><h2>${esc(l.sujet)}</h2>${l.corps.map((c) => `<p>${esc(c)}</p>`).join("")}${sp ? `<p><a class="btn small" href="/sorts/${sp.slug}/">Le sort complet : ${esc(sp.n)} →</a></p>` : ""}</article>`; }).join("\n")}
+</div></section>` });
+
 add({ url: "/404.html", page: "404", title: "Page introuvable | Le Grimoire de Minuit", desc: "Cette page s’est évaporée comme une fumée d’encens.", noindex: true,
   body: `<section class="lost"><p class="label">Erreur 404</p><h1>Cette page s’est évaporée</h1><p>Comme une fumée d’encens, la page que tu cherches a disparu. Le sort a peut-être été déplacé dans un autre chapitre.</p><div class="hero-links" style="justify-content:center"><a class="btn" href="/">Retour à l’accueil</a><a class="btn ghost" href="/sorts/">Tous les sorts</a></div></section>` });
 
 /* ---------- écriture ---------- */
 rm(RAW); rm(OUT); mk(RAW);
 const appSrc = fs.readFileSync(path.join(ROOT, "src/app.js"), "utf8");
+const uiSrc = fs.readFileSync(path.join(ROOT, "src/ui.js"), "utf8");
 const styleSrc = fs.readFileSync(path.join(ROOT, "assets/style.css"), "utf8");
-VER = crypto.createHash("md5").update(dataSrc + appSrc + styleSrc).digest("hex").slice(0, 8);
+VER = crypto.createHash("md5").update(dataSrc + appSrc + uiSrc + styleSrc + JSON.stringify(TAROTIMG)).digest("hex").slice(0, 8);
 buildFonts(RAW);
 await writeImages(RAW);
-write(path.join(RAW, "assets/data.js"), dataSrc + "\nwindow.IMG=" + JSON.stringify(IMGPUB) + ";\nwindow.INGLINK=" + JSON.stringify(Object.fromEntries(INGREDIENTS.map((i) => [nrm(i.n), i.slug]))) + ";");
+await writeTarot(RAW);
+write(path.join(RAW, "assets/data.js"), dataSrc + "\nwindow.IMG=" + JSON.stringify(IMGPUB) + ";\nwindow.INGLINK=" + JSON.stringify(Object.fromEntries(INGREDIENTS.map((i) => [nrm(i.n), i.slug]))) + ";\nwindow.TAROTIMG=" + JSON.stringify(TAROTIMG) + ";");
 write(path.join(RAW, "assets/app.js"), appSrc);
+write(path.join(RAW, "assets/ui.js"), uiSrc);
+/* index de recherche : une entrée par page ou élément */
+const SX = [];
+const sx = (u, k, t, d, extra = "") => SX.push({ u, k, t, d: clip(String(d), 110), x: nrm([t, d, extra].join(" ")).replace(/\s+/g, " ") });
+for (const s of SPELLS) sx(`/sorts/${s.slug}/`, "Sort · " + CH[s.ch].n, s.n, s.sub, s.ing.join(" ") + " " + (s.moon || ""));
+for (const r of RIT) sx(`/rituels/${r.slug}/`, "Rituel", r.n, r.intro);
+for (const b of SAB) sx(`/sabbats/${b.slug}/`, "Sabbat", b.n, b.when + ". " + b.t[0]);
+for (const d of DOSSIERS) { sx(`/dossiers/${d.slug}/`, "Dossier", d.n, d.dek); for (const x of d.sections) sx(`/dossiers/${d.slug}/#${x.id}`, "Dossier · " + d.n, x.h, x.body.map((b) => b.p || "").join(" ").slice(0, 400), x.body.map((b) => JSON.stringify(b.cards || b.timeline || b.people || "")).join(" ")); }
+for (const i of INGREDIENTS) sx(`/ingredients/${i.slug}/`, "Ingrédient · " + i.t, i.n, i.use, i.lat || "");
+for (const f of FIGURES) sx("/figures/", "Figure", f.n, f.t, f.o);
+for (const e of ERAS_) for (const it of e.items) sx("/histoire/", "Histoire · " + e.n, it[1], it[2], it[0]);
+for (const g of GLOSS) sx("/glossaire/", "Glossaire", g[0], g[1]);
+for (const r of RECIPES) sx("/recettes/", "Recette", r.n, r.u, r.ing);
+for (const t of TOOLS) sx("/outils/", "Outil", t.n, t.t);
+for (const c of TAROT) sx("/divination/", "Tarot", c[1], c[2]);
+for (const l of LETTRES) sx(`/lettre/#${l.slug}`, "Lettre du samedi", l.sujet, l.corps[0]);
+for (const p of pages) if (!p.noindex && !p.id && p.url !== "/" && !SX.some((e) => e.u === p.url)) sx(p.url, "Page", p.title.split(" | ")[0], p.desc);
+write(path.join(RAW, "assets/search.json"), JSON.stringify(SX));
 write(path.join(RAW, "assets/style.css"), styleSrc);
 const esb = require("esbuild");
-for (const f of ["assets/app.js", "assets/data.js", "assets/style.css"]) { const p = path.join(RAW, f); const r = await esb.transform(fs.readFileSync(p, "utf8"), { loader: f.endsWith(".css") ? "css" : "js", minify: true, charset: "utf8" }); fs.writeFileSync(p, r.code); }
+for (const f of ["assets/app.js", "assets/data.js", "assets/ui.js", "assets/style.css"]) { const p = path.join(RAW, f); const r = await esb.transform(fs.readFileSync(p, "utf8"), { loader: f.endsWith(".css") ? "css" : "js", minify: true, charset: "utf8" }); fs.writeFileSync(p, r.code); }
 for (const p of pages) {
   let html = shell(p);
   if (p.noindex) html = html.replace("<link rel=\"canonical\"", '<meta name="robots" content="noindex">\n<link rel="canonical"');
@@ -426,7 +473,7 @@ for (const p of pages) {
 }
 
 /* ---------- pré-rendu ---------- */
-const MIME = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml", ".png": "image/png", ".woff2": "font/woff2", ".xml": "application/xml", ".txt": "text/plain" };
+const MIME = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml", ".png": "image/png", ".woff2": "font/woff2", ".xml": "application/xml", ".txt": "text/plain", ".json": "application/json", ".webp": "image/webp" };
 const server = http.createServer((req, res) => {
   let u = decodeURIComponent(req.url.split("?")[0].split("#")[0]);
   if (u.endsWith("/")) u += "index.html";

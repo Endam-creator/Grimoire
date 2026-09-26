@@ -1,4 +1,358 @@
 window.DOSSIERS=[
+/* =========================================================== FRANCE */
+{
+ slug: "france",
+ title: "La sorcellerie en France : procès, grimoires, Berry, Bretagne et leveurs de sorts",
+ n: "La sorcellerie en France",
+ kicker: "Dossier · du Moyen Âge au bocage",
+ dek: "Bûchers de Lorraine, grimoires de colportage, sorciers du Berry, lavandières de Bretagne et leveurs de sorts : l’histoire française de la sorcellerie, qui ne s’est jamais tout à fait arrêtée.",
+ desc: "La sorcellerie en France : procès (Lorraine, Franche-Comté, Pays basque, Loudun, affaire des poisons), Petit Albert et grimoires de colportage, sorciers du Berry, légendes bretonnes, leveurs de sorts et coupeurs de feu d’aujourd’hui.",
+ facts: [
+  [
+   "1398",
+   "la Sorbonne condamne la magie démoniaque"
+  ],
+  [
+   "1682",
+   "Louis XIV met fin aux procès en sorcellerie"
+  ],
+  [
+   "1668",
+   "première édition connue du Petit Albert"
+  ],
+  [
+   "1977",
+   "« Les Mots, la mort, les sorts » révèle la sorcellerie du bocage"
+  ]
+ ],
+ lede: "On associe souvent la chasse aux sorcières à l’Allemagne, à l’Écosse ou à Salem. La France a pourtant connu ses bûchers, ses grands juges démonologues et ses procès retentissants. Surtout, elle a gardé jusqu’à aujourd’hui une sorcellerie populaire bien vivante : des grimoires vendus par les colporteurs, des « jeteurs de sorts » redoutés dans les campagnes, des leveurs de sorts et des coupeurs de feu qu’on consulte encore. Voici cette histoire, de la Sorbonne médiévale au bocage de la Mayenne.",
+ sections: [
+  {
+   id: "chronologie",
+   h: "Repères",
+   body: [
+    {
+     timeline: [
+      [
+       "1398",
+       "La Sorbonne condamne la magie",
+       "La faculté de théologie de Paris condamne vingt-huit propositions sur la magie et l’invocation des démons. La sorcellerie commence à être pensée comme une hérésie."
+      ],
+      [
+       "1440",
+       "Gilles de Rais",
+       "Le compagnon d’armes de Jeanne d’Arc est jugé à Nantes, notamment pour avoir invoqué des démons, et pour des crimes d’enfants. Il est pendu et brûlé."
+      ],
+      [
+       "1459–1460",
+       "La vauderie d’Arras",
+       "Des habitants d’Arras sont accusés de voler au sabbat sur des bâtons enduits d’onguent. Le parlement de Paris réhabilitera les victimes en 1491."
+      ],
+      [
+       "1578",
+       "Jeanne Harvilliers",
+       "Jugée à Ribemont, en Picardie, cette femme accusée d’avoir été vouée au diable par sa mère est brûlée vive. Le juriste Jean Bodin assiste au procès et écrit ensuite sa « Démonomanie des sorciers » (1580)."
+      ],
+      [
+       "1595",
+       "Nicolas Rémy et la Lorraine",
+       "Le procureur général du duché de Lorraine, alors indépendant du royaume, publie sa « Démonolâtrie ». Il affirme avoir fait condamner des centaines de sorcières. La Lorraine compte parmi les régions les plus touchées d’Europe."
+      ],
+      [
+       "1598–1616",
+       "Henry Boguet en Franche-Comté",
+       "Grand juge de la terre de Saint-Claude, il publie le « Discours exécrable des sorciers » (1602), réédité une douzaine de fois. Les historiens ont ramené à une quarantaine le nombre de ses victimes, que la légende portait à 1 500."
+      ],
+      [
+       "1609",
+       "Le Labourd",
+       "Au Pays basque, le juge Pierre de Lancre mène une enquête qui envoie des dizaines de personnes au bûcher."
+      ],
+      [
+       "1624",
+       "Le parlement de Paris freine",
+       "Le parlement de Paris impose que toute condamnation à mort pour sorcellerie dans son ressort, soit près de la moitié du royaume, lui soit soumise en appel. Les exécutions y deviennent rares."
+      ],
+      [
+       "1634",
+       "Loudun",
+       "Le curé Urbain Grandier est brûlé vif, accusé d’avoir ensorcelé les ursulines."
+      ],
+      [
+       "1679–1682",
+       "L’affaire des poisons",
+       "La Voisin et son réseau de devineresses sont jugés par la chambre ardente. La Voisin est brûlée en place de Grève en 1680."
+      ],
+      [
+       "1682",
+       "L’édit de Louis XIV",
+       "La sorcellerie devient une « prétendue magie », punie comme escroquerie ou sacrilège. Les bûchers pour sorcellerie prennent fin dans le royaume."
+      ],
+      [
+       "1858",
+       "Les Légendes rustiques",
+       "George Sand publie, avec les dessins de son fils Maurice, les légendes du Berry : meneurs de loups, lavandières de nuit, feux follets."
+      ],
+      [
+       "1977",
+       "Le bocage ensorcelé",
+       "L’ethnologue Jeanne Favret-Saada publie « Les Mots, la mort, les sorts » : la sorcellerie est toujours vivante dans les campagnes de la Mayenne."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   id: "est",
+   h: "Lorraine et Franche-Comté, terres de bûchers",
+   body: [
+    {
+     p: "Le royaume de France a finalement été moins touché que ses voisins. La raison est surtout judiciaire : dès le début du XVIIᵉ siècle, le parlement de Paris exige de revoir les condamnations et prononce de nombreux acquittements. Les juges royaux se méfient des aveux obtenus sous la torture."
+    },
+    {
+     p: "Les grandes chasses françaises ont eu lieu à la périphérie, dans des territoires qui ne dépendaient pas, ou pas encore, du roi : le duché de Lorraine, la Franche-Comté espagnole, le Pays basque, les terres d’Empire de l’Est. Là, des juges locaux convaincus, comme Nicolas Rémy ou Henry Boguet, pouvaient condamner presque sans contrôle."
+    },
+    {
+     p: "Leurs livres, écrits pour guider les autres juges, décrivent le sabbat en détail : le vol sur le balai ou le bâton, le banquet, la danse, le baiser au diable, la marque du diable sur le corps, qu’on cherchait en piquant les accusées avec des aiguilles. C’est en grande partie de ces traités que vient l’image du sabbat que nous avons encore aujourd’hui."
+    }
+   ]
+  },
+  {
+   id: "juges",
+   h: "Les juges démonologues",
+   body: [
+    {
+     p: "À la fin du XVIᵉ siècle, une poignée de magistrats français écrit les livres qui vont guider les juges de toute l’Europe. Ce ne sont pas des moines fanatiques mais des juristes cultivés, convaincus d’affronter une conspiration du diable."
+    },
+    {
+     cards: [
+      [
+       "Jean Bodin",
+       "Angers, 1580",
+       "Le grand penseur politique publie « De la démonomanie des sorciers » après avoir assisté au procès de Jeanne Harvilliers, brûlée en 1578. Il réclame qu’on accepte les dénonciations anonymes et qu’on ne gracie jamais une sorcière."
+      ],
+      [
+       "Nicolas Remy",
+       "Lorraine, 1595",
+       "Procureur général du duché de Lorraine, il affirme dans sa « Démonolâtrie » avoir mené plus de neuf cents procès en quinze ans, entre 1577 et 1592. Sa méthode aboutissait presque toujours à la condamnation."
+      ],
+      [
+       "Henri Boguet",
+       "Franche-Comté, 1602",
+       "Grand juge de la terre de Saint-Claude, dans le Jura, il publie un « Discours exécrable des sorciers » qui décrit ses propres procès et devient un manuel pratique pour les tribunaux."
+      ],
+      [
+       "Pierre de Lancre",
+       "Pays basque, 1609",
+       "Envoyé par le roi dans le Labourd, il mène une chasse qui terrorise la région, puis décrit en détail l’« akelarre », le sabbat basque, dans un livre de 1612 qui marquera durablement l’imaginaire."
+      ]
+     ]
+    },
+    {
+     p: "Toutes les régions ne se ressemblent pas. Les provinces frontalières, Lorraine, Franche-Comté, Pays basque, sont les plus touchées. Le Parlement de Paris, lui, se montre de plus en plus prudent : à partir de 1624, toute condamnation à mort pour sorcellerie dans son ressort doit lui être soumise en appel, et il en annule une grande partie."
+    }
+   ]
+  },
+  {
+   id: "possedees",
+   h: "Le temps des possédées",
+   body: [
+    {
+     p: "Au XVIIᵉ siècle, la peur change de visage. On ne poursuit plus seulement des paysannes, mais des prêtres accusés d’avoir ensorcelé des religieuses. Les séances d’exorcisme publiques attirent des foules immenses."
+    },
+    {
+     timeline: [
+      [
+       "1611",
+       "Aix-en-Provence",
+       "Une jeune ursuline, Madeleine Demandolx de la Palud, se dit possédée et accuse son confesseur, Louis Gaufridy, d’être le prince des magiciens. Sous la torture, il avoue tout ce qu’on veut. Il est brûlé à Aix en avril 1611."
+      ],
+      [
+       "1634",
+       "Loudun",
+       "Les ursulines de Loudun accusent le curé Urbain Grandier, séducteur et ennemi du cardinal de Richelieu. Il est brûlé vif sans avoir avoué. L’affaire inspirera Aldous Huxley et le film « Les Diables » de Ken Russell."
+      ],
+      [
+       "1647",
+       "Louviers",
+       "En Normandie, les religieuses du couvent de Louviers se disent possédées. Le prêtre Thomas Boullé est brûlé, et le corps d’un aumônier déjà mort, Mathurin Picard, est exhumé pour être brûlé avec lui."
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   id: "grimoires",
+   h: "Les grimoires des colporteurs",
+   body: [
+    {
+     p: "Dès la fin du XVIIᵉ siècle, des petits livres de magie se répandent dans les campagnes françaises. Ils sont vendus par les colporteurs, ces marchands ambulants qui passaient de village en village avec leur hotte, avec les almanachs et les romans de la « Bibliothèque bleue », imprimés à Troyes sur du papier bon marché."
+    },
+    {
+     cards: [
+      [
+       "Le Petit Albert",
+       "« Secrets merveilleux de la magie naturelle et cabalistique »",
+       "Faussement attribué au savant Albert le Grand, sa première édition connue date de 1668, avec une adresse d’imprimeur fantaisiste. On y trouve des recettes de cuisine et de savon, des secrets d’amour, des talismans, la chasse aux trésors et la terrible « main de gloire », une chandelle faite de la main d’un pendu. Il s’en est vendu des centaines de milliers d’exemplaires."
+      ],
+      [
+       "Le Grand Albert",
+       "« Les Admirables Secrets d’Albert le Grand »",
+       "Son grand frère, plus savant : propriétés des pierres, des plantes et des animaux, héritées des traités médiévaux. On le consultait pour soigner les bêtes autant que pour se protéger."
+      ],
+      [
+       "Le Dragon rouge",
+       "ou « Grand Grimoire »",
+       "Le plus sulfureux : il prétend enseigner à évoquer Lucifuge Rofocale, le « premier ministre » de l’enfer, pour obtenir des trésors. Posséder ce livre suffisait à faire passer quelqu’un pour sorcier dans son village."
+      ],
+      [
+       "L’Enchiridion du pape Léon",
+       "Prières et oraisons de protection",
+       "Recueil de prières attribué, bien sûr à tort, au pape Léon III. Il mêle oraisons chrétiennes et formules magiques de protection, très utilisées par les guérisseurs."
+      ]
+     ]
+    },
+    {
+     p: "Le clergé a longtemps combattu ces livres. On raconte que des propriétaires en cachaient un exemplaire sous la nappe de l’autel pour le faire bénir pendant la messe, en espérant ainsi le rendre plus puissant, ou moins dangereux."
+    }
+   ]
+  },
+  {
+   id: "berry",
+   h: "Le Berry, pays des sorciers",
+   body: [
+    {
+     p: "Si une région française a la réputation d’être celle des sorciers, c’est le Berry. George Sand, qui y a passé sa vie à Nohant, a recueilli ses légendes dans « Les Légendes rustiques » (1858) : les meneurs de loups, ces hommes qui se faisaient obéir des bêtes la nuit dans les bois ; les lavandières de nuit, qui battent le linge des morts au bord des mares et noient les passants qui refusent de les aider ; les feux follets et les « fades »."
+    },
+    {
+     p: "Dans les villages, on se méfiait des bergers et des sonneurs de cornemuse, soupçonnés de pactes avec le diable pour mieux mener leurs troupeaux ou faire danser les noces. Un musée de la sorcellerie, installé à Concressault dans le Cher, raconte aujourd’hui ces croyances."
+    }
+   ]
+  },
+  {
+   id: "bretagne",
+   h: "Bretagne : l’Ankou et les lavandières",
+   body: [
+    {
+     p: "La Bretagne a une tradition surnaturelle très riche, surtout liée à la mort. L’Ankou, le serviteur de la Mort, parcourt la nuit les chemins avec sa charrette grinçante et sa faux emmanchée à l’envers. Celui qui entend sa charrette sait qu’un décès approche. Le dernier mort de l’année dans une paroisse devient l’Ankou de l’année suivante."
+    },
+    {
+     p: "Les « kannerezed noz », les lavandières de nuit, lavent les linceuls au bord des lavoirs. Les korrigans, petits êtres des landes et des dolmens, dansent en rond la nuit et font payer cher ceux qui les dérangent. Le folkloriste Anatole Le Braz a recueilli ces récits dans « La Légende de la mort chez les Bretons armoricains » (1893)."
+    },
+    {
+     p: "C’est aussi en Bretagne que la nuit de la Toussaint gardait le plus fortement la marque de Samhain : on laissait des crêpes et du cidre sur la table pour les âmes qui revenaient visiter la maison."
+    }
+   ]
+  },
+  {
+   id: "leveurs",
+   h: "Leveurs de sorts, panseurs et coupeurs de feu",
+   body: [
+    {
+     p: "Dans la France rurale, la sorcellerie ne se résume pas aux sorciers qui jettent des sorts. Elle comprend surtout ceux qui les défont : les leveurs de sorts, désenvoûteurs ou « désorceleurs », qu’on allait consulter quand les vaches ne donnaient plus de lait, que les récoltes pourrissaient ou que les malheurs s’enchaînaient."
+    },
+    {
+     p: "À côté d’eux, les panseurs de secret soignent par des prières transmises oralement, souvent d’une génération à l’autre : on « coupe le feu » des brûlures, on arrête le sang, on soigne le zona ou les verrues. Cette tradition n’a pas disparu. Aujourd’hui encore, dans certains hôpitaux français, des soignants gardent discrètement les coordonnées de coupeurs de feu que les patients brûlés demandent à appeler."
+    },
+    {
+     note: "Consulter un coupeur de feu ou un magnétiseur peut rassurer, mais ne remplace jamais les soins médicaux, en particulier pour une brûlure. Méfie-toi de toute personne qui te demande de grosses sommes pour « lever un sort » : c’est une escroquerie classique, punie par la loi."
+    }
+   ]
+  },
+  {
+   id: "bocage",
+   h: "Le bocage ensorcelé",
+   body: [
+    {
+     p: "En 1969, l’ethnologue Jeanne Favret-Saada s’installe dans le bocage de la Mayenne pour étudier la sorcellerie. Elle découvre qu’on ne peut pas en parler de l’extérieur : pour qu’on lui raconte quoi que ce soit, il faut qu’elle soit elle-même « prise » dans l’histoire, qu’on la croie ensorcelée ou capable de désensorceler."
+    },
+    {
+     p: "Son livre, « Les Mots, la mort, les sorts » (1977), décrit un monde où une série de malheurs, une vache morte, un accident, une maladie, conduit une famille à se croire victime d’un sorcier, souvent un voisin. Le désorceleur ne soigne pas seulement : il permet de nommer le conflit et de le régler sans violence physique."
+    },
+    {
+     quote: "En sorcellerie, la parole, c’est la guerre.",
+     by: "Jeanne Favret-Saada, Les Mots, la mort, les sorts (1977)"
+    },
+    {
+     p: "Ce livre a profondément changé la façon d’étudier les croyances : la sorcellerie n’y apparaît plus comme une superstition du passé, mais comme une manière, bien actuelle, de donner un sens au malheur."
+    }
+   ]
+  }
+ ],
+ sources: [
+  [
+   "Petit Albert (grimoire)",
+   "https://fr.wikipedia.org/wiki/Petit_Albert_(grimoire)",
+   "Wikipédia"
+  ],
+  [
+   "Henry Boguet",
+   "https://fr.wikipedia.org/wiki/Henry_Boguet",
+   "Wikipédia"
+  ],
+  [
+   "Jeanne Favret-Saada",
+   "https://fr.wikipedia.org/wiki/Jeanne_Favret-Saada",
+   "Wikipédia"
+  ],
+  [
+   "Chasse aux sorcières",
+   "https://fr.wikipedia.org/wiki/Chasse_aux_sorci%C3%A8res",
+   "Wikipédia"
+  ],
+  [
+   "Affaire des poisons",
+   "https://fr.wikipedia.org/wiki/Affaire_des_poisons",
+   "Wikipédia"
+  ],
+  [
+   "Nicolas Remy",
+   "https://fr.wikipedia.org/wiki/Nicolas_Remy",
+   "Wikipédia"
+  ],
+  [
+   "Discours exécrable des sorciers, Henry Boguet",
+   "https://gallica.bnf.fr/ark:/12148/bpt6k84887p/f139.image",
+   "Gallica, BnF"
+  ],
+  [
+   "Aix-en-Provence possessions",
+   "https://en.wikipedia.org/wiki/Aix-en-Provence_possessions",
+   "Wikipedia"
+  ],
+  [
+   "Louviers possessions",
+   "https://en.wikipedia.org/wiki/Louviers_possessions",
+   "Wikipedia"
+  ],
+  [
+   "Loudun possessions",
+   "https://en.wikipedia.org/wiki/Loudun_possessions",
+   "Wikipedia"
+  ],
+  [
+   "Légendes rustiques",
+   "https://fr.wikipedia.org/wiki/L%C3%A9gendes_rustiques",
+   "Wikipédia"
+  ],
+  [
+   "La sorcellerie berrichonne, fantasme ou réalité",
+   "https://www.detoursenfrance.fr/patrimoine/destinations/regions/centre-val-de-loire/la-sorcellerie-berrichonne-fantasme-ou-realite-1108096",
+   "Détours en France"
+  ],
+  [
+   "La liste est dans l’armoire : leveurs de mal et hôpitaux",
+   "https://www.jefklak.org/la-liste-est-dans-larmoire/",
+   "Jef Klak"
+  ],
+  [
+   "Les mots, la mort, les sorts",
+   "https://www.gallimard.fr/catalogue/les-mots-la-mort-les-sorts/9782070322817",
+   "Gallimard"
+  ]
+ ]
+},
+
 /* =========================================================== SALEM */
 {slug:"salem",title:"Les sorcières de Salem (1692) : histoire, victimes et procès",n:"Les sorcières de Salem",kicker:"Dossier · Massachusetts, 1692",
  dek:"Comment un village puritain de Nouvelle-Angleterre a pendu dix-neuf innocents en quelques mois, et pourquoi on en parle encore.",
