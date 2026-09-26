@@ -627,3 +627,25 @@ dl.herb dt a:hover{color:var(--gold)}
 .srch-top input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
 #lettre-vide{margin-top:28px}
 .arcana i{text-align:center}
+.lettre .lincant{font-family:var(--fell);font-style:italic;color:var(--bone);border-left:2px solid var(--gold);padding-left:16px}
+
+/* ---------- impression : une page propre pour son Livre des Ombres ---------- */
+@media print{
+  @page{size:A4;margin:14mm 16mm}
+  html,body{background:#fff!important}
+  body *{color:#2b1d12!important;background:transparent!important;box-shadow:none!important;text-shadow:none!important;animation:none!important}
+  .topbar,.srch,.site-foot,.crumbs,.prevnext,.related,.cta-line,.nl,.page-actions,.toast,.ribbon,.bookbar,.dtoc,.plate,figure{display:none!important}
+  .wrap{padding:0!important;max-width:none!important}
+  .chap,.chap.first{padding:0!important;border:0!important}
+  .book-stage,.book{padding:0!important;margin:0!important;border:0!important}
+  .spread{display:block!important;min-height:0!important;border:0!important;overflow:visible!important}
+  .page{padding:0 0 6mm!important;background-image:none!important;border:0!important;font-size:11.5pt}
+  .page .folio{display:none}
+  .page h1,.page h3{font-size:26pt!important}
+  .page .h5,.page h5,.page ol.rite li::before,.page ul.ing li::before,.page .note::first-letter{color:#8c2f2a!important}
+  .page .marg{position:static!important;transform:none!important;font-size:12pt}
+  .meta4{border:1px solid #bba88a!important}
+  ol,ul,li,p{break-inside:avoid}
+  main::after{content:"Le Grimoire de Minuit · grimoire.endam-digital.com";display:block;text-align:center;font-family:var(--fell);font-style:italic;font-size:10pt;color:#6b5540!important;margin-top:8mm;border-top:1px solid #bba88a;padding-top:3mm}
+  a{text-decoration:none!important}
+}

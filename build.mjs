@@ -146,7 +146,7 @@ function footer() {
 <div><a class="brand" href="/">${MOONICON}<span>Le Grimoire de Minuit</span></a><p>Un grimoire en ligne de sorcellerie : histoire, sorts, rituels et traditions, rassemblés et réécrits en français. Contenu à visée culturelle. Un projet <a href="https://endam-digital.com" style="color:var(--gold)">Endam Digital</a>.</p></div>
 ${col("Pratiquer", [["/livre-des-ombres/", "Livre des Ombres"], ["/sorts/", "Tous les sorts"], ["/atelier/", "Atelier du sorcier"], ["/rituels/", "Rituels"], ["/sabbats/", "Roue de l’année"]])}
 ${col("Savoir", [["/outils/", "Outils"], ["/recettes/", "Recettes"], ["/divination/", "Divination & tarot"], ["/correspondances/", "Correspondances"], ["/ingredients/", "Plantes & pierres"]])}
-${col("Culture", [["/dossiers/", "Dossiers : France, Salem, vaudou"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"], ["/lettre/", "La lettre du samedi"], ["/mentions-legales/", "Mentions légales"]])}
+${col("Culture", [["/dossiers/toussaint/", "Toussaint et jour des morts"], ["/dossiers/", "Tous les dossiers"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"], ["/lettre/", "La lettre du samedi"], ["/mentions-legales/", "Mentions légales"]])}
 </footer>`;
 }
 function crumbs(list) {
@@ -158,7 +158,7 @@ function crumbsLD(list) {
 function head(num, title, intro) {
   return `<div class="chap-head"><p class="chap-num">${num}</p><div><h1>${title}</h1>${intro ? `<p>${intro}</p>` : ""}</div></div>`;
 }
-function shell({ url, page, id = "", title, desc, body, ld = [], type = "website" }) {
+function shell({ url, page, id = "", title, desc, body, ld = [], type = "website", ogimg = "/assets/og.png" }) {
   const full = SITE + url;
   return `<!doctype html>
 <html lang="fr">
@@ -175,10 +175,11 @@ function shell({ url, page, id = "", title, desc, body, ld = [], type = "website
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${full}">
-<meta property="og:image" content="${SITE}/assets/og.png">
+<meta property="og:image" content="${SITE}${ogimg}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${SITE}${ogimg}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/fonts.css?v=${VER}">
@@ -245,7 +246,7 @@ ${NL()}
 <a href="/divination/"><b>La divination</b><span>Tarot, flamme, cire et feuilles de thé</span></a>
 <a href="/correspondances/"><b>Les correspondances</b><span>Jours, couleurs, plantes, pierres, lunes</span></a>
 <a href="/recettes/"><b>Les recettes</b><span>Sel noir, eau de lune, encens, huiles</span></a>
-<a href="/dossiers/"><b>Les dossiers</b><span>La France, Salem, le vaudou</span></a>
+<a href="/dossiers/"><b>Les dossiers</b><span>Toussaint, France, Salem, vaudou</span></a>
 <a href="/histoire/"><b>L’histoire</b><span>Quatre mille ans de magie et de procès</span></a>
 <a href="/figures/"><b>Les figures</b><span>De Circé à Doreen Valiente</span></a>
 </div></div></section>` });
@@ -302,7 +303,7 @@ for (const r of RIT) {
   const url = `/rituels/${r.slug}/`, cr = [["/", "Accueil"], ["/rituels/", "Rituels"], [null, r.n]];
   add({ url, page: "rituel", id: r.id, type: "article", title: `${r.n} — rituel de sorcellerie pas à pas | Le Grimoire de Minuit`, desc: clip(r.intro),
     ld: [howto(r.n, r.intro, r.kit, r.steps.map((s) => s[0] + " : " + s[1] + (s[2] ? " « " + s[2] + " »" : "")), url), crumbsLD(Object.assign([["/", "Accueil"], ["/rituels/", "Rituels"], [url, r.n]], { url }))],
-    body: `${crumbs(cr)}<section class="chap first" style="border-bottom:0"><div id="rit-panel"></div><div class="prevnext" id="prevnext" style="margin-top:48px"></div><div class="cta-line"><a class="btn ghost" href="/rituels/">Tous les rituels</a><a class="btn ghost" href="/livre-des-ombres/">Le Livre des Ombres</a></div></section>` });
+    body: `${crumbs(cr)}<section class="chap first" style="border-bottom:0"><div id="rit-panel"></div><div class="prevnext" id="prevnext" style="margin-top:48px"></div><div class="cta-line"><button class="btn" type="button" data-print>Imprimer ce rituel</button><a class="btn ghost" href="/rituels/">Tous les rituels</a><a class="btn ghost" href="/livre-des-ombres/">Le Livre des Ombres</a></div></section>` });
 }
 
 add({ url: "/sabbats/", page: "sabbats", title: "La roue de l’année : les 8 sabbats des sorcières | Le Grimoire de Minuit", desc: "Samhain, Yule, Imbolc, Ostara, Beltane, Litha, Lughnasadh et Mabon : dates, histoire, correspondances, rituels et recettes des huit sabbats de la roue de l’année.",
@@ -313,7 +314,7 @@ for (const sb of SAB) {
   const url = `/sabbats/${sb.slug}/`;
   add({ url, page: "sabbat", id: sb.id, type: "article", title: sb.more ? `${sb.n} 2026 : rituels de la nuit du 31 octobre, sorts et histoire d’Halloween | Le Grimoire de Minuit` : `${sb.n} (${sb.when.replace(/ · .*/, "")}) — histoire, rituels et recette | Le Grimoire de Minuit`, desc: sb.more ? "Comment célébrer Samhain le 31 octobre : la nuit heure par heure, 8 sorts traditionnels (bougie à la fenêtre, repas muet, noix dans le feu, miroir de minuit), l’histoire d’Halloween et les recettes." : clip(`${sb.n}, ${sb.alias.toLowerCase()} : ${sb.t[0]}`),
     ld: [{ "@context": "https://schema.org", "@type": "Article", headline: `${sb.n} : histoire, correspondances et rituels`, inLanguage: "fr", url: SITE + url, image: SITE + "/assets/og.png", author: { "@type": "Organization", name: "Endam Digital" } }, crumbsLD(Object.assign([["/", "Accueil"], ["/sabbats/", "Sabbats"], [url, sb.n]], { url }))],
-    body: `${crumbs([["/", "Accueil"], ["/sabbats/", "Sabbats"], [null, sb.n]])}<section class="chap first" style="border-bottom:0"><div class="body-col" style="margin-left:0;max-width:900px"><div class="sab-detail solo" id="sab-detail"></div><nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav></div>${NL()}</section>` });
+    body: `${crumbs([["/", "Accueil"], ["/sabbats/", "Sabbats"], [null, sb.n]])}<section class="chap first" style="border-bottom:0"><div class="body-col" style="margin-left:0;max-width:900px"><div class="sab-detail solo" id="sab-detail"></div>${sb.more ? `<div class="cta-line"><a class="btn" href="/dossiers/toussaint/">En France : la Toussaint et la nuit des âmes →</a><a class="btn ghost" href="/dossiers/france/">La sorcellerie en France</a></div>` : ""}<nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav></div>${NL()}</section>` });
 }
 
 const simple = (url, page, crumb, title, desc, inner) => add({ url, page, title, desc, body: `${crumbs([["/", "Accueil"], [null, crumb]])}<section class="chap first" style="border-bottom:0">${inner}</section>` });
@@ -324,7 +325,7 @@ simple("/recettes/", "recettes", "Recettes", "Recettes de sorcière : sel noir, 
 simple("/divination/", "divination", "Divination", "Divination : tirage de tarot, flamme, cire et feuilles de thé | Le Grimoire de Minuit", "Tire trois cartes du tarot de Marseille, découvre les 22 arcanes majeurs, le langage de la flamme des bougies et le dictionnaire des formes pour lire le thé et la cire.",
   `${head("La Divination", "Lire les signes", "Le tarot, la flamme, la cire, les feuilles de thé. Pose une question claire, respire, et laisse venir la première impression.")}
 <div class="body-col"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Tirage des trois cartes</h2><p class="subintro">Pense à ta question, puis tire trois arcanes majeurs du tarot de Marseille : le passé, le présent, l’avenir. Une carte renversée nuance ou retourne son sens.</p>
-<div class="actions" style="margin-bottom:22px"><button class="btn" type="button" id="draw">Tirer les cartes</button></div><div class="tarot" id="tarot"></div>${Object.keys(TAROTIMG).length ? `<p class="tcredit">Cartes : ${esc(TAROTCRED.deck || "Tarot de Jean Dodal, Lyon, vers 1701")}. Domaine public, <a href="https://commons.wikimedia.org/wiki/Category:Jean_Dodal_tarot" target="_blank" rel="noopener">Wikimedia Commons</a>.${TAROTIMG[0] ? "" : " Le Mat, dont aucune reproduction libre n’existe, garde son dessin."}</p>` : ""}
+<div class="actions" style="margin-bottom:22px"><button class="btn" type="button" id="draw">Tirer les cartes</button></div><div class="tarot" id="tarot"></div>${Object.keys(TAROTIMG).length ? `<p class="tcredit">Cartes : ${esc(TAROTCRED.deck || "Tarot de Jean Dodal, Lyon, vers 1701")}. Domaine public, <a href="https://commons.wikimedia.org/wiki/Category:Jean_Dodal_tarot" target="_blank" rel="noopener">Wikimedia Commons</a>.${TAROTIMG[0] ? (TAROTCRED["00"] && !/public domain|cc0|^pd/i.test(TAROTCRED["00"].license || "") ? ` Le Mat : <a href="${TAROTCRED["00"].page}" target="_blank" rel="noopener">${esc(TAROTCRED["00"].commons.replace(/^File:/, ""))}</a>${TAROTCRED["00"].artist ? ", " + esc(TAROTCRED["00"].artist) : ""}, licence ${esc(TAROTCRED["00"].license)}.` : "") : " Le Mat garde son dessin, faute de reproduction ancienne libre de droits."}</p>` : ""}
 <div class="block"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Les vingt-deux arcanes majeurs</h2><div class="arcana" id="arcana"></div></div>
 <div class="block"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Le langage de la flamme</h2><p class="subintro">Pendant un sort de bougie, les sorcières observent la flamme, la fumée et la cire. Vérifie d’abord qu’il n’y a ni courant d’air ni mèche trop longue.</p><div class="tbl-wrap"><table><thead><tr><th>Signe</th><th>Ce qu’on y lit</th></tr></thead><tbody id="candle"></tbody></table></div></div>
 <div class="block"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Dictionnaire des formes</h2><p class="subintro">Pour lire les feuilles de thé, le marc de café ou la cire figée dans l’eau froide. Voir aussi <a href="/sorts/tasse-de-the/">la tasse de thé</a> et <a href="/sorts/ceromancie/">la céromancie</a>.</p><div class="symgrid" id="symbols"></div></div></div>`);
@@ -355,10 +356,11 @@ function block(bk) {
   if (bk.quote) return `<blockquote class="dquote"><p>« ${esc(bk.quote)} »</p><cite>${esc(bk.by)}</cite></blockquote>`;
   if (bk.timeline) return `<ol class="timeline dtl">${bk.timeline.map((x) => `<li><span class="yr">${esc(x[0])}</span><div><h3 class="t21">${esc(x[1])}</h3><p>${esc(x[2])}</p></div></li>`).join("")}</ol>`;
   if (bk.people) return `<div class="people">${bk.people.map((x) => `<div class="person"><p class="label">${esc(x[1])} 1692</p><h3>${esc(x[0])}</h3><p>${esc(x[2])}</p></div>`).join("")}</div>`;
+  if (bk.links) return `<div class="linkgrid" style="margin:18px 0">${bk.links.map((x) => `<a class="lcard" href="${x[0]}"><b>${esc(x[1])}</b><span>${esc(x[2])}</span></a>`).join("")}</div>`;
   if (bk.cards) return `<div class="dcards">${bk.cards.map((x) => `<div class="dcard"><h3>${esc(x[0])}</h3><p class="dsub">${esc(x[1])}</p><p>${esc(x[2])}</p></div>`).join("")}</div>`;
   return "";
 }
-add({ url: "/dossiers/", page: "dossiers", title: "Dossiers : la sorcellerie en France, Salem, le vaudou | Le Grimoire de Minuit", desc: "Les grands dossiers du Grimoire de Minuit : la sorcellerie en France, des bûchers de Lorraine aux leveurs de sorts, l’affaire des sorcières de Salem en 1692 et le vaudou, du Bénin à Haïti.",
+add({ url: "/dossiers/", page: "dossiers", title: "Dossiers : Toussaint, sorcellerie en France, Salem, vaudou | Le Grimoire de Minuit", desc: "Les grands dossiers du Grimoire de Minuit : la Toussaint et la nuit des morts, la sorcellerie en France, des bûchers de Lorraine aux leveurs de sorts, l’affaire des sorcières de Salem en 1692 et le vaudou, du Bénin à Haïti.",
   body: `${crumbs([["/", "Accueil"], [null, "Dossiers"]])}<section class="chap first" style="border-bottom:0">${head("Les Dossiers", "Les grands dossiers", "Des enquêtes longues pour comprendre les affaires et les traditions qui ont façonné l’image de la sorcière.")}
 <div class="body-col dlist">${DOSSIERS.map((d) => `<a class="dteaser" href="/dossiers/${d.slug}/"><p class="label">${esc(d.kicker)}</p><h2>${esc(d.n)}</h2><p>${esc(d.dek)}</p><span class="btn small">Lire le dossier →</span></a>`).join("")}</div></section>` });
 for (const d of DOSSIERS) {
@@ -427,11 +429,43 @@ add({ url: "/lettre/", page: "lettre", title: "La lettre du samedi : archives | 
   body: `${crumbs([["/", "Accueil"], [null, "La lettre du samedi"]])}<section class="chap first" style="border-bottom:0">${head("La Lettre", "La lettre du samedi", "Chaque samedi, un sort, une légende et la lune de la semaine. Voici les lettres déjà envoyées.")}
 <div class="body-col">${NL()}
 <p class="subintro" id="lettre-vide"${LSORTED.some((l) => l.date <= TODAY) ? " hidden" : ""}>La première lettre part bientôt. Abonne-toi pour la recevoir.</p>
-${LSORTED.map((l) => { const sp = SPELLS.find((x) => x.id === l.sort); return `<article class="lettre" id="${l.slug}" data-date="${l.date}"${l.date > TODAY ? " hidden" : ""}><p class="label">Lettre du ${frDate(l.date)}</p><h2>${esc(l.sujet)}</h2>${l.corps.map((c) => `<p>${esc(c)}</p>`).join("")}${sp ? `<p><a class="btn small" href="/sorts/${sp.slug}/">Le sort complet : ${esc(sp.n)} →</a></p>` : ""}</article>`; }).join("\n")}
+${LSORTED.map((l) => { const sp = SPELLS.find((x) => x.id === l.sort); return `<article class="lettre" id="${l.slug}" data-date="${l.date}"${l.date > TODAY ? " hidden" : ""}><p class="label">Lettre du ${frDate(l.date)}</p><h2>${esc(l.sujet)}</h2>${l.corps.map((c) => `<p${c.startsWith("« ") ? ' class="lincant"' : ""}>${esc(c).replace(/https:\/\/grimoire\.endam-digital\.com(\/[^\s<]*[^\s<.,])/g, '<a href="$1">grimoire.endam-digital.com$1</a>')}</p>`).join("")}${sp ? `<p><a class="btn small" href="/sorts/${sp.slug}/">Le sort complet : ${esc(sp.n)} →</a></p>` : ""}</article>`; }).join("\n")}
 </div></section>` });
 
 add({ url: "/404.html", page: "404", title: "Page introuvable | Le Grimoire de Minuit", desc: "Cette page s’est évaporée comme une fumée d’encens.", noindex: true,
   body: `<section class="lost"><p class="label">Erreur 404</p><h1>Cette page s’est évaporée</h1><p>Comme une fumée d’encens, la page que tu cherches a disparu. Le sort a peut-être été déplacé dans un autre chapitre.</p><div class="hero-links" style="justify-content:center"><a class="btn" href="/">Retour à l’accueil</a><a class="btn ghost" href="/sorts/">Tous les sorts</a></div></section>` });
+
+/* ---------- images de partage par page ---------- */
+const STARS = (n) => "★".repeat(n) + "☆".repeat(Math.max(0, 3 - n));
+function ogOf(p) {
+  if (p.page === "sort") { const s = SPELLS.find((x) => x.id === p.id); return { k: "Sort · " + CH[s.ch].n, t: s.n, sub: s.sub, meta: ["Lune : " + s.moon.toLowerCase(), s.dur, "Niveau " + s.lvl + "/3"] }; }
+  if (p.page === "rituel") { const r = RIT.find((x) => x.id === p.id); return { k: "Rituel pas à pas", t: r.n, sub: clip(r.intro, 95), meta: [r.dur, r.moon, r.lvl] }; }
+  if (p.page === "sabbat") { const b = SAB.find((x) => x.id === p.id); return { k: "Sabbat · la roue de l’année", t: b.n, sub: b.when, meta: [], img: IMGPLACE[b.id] }; }
+  if (p.page === "dossier") { const d = DOSSIERS.find((x) => x.slug === p.id); return { k: d.kicker, t: d.n, sub: clip(d.dek, 110), meta: [], img: ((IMGPLACE.dossier || {})[d.slug] || [])[0] }; }
+  if (p.page === "ingredient") { const i = INGREDIENTS.find((x) => x.slug === p.id); return { k: (i.t === "Pierre" ? "Pierre" : "Ingrédient · " + i.t.toLowerCase()) + " · usages magiques", t: i.n, sub: i.use, meta: [i.el, i.pl].filter(Boolean) }; }
+  return null;
+}
+for (const p of pages) {
+  p.og = ogOf(p);
+  if (p.og) { p.ogimg = `/assets/og/${p.page}-${p.id}.jpg`; for (const j of p.ld || []) if (j.image === SITE + "/assets/og.png") j.image = SITE + p.ogimg; }
+}
+function ogHTML(o, fontsCss) {
+  const im = o.img && IMG[o.img];
+  const tl = o.t.length > 34 ? 60 : o.t.length > 22 ? 72 : 84;
+  return `<html><head><base href="http://localhost:4173/"><meta charset="utf-8"><style>${fontsCss}
+body{margin:0;width:1200px;height:630px;box-sizing:border-box;background:#15121d;background-image:radial-gradient(ellipse 70% 60% at 85% 15%,rgba(217,169,91,.16),transparent 60%);color:#e9e0cc;font-family:Spectral,Georgia,serif;display:grid;grid-template-columns:1fr ${im ? "400px" : "300px"};gap:56px;align-items:center;padding:0 72px}
+.k{font-family:'IBM Plex Mono',monospace;font-size:19px;letter-spacing:.16em;text-transform:uppercase;color:#d9a95b}
+h1{font-family:'IM Fell English SC',Georgia,serif;font-weight:400;font-size:${tl}px;line-height:1.02;margin:20px 0 0}
+.s{font-family:'IM Fell English',Georgia,serif;font-style:italic;font-size:31px;line-height:1.25;color:#cbbfa6;margin:18px 0 0}
+.m{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.m span{font-family:'IBM Plex Mono',monospace;font-size:17px;color:#b6ab97;border:1px solid #3a3249;padding:6px 12px;border-radius:3px}
+.u{position:absolute;left:72px;bottom:40px;display:flex;align-items:center;gap:12px;font-family:'IM Fell English SC',Georgia,serif;font-size:24px;color:#e9e0cc}.u i{font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:17px;color:#8a8095;margin-left:8px}
+.pic{width:400px;height:520px;object-fit:cover;border-radius:4px;border:8px solid #efe4c8;box-shadow:0 30px 60px rgba(0,0,0,.6);filter:sepia(.15)}
+.moon{width:300px;height:300px;filter:drop-shadow(0 0 50px rgba(233,224,204,.22))}
+.frame{position:absolute;inset:22px;border:1px solid rgba(217,169,91,.28);pointer-events:none}
+</style></head><body><div class="frame"></div><div><div class="k">${esc(o.k)}</div><h1>${esc(o.t)}</h1><p class="s">${esc(o.sub)}</p>${o.meta.length ? `<div class="m">${o.meta.map((x) => `<span>${esc(x)}</span>`).join("")}</div>` : ""}</div>
+${im ? `<img class="pic" src="${im.src2}">` : `<svg class="moon" viewBox="-4 -4 108 108"><defs><radialGradient id="g" cx="40%" cy="38%" r="70%"><stop offset="0" stop-color="#f4ecd8"/><stop offset="1" stop-color="#cdbf9f"/></radialGradient></defs><circle cx="50" cy="50" r="50" fill="#221d2e" stroke="#3a3249"/><path d="M50,0 A50,50 0 0 1 50,100 A30,50 0 0 1 50,0Z" fill="url(#g)"/></svg>`}
+<div class="u"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M15.5 3.2A9 9 0 1 0 20.8 15 7.2 7.2 0 0 1 15.5 3.2Z" fill="none" stroke="#d9a95b" stroke-width="1.4"/></svg>Le Grimoire de Minuit<i>grimoire.endam-digital.com</i></div></body></html>`;
+}
 
 /* ---------- écriture ---------- */
 rm(RAW); rm(OUT); mk(RAW);
@@ -517,6 +551,12 @@ svg{width:320px;height:320px;filter:drop-shadow(0 0 60px rgba(233,224,204,.25))}
 <svg viewBox="-4 -4 108 108"><defs><radialGradient id="g" cx="40%" cy="38%" r="70%"><stop offset="0" stop-color="#f4ecd8"/><stop offset="1" stop-color="#cdbf9f"/></radialGradient></defs><circle cx="50" cy="50" r="50" fill="#221d2e" stroke="#3a3249"/><path d="M50,0 A50,50 0 0 1 50,100 A30,50 0 0 1 50,0Z" fill="url(#g)"/></svg></body></html>`);
 await og.waitForTimeout(400);
 await og.screenshot({ path: path.join(OUT, "assets/og.png") });
+mk(path.join(OUT, "assets/og"));
+for (const p of pages.filter((x) => x.og)) {
+  await og.setContent(ogHTML(p.og, fontsCss), { waitUntil: "load" });
+  await og.evaluate(() => document.fonts.ready);
+  await og.screenshot({ path: path.join(OUT, p.ogimg), type: "jpeg", quality: 84 });
+}
 const FAV = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#15121d"/><path d="M40 12A22 22 0 1 0 52 42 17 17 0 0 1 40 12Z" fill="#d9a95b"/><circle cx="46" cy="18" r="2.5" fill="#e9e0cc"/></svg>`;
 write(path.join(OUT, "favicon.svg"), FAV);
 await og.setViewportSize({ width: 180, height: 180 });

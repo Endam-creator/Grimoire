@@ -18,6 +18,8 @@ var sb=$("#srch-btn");if(sb)sb.addEventListener("click",open);
 var sc=$("#srch-close");if(sc)sc.addEventListener("click",close);
 if(ov){ov.addEventListener("click",function(e){if(e.target===ov)close()});inp.addEventListener("input",run)}
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&ov&&!ov.hidden)close();if((e.key==="/"||(e.key==="k"&&(e.ctrlKey||e.metaKey)))&&ov&&ov.hidden&&!/INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||"")){e.preventDefault();open()}});
+/* impression */
+document.addEventListener("click",function(e){if(e.target.closest("[data-print]")){e.preventDefault();window.print()}});
 /* lettres : n'afficher qu'à partir de la date d'envoi */
 var today=new Date(),td=today.getFullYear()+"-"+("0"+(today.getMonth()+1)).slice(-2)+"-"+("0"+today.getDate()).slice(-2),shown=0;
 document.querySelectorAll(".lettre[data-date]").forEach(function(el){var on=el.getAttribute("data-date")<=td;el.hidden=!on;if(on)shown++});

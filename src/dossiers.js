@@ -1,4 +1,42 @@
 window.DOSSIERS=[
+/* =========================================================== TOUSSAINT */
+{slug:"toussaint",title:"Toussaint et jour des morts : origines, traditions françaises et lien avec Samhain",n:"Toussaint et jour des morts",kicker:"Dossier · 1ᵉʳ et 2 novembre",
+ dek:"Chrysanthèmes, veillées bretonnes, betteraves sculptées et crêpes laissées aux âmes : les vraies traditions françaises de la nuit des morts, bien avant Halloween.",
+ desc:"Toussaint et jour des morts : origines de la fête du 1ᵉʳ novembre, pourquoi on fleurit les tombes de chrysanthèmes, les traditions de Bretagne et de Lorraine, le lien avec Samhain et Halloween, et comment célébrer la nuit des âmes.",
+ facts:[["1ᵉʳ nov.","la Toussaint, fête de tous les saints, jour férié en France"],["2 nov.","le jour des morts, né à Cluny vers 998"],["835","la fête gagne tout l’Empire carolingien"],["60 %","des Français fêtent aussi Halloween (sondage 2022)"]],
+ lede:"En France, la nuit des morts ne s’appelle ni Samhain ni Halloween : c’est la Toussaint. Pendant des siècles, les deux premiers jours de novembre ont été consacrés aux défunts, avec leurs cloches, leurs veillées et leurs offrandes. Bien avant l’arrivée des citrouilles américaines, les campagnes françaises sculptaient déjà des betteraves et laissaient des crêpes sur la table pour les âmes qui revenaient à la maison.",
+ sections:[
+  {id:"origines",h:"Tous les saints, puis tous les morts",body:[
+   {p:"La Toussaint est d’abord une fête chrétienne : celle de tous les saints, connus ou inconnus. Le jour des morts, le lendemain, est une fête différente, consacrée à tous les défunts. Les deux se sont fondues dans l’usage populaire."},
+   {timeline:[
+    ["VIIIᵉ siècle","Une chapelle pour tous les saints","À Rome, le pape Grégoire III consacre une chapelle de la basilique Saint-Pierre à tous les saints. Le 1ᵉʳ novembre commence à s’imposer comme leur fête."],
+    ["vers 835","La fête gagne l’Empire","Sur le conseil du pape Grégoire IV, l’empereur Louis le Pieux, fils de Charlemagne, étend la fête de tous les saints au 1ᵉʳ novembre dans tout l’Empire carolingien."],
+    ["vers 998","Cluny invente le jour des morts","Odilon, abbé de Cluny, demande à ses monastères de prier pour tous les défunts le 2 novembre. L’usage se répand dans toute l’Église latine."]]}]},
+  {id:"samhain",h:"Et Samhain dans tout ça ?",body:[
+   {p:"On lit souvent que l’Église aurait placé la Toussaint le 1ᵉʳ novembre pour christianiser Samhain, la fête celtique de la fin de l’été. Les historiens sont plus prudents : la date a été choisie à Rome, loin des pays celtes, et rien dans les textes ne dit qu’elle visait les Irlandais ou les Bretons."},
+   {p:"La coïncidence a pourtant eu des effets bien réels. Dans les pays de tradition celtique, Irlande, Écosse, Bretagne, les croyances anciennes sur la nuit où les morts reviennent se sont coulées dans les fêtes chrétiennes des 1ᵉʳ et 2 novembre. C’est de ce mélange qu’est née Halloween, la veille de la Toussaint : « All Hallows’ Eve »."}]},
+  {id:"cimetiere",h:"Pourquoi on va au cimetière le 1ᵉʳ novembre",body:[
+   {p:"En toute logique, c’est le 2 novembre qu’on devrait fleurir les tombes. Mais en France, seule la Toussaint est un jour férié : c’est donc le 1ᵉʳ que les familles se retrouvent au cimetière, et la fête des saints est devenue, dans les faits, celle des morts."},
+   {p:"Le chrysanthème s’impose au cours du XIXᵉ et du début du XXᵉ siècle. Il fleurit en novembre et résiste au froid, ce qui en fait la fleur idéale des cimetières. On raconte souvent que l’usage s’est généralisé en 1919, pour le premier anniversaire de l’armistice, quand il a fallu fleurir les tombes des soldats morts à la guerre. Depuis, en France, on n’offre jamais de chrysanthèmes à un vivant."}]},
+  {id:"bretagne",h:"La nuit des âmes en Bretagne",body:[
+   {p:"C’est en Bretagne que la nuit des morts est restée la plus vivante. Dans « La Légende de la mort » (1893), Anatole Le Braz raconte que les âmes des défunts, l’Anaon, revenaient cette nuit-là dans les maisons où elles avaient vécu."},
+   {p:"Après les vêpres des morts, on ne desservait pas la table. On y laissait des crêpes, du lait ou de la bouillie, et l’on gardait un feu dans l’âtre pour que les âmes puissent se réchauffer. Des chanteurs passaient de ferme en ferme dans la nuit pour chanter la complainte des trépassés et rappeler aux vivants de prier pour eux."},
+   {note:"L’Ankou et les lavandières de nuit, autres figures de la mort bretonne, sont racontés dans notre dossier sur la sorcellerie en France."}]},
+  {id:"betteraves",h:"Des lanternes avant Halloween",body:[
+   {p:"La lanterne à visage n’est pas une invention américaine. En Bretagne, les enfants creusaient des betteraves et des navets en forme de tête de mort et y glissaient une bougie pour effrayer les passants. En Moselle germanophone, ces farces ont donné son nom à la veille de la Toussaint : « Rommelbootzennaat », la nuit des betteraves grimaçantes."},
+   {p:"Halloween, elle, arrive en France en 1997, portée par une grande opération commerciale : des milliers de citrouilles installées au Trocadéro pour lancer un téléphone portable. Les marques suivent, la fête connaît un pic au début des années 2000, puis s’essouffle. Elle revient en force après 2020 : en 2022, 60 % des Français disaient la fêter, et 76 % des 18-24 ans."}]},
+  {id:"celebrer",h:"Célébrer la nuit des âmes",body:[
+   {p:"Pour les sorcières d’aujourd’hui, la Toussaint et Samhain se rejoignent : c’est le moment d’honorer ses morts. Voici les gestes du grimoire qui s’accordent le mieux avec les traditions françaises."},
+   {links:[
+    ["/rituels/autel-des-ancetres/","L’autel des ancêtres","Photos, bougies et offrandes pour accueillir ceux qui sont partis."],
+    ["/sorts/bougie-a-la-fenetre/","La bougie à la fenêtre","La lumière qui guide les âmes jusqu’à la maison."],
+    ["/sorts/pain-des-ames/","Le pain des âmes","Les gâteaux offerts aux morts, cousins des crêpes bretonnes."],
+    ["/sorts/repas-muet/","Le repas muet","Un dîner en silence avec une place de plus à table."],
+    ["/sabbats/samhain/","Samhain","La nuit du 31 octobre heure par heure."],
+    ["/dossiers/france/","La sorcellerie en France","Procès, grimoires, Berry et Bretagne."]]}]}],
+ sources:[["Toussaint","https://fr.wikipedia.org/wiki/Toussaint","Wikipédia"],["Commémoration des fidèles défunts","https://fr.wikipedia.org/wiki/Comm%C3%A9moration_des_fid%C3%A8les_d%C3%A9funts","Wikipédia"],["La Légende de la mort en Basse-Bretagne, Anatole Le Braz","https://fr.wikisource.org/wiki/La_L%C3%A9gende_de_la_mort_en_Basse-Bretagne","Wikisource"],["Comment Halloween a conquis la France en une trentaine d’années","https://www.slate.fr/societe/halloween-octobre-france-fete-folklore-traditions-celtes-samain-bonbons-origines","Slate"],["La Toussaint en France, du Moyen Âge au XXᵉ siècle","https://geneaplus.com/la-vie-de-nos-ancetres/fetes-rites-et-traditions/la-toussaint-en-france-du-moyen-age-au-xxe-siecle/","Généaplus"],["Ronald Hutton, The Stations of the Sun","https://en.wikipedia.org/wiki/The_Stations_of_the_Sun","Oxford University Press, 1996"]]},
+
+
 /* =========================================================== FRANCE */
 {
  slug: "france",

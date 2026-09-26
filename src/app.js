@@ -76,7 +76,7 @@ function spreadSpell(s,o){
    +'<h2 class="h5">Après le sort</h2><p class="after">'+esc(s.after)+'</p>'
    +(s.warn?'<p class="warnink"><b>Attention.</b> '+esc(s.warn)+'</p>':'')
    +'<div class="page-actions"><button class="inkbtn" type="button" data-copy="'+s.id+'">Copier ce sort</button>'
-   +(o.solo?'<a class="inkbtn" href="/livre-des-ombres/#sort-'+s.id+'">Ouvrir dans le livre</a>':'<a class="inkbtn" href="'+spellUrl(s)+'">Page du sort</a><button class="inkbtn" type="button" data-p="0">Table des sortilèges</button>')
+   +(o.solo?'<button class="inkbtn" type="button" data-print>Imprimer pour mon Livre des Ombres</button><a class="inkbtn" href="/livre-des-ombres/#sort-'+s.id+'">Ouvrir dans le livre</a>':'<a class="inkbtn" href="'+spellUrl(s)+'">Page du sort</a><button class="inkbtn" type="button" data-p="0">Table des sortilèges</button>')
    +'</div><span class="folio">'+(pl+1)+'</span></div>';
   return L+R;
 }
@@ -191,7 +191,7 @@ function cardArt(num){var n=(num%5)+5,pts=[];for(var i=0;i<n*2;i++){var a=i/(n*2
   return'<svg class="art" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="#8c2f2a" stroke-width="1.2" stroke-dasharray="1 3"/><polygon points="'+pts.join(" ")+'" fill="rgba(140,47,42,.12)" stroke="#2e2116" stroke-width="1.4"/><circle cx="50" cy="50" r="7" fill="#8c2f2a"/></svg>'}
 var TIMG=window.TAROTIMG||{};
 function draw(){var idx=[],pos=["Le passé","Le présent","L’avenir"];while(idx.length<3){var k=Math.floor(Math.random()*22);if(idx.indexOf(k)<0)idx.push(k)}
-  $("#tarot").innerHTML=idx.map(function(k,j){var c=TAROT[k],rev=Math.random()<0.3;return'<div class="tcard"><p class="pos">'+pos[j]+'</p>'+(TIMG[k]?'<div class="tface hasimg'+(rev?" rev":"")+'"><img src="'+TIMG[k]+'" width="240" height="440" alt="'+esc(c[1])+', tarot de Jean Dodal"></div>':'<div class="tface'+(rev?" rev":"")+'"><span class="num">'+c[0]+'</span>'+cardArt(k)+'<span class="nm">'+esc(c[1])+'</span></div>')+'<p class="tread"><b>'+esc(c[1])+(rev?" (renversée)":"")+'</b><br>'+esc(rev?c[3]:c[2])+'</p></div>'}).join("")}
+  $("#tarot").innerHTML=idx.map(function(k,j){var c=TAROT[k],rev=Math.random()<0.3;return'<div class="tcard"><p class="pos">'+pos[j]+'</p>'+(TIMG[k]?'<div class="tface hasimg'+(rev?" rev":"")+'"><img src="'+TIMG[k]+'" width="240" height="440" alt="'+esc(c[1])+', tarot de Marseille"></div>':'<div class="tface'+(rev?" rev":"")+'"><span class="num">'+c[0]+'</span>'+cardArt(k)+'<span class="nm">'+esc(c[1])+'</span></div>')+'<p class="tread"><b>'+esc(c[1])+(rev?" (renversée)":"")+'</b><br>'+esc(rev?c[3]:c[2])+'</p></div>'}).join("")}
 
 /* ================= RENDUS PAR PAGE ================= */
 var R={
