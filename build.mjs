@@ -467,6 +467,66 @@ ${im ? `<img class="pic" src="${im.src2}">` : `<svg class="moon" viewBox="-4 -4 
 <div class="u"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M15.5 3.2A9 9 0 1 0 20.8 15 7.2 7.2 0 0 1 15.5 3.2Z" fill="none" stroke="#d9a95b" stroke-width="1.4"/></svg>Le Grimoire de Minuit<i>grimoire.endam-digital.com</i></div></body></html>`;
 }
 
+/* ---------- épingles Pinterest (1000 × 1500) ---------- */
+const PIN_START = "2026-09-28"; // premier jour de publication du lot 1
+const PIN_SLOTS = ["05:00:00", "10:00:00", "17:00:00"]; // heures UTC : 7 h, 12 h et 19 h à Paris
+const PINS = [];
+const join = (x) => (Array.isArray(x) ? x.join(", ") : String(x || ""));
+for (const s of SPELLS) {
+  const url = `/sorts/${s.slug}/`, sam = s.ch === "samhain" || s.id === "pelure";
+  PINS.push({ key: "sort-" + s.slug, url, prio: sam ? 0 : 2, board: sam ? "Samhain et Halloween" : "Sorts et sortilèges",
+    k: "Sort · " + CH[s.ch].n, t: s.n, sub: s.sub, lt: "Il te faut", list: s.ing.slice(0, 6), quote: s.inc.split("\n").slice(0, 4).join("\n"), cta: "Le sort pas à pas",
+    title: `${s.n} : ${CHAPWORD[s.ch]} pas à pas`, desc: `${s.sub}. ${clip(s.note, 230)} Ingrédients, rituel, incantation et variantes sur Le Grimoire de Minuit.`,
+    kw: ["sorcellerie", CHAPWORD[s.ch], "sort", "livre des ombres", "witchcraft", sam ? "samhain" : "wicca"] });
+}
+for (const r of RIT) {
+  const q = (r.steps.find((x) => x[2]) || [])[2];
+  PINS.push({ key: "rituel-" + r.slug, url: `/rituels/${r.slug}/`, prio: r.id === "ancetres" ? 0 : 3, board: r.id === "ancetres" ? "Samhain et Halloween" : "Rituels de sorcière",
+    k: "Rituel pas à pas", t: r.n, sub: clip(r.intro, 120), lt: "Les étapes", list: r.steps.map((x) => x[0]).slice(0, 7), ol: true, quote: q ? "« " + q + " »" : "", cta: "Le rituel complet",
+    title: `${r.n} : rituel de sorcellerie pas à pas`, desc: `${clip(r.intro, 300)} Le matériel, chaque étape et les paroles à dire sur Le Grimoire de Minuit.`,
+    kw: ["rituel sorcellerie", "wicca", "autel", "sorcière", "witchcraft"] });
+}
+for (const b of SAB) {
+  PINS.push({ key: "sabbat-" + b.slug, url: `/sabbats/${b.slug}/`, prio: b.id === "samhain" ? 0 : b.id === "yule" ? 1 : 4, board: b.id === "samhain" ? "Samhain et Halloween" : "La roue de l'année",
+    k: "Sabbat · " + b.when, t: b.n, sub: b.alias || "", img: IMGPLACE[b.id], lt: "Correspondances", defs: [["Couleurs", join(b.cols)], ["Plantes", join(b.herbs)], ["Pierres", join(b.stones)], ["À table", join(b.food)]], cta: "Rituels et recettes",
+    title: b.id === "samhain" ? "Samhain : que faire la nuit du 31 octobre ? Rituels, sorts et histoire" : `${b.n} : histoire, rituels et correspondances du sabbat`, desc: `${b.when}. ${clip(b.t[0], 320)} Rituel, recette et correspondances sur Le Grimoire de Minuit.`,
+    kw: ["sabbat", "roue de l’année", b.n.toLowerCase(), "wicca", "paganisme"] });
+}
+for (const d of DOSSIERS) {
+  const im = ((IMGPLACE.dossier || {})[d.slug] || [])[0];
+  PINS.push({ key: "dossier-" + d.slug, url: `/dossiers/${d.slug}/`, prio: d.slug === "toussaint" || d.slug === "salem" ? 0 : 1, board: d.slug === "toussaint" ? "Samhain et Halloween" : "Histoire de la sorcellerie",
+    k: d.kicker, t: d.n, sub: clip(d.dek, 150), img: im, lt: "En bref", defs: d.facts.slice(0, 4), cta: "Lire le dossier",
+    title: clip(d.title, 100), desc: clip(`${d.dek} ${d.lede}`, 480), kw: ["histoire de la sorcellerie", "sorcières", d.n.toLowerCase(), "procès en sorcellerie"] });
+}
+function pinHTML(o, fontsCss) {
+  const im = o.img && IMG[o.img];
+  const tl = o.t.length > 30 ? 66 : o.t.length > 18 ? 80 : 96;
+  const body = o.defs ? `<dl>${o.defs.map((x) => `<div><dt>${esc(x[0])}</dt><dd>${esc(clip(x[1], 90))}</dd></div>`).join("")}</dl>`
+    : `<${o.ol ? "ol" : "ul"}>${o.list.map((x) => `<li>${esc(clip(x, 70))}</li>`).join("")}</${o.ol ? "ol" : "ul"}>`;
+  return `<html><head><base href="http://localhost:4173/"><meta charset="utf-8"><style>${fontsCss}
+*{box-sizing:border-box}body{margin:0;width:1000px;height:1500px;background:#15121d;background-image:radial-gradient(ellipse 80% 40% at 80% 5%,rgba(217,169,91,.18),transparent 60%);color:#e9e0cc;font-family:Spectral,Georgia,serif;display:flex;flex-direction:column;padding:56px 64px 0}
+.top{display:flex;align-items:center;gap:12px;font-family:'IM Fell English SC',Georgia,serif;font-size:28px;color:#d9a95b}
+.pic{width:100%;height:440px;flex:none;object-fit:cover;border:8px solid #efe4c8;border-radius:4px}
+.k{font-family:'IBM Plex Mono',monospace;font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:#d9a95b;margin-top:30px}
+h1{font-family:'IM Fell English SC',Georgia,serif;font-weight:400;font-size:${tl}px;line-height:1.02;margin:14px 0 0}
+.s{font-family:'IM Fell English',Georgia,serif;font-style:italic;font-size:32px;line-height:1.25;color:#cbbfa6;margin:14px 0 0}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;overflow:hidden}.orn{display:block;margin:0 auto 10px;width:190px;height:190px;filter:drop-shadow(0 0 40px rgba(233,224,204,.2))}
+.card{margin-top:34px;background:#efe4c8;background-image:radial-gradient(ellipse at 10% 10%,rgba(255,255,255,.5),transparent 55%),radial-gradient(ellipse at 100% 100%,rgba(140,95,40,.22),transparent 55%);color:#2e2116;border-radius:4px;padding:34px 40px}
+h2{font-family:'IM Fell English SC',Georgia,serif;font-weight:400;font-size:36px;color:#8c2f2a;margin:0 0 18px}
+ul,ol{margin:0;padding:0;list-style:none;display:grid;gap:10px;font-size:32px;line-height:1.3}ul li{padding-left:30px;position:relative}ul li::before{content:"❧";position:absolute;left:0;color:#8c2f2a}
+ol{counter-reset:r}ol li{counter-increment:r;padding-left:60px;position:relative}ol li::before{content:counter(r,upper-roman)".";position:absolute;left:0;width:42px;text-align:right;font-family:'IM Fell English SC',serif;color:#8c2f2a}
+dl{margin:0;display:grid;gap:14px}dl div{display:grid;grid-template-columns:200px 1fr;gap:18px;font-size:30px;line-height:1.3}dt{font-family:'IM Fell English SC',serif;color:#8c2f2a}dd{margin:0}
+.q{font-family:'IM Fell English',Georgia,serif;font-style:italic;font-size:33px;line-height:1.35;white-space:pre-line;border-top:1px solid rgba(90,66,48,.3);margin-top:24px;padding-top:20px;text-align:center}
+.cta{margin:0 -64px;padding:30px 64px;background:#8c2f2a;display:flex;justify-content:space-between;align-items:center;margin-top:34px}
+.cta b{font-family:'IM Fell English SC',serif;font-weight:400;font-size:38px;color:#f4ecd8}.cta span{font-family:'IBM Plex Mono',monospace;font-size:21px;color:#f4ecd8;opacity:.9}
+</style></head><body>
+<div class="top"><svg width="34" height="34" viewBox="0 0 24 24"><path d="M15.5 3.2A9 9 0 1 0 20.8 15 7.2 7.2 0 0 1 15.5 3.2Z" fill="none" stroke="#d9a95b" stroke-width="1.4"/></svg>Le Grimoire de Minuit</div>
+<div class="main">${im ? `<img class="pic" src="${im.src2}">` : `<svg class="orn" viewBox="-4 -4 108 108"><defs><radialGradient id="g" cx="40%" cy="38%" r="70%"><stop offset="0" stop-color="#f4ecd8"/><stop offset="1" stop-color="#cdbf9f"/></radialGradient></defs><circle cx="50" cy="50" r="50" fill="#221d2e" stroke="#3a3249"/><path d="M50,0 A50,50 0 0 1 50,100 A30,50 0 0 1 50,0Z" fill="url(#g)"/></svg>`}
+<div class="k">${esc(o.k)}</div><h1>${esc(o.t)}</h1>${o.sub ? `<p class="s">${esc(o.sub)}</p>` : ""}
+<div class="card"><h2>${esc(o.lt)}</h2>${body}${o.quote ? `<p class="q">${esc(o.quote)}</p>` : ""}</div></div>
+<div class="cta"><b>${esc(o.cta)} →</b><span>grimoire.endam-digital.com</span></div></body></html>`;
+}
+
 /* ---------- écriture ---------- */
 rm(RAW); rm(OUT); mk(RAW);
 const appSrc = fs.readFileSync(path.join(ROOT, "src/app.js"), "utf8");
@@ -552,6 +612,15 @@ svg{width:320px;height:320px;filter:drop-shadow(0 0 60px rgba(233,224,204,.25))}
 await og.waitForTimeout(400);
 await og.screenshot({ path: path.join(OUT, "assets/og.png") });
 mk(path.join(OUT, "assets/og"));
+mk(path.join(OUT, "assets/pins"));
+await og.setViewportSize({ width: 1000, height: 1500 });
+for (const o of PINS) {
+  await og.setContent(pinHTML(o, fontsCss), { waitUntil: "load" });
+  await og.evaluate(() => document.fonts.ready);
+  if (await og.evaluate(() => { const m = document.querySelector(".main"); return m.scrollHeight > m.clientHeight + 2; })) console.log("épingle trop longue : " + o.key);
+  await og.screenshot({ path: path.join(OUT, `assets/pins/${o.key}.jpg`), type: "jpeg", quality: 82 });
+}
+await og.setViewportSize({ width: 1200, height: 630 });
 for (const p of pages.filter((x) => x.og)) {
   await og.setContent(ogHTML(p.og, fontsCss), { waitUntil: "load" });
   await og.evaluate(() => document.fonts.ready);
@@ -571,6 +640,21 @@ write(path.join(OUT, ".nojekyll"), "");
 write(path.join(OUT, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
 const prio = (u) => (u === "/" ? "1.0" : /^\/(livre-des-ombres|sorts|rituels|sabbats|dossiers)\/$/.test(u) || u.startsWith("/dossiers/") ? "0.9" : u.startsWith("/sorts/") ? "0.8" : "0.7");
 write(path.join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.filter((p) => !p.noindex).map((p) => `  <url><loc>${SITE}${p.url}</loc><lastmod>${TODAY}</lastmod><priority>${prio(p.url)}</priority></url>`).join("\n")}\n</urlset>\n`);
+/* fichiers d'import Pinterest : 3 épingles par jour, par lots de 14 jours maximum */
+{
+  const order = PINS.slice().sort((a, b) => a.prio - b.prio);
+  const csvq = (v) => '"' + String(v).replace(/"/g, '""') + '"';
+  const head = "Title,Media URL,Pinterest board,Thumbnail,Description,Link,Publish date,Keywords";
+  const lots = []; const d0 = new Date(PIN_START + "T00:00:00Z");
+  order.forEach((o, i) => {
+    const day = Math.floor(i / PIN_SLOTS.length), lot = Math.floor(day / 14);
+    const dt = new Date(d0.getTime() + day * 864e5).toISOString().slice(0, 10) + "T" + PIN_SLOTS[i % PIN_SLOTS.length];
+    (lots[lot] = lots[lot] || []).push([o.title.slice(0, 100), `${SITE}/assets/pins/${o.key}.jpg`, o.board, "", o.desc.slice(0, 500), SITE + o.url, dt, o.kw.join(", ")].map(csvq).join(","));
+  });
+  mk(path.join(ROOT, "social/pinterest"));
+  lots.forEach((rows, n) => write(path.join(ROOT, `social/pinterest/lot-${n + 1}.csv`), head + "\n" + rows.join("\n") + "\n"));
+  console.log(`${PINS.length} épingles, ${lots.length} lots Pinterest`);
+}
 rm(RAW);
 console.log(`${pages.length} pages générées dans docs/`);
 if (errors.length) { console.log("ERREURS JS :\n" + errors.join("\n")); process.exitCode = 1; }
