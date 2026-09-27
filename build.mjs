@@ -140,10 +140,17 @@ function header(page) {
 </div></header>
 <div class="srch" id="srch" hidden role="dialog" aria-modal="true" aria-label="Recherche"><div class="srch-box"><div class="srch-top"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#d9a95b" stroke-width="1.8"/><path d="m15.5 15.5 5 5" stroke="#d9a95b" stroke-width="1.8" stroke-linecap="round"/></svg><input id="srch-in" type="search" placeholder="Sort, plante, sabbat, sorcière…" aria-label="Rechercher dans tout le grimoire" autocomplete="off"><button class="icon-btn" id="srch-close" type="button" aria-label="Fermer la recherche">✕</button></div><div id="srch-res" aria-live="polite"></div></div></div>`;
 }
+// réseaux sociaux : adresse complète du profil, ou "" pour ne pas l'afficher
+const SOCIAL = [
+  ["Instagram", "https://www.instagram.com/grimoiredeminuit/"],
+  ["TikTok", "https://www.tiktok.com/@le.grimoire.de.mi"],
+  ["Pinterest", "https://www.pinterest.fr/grimoiredeminuit/"],
+].filter(([, u]) => u);
+const SOCIALHTML = SOCIAL.length ? `<p class="socials">${SOCIAL.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener me">${n}</a>`).join("")}</p>` : "";
 function footer() {
   const col = (t, l) => `<div><h2>${t}</h2><ul>${l.map(([h, x]) => `<li><a href="${h}">${x}</a></li>`).join("")}</ul></div>`;
   return `<footer class="site-foot">
-<div><a class="brand" href="/">${MOONICON}<span>Le Grimoire de Minuit</span></a><p>Un grimoire en ligne de sorcellerie : histoire, sorts, rituels et traditions, rassemblés et réécrits en français. Contenu à visée culturelle. Un projet <a href="https://endam-digital.com" style="color:var(--gold)">Endam Digital</a>.</p></div>
+<div><a class="brand" href="/">${MOONICON}<span>Le Grimoire de Minuit</span></a>${SOCIALHTML}<p>Un grimoire en ligne de sorcellerie : histoire, sorts, rituels et traditions, rassemblés et réécrits en français. Contenu à visée culturelle. Un projet <a href="https://endam-digital.com" style="color:var(--gold)">Endam Digital</a>.</p></div>
 ${col("Pratiquer", [["/livre-des-ombres/", "Livre des Ombres"], ["/sorts/", "Tous les sorts"], ["/atelier/", "Atelier du sorcier"], ["/rituels/", "Rituels"], ["/sabbats/", "Roue de l’année"]])}
 ${col("Savoir", [["/outils/", "Outils"], ["/recettes/", "Recettes"], ["/divination/", "Divination & tarot"], ["/correspondances/", "Correspondances"], ["/ingredients/", "Plantes & pierres"]])}
 ${col("Culture", [["/dossiers/toussaint/", "Toussaint et jour des morts"], ["/dossiers/", "Tous les dossiers"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"], ["/lettre/", "La lettre du samedi"], ["/mentions-legales/", "Mentions légales"]])}
@@ -222,7 +229,7 @@ const pages = [];
 const add = (p) => pages.push(p);
 
 add({ url: "/", page: "home", title: "Le Grimoire de Minuit — sorts, rituels et Livre des Ombres", desc: `Un grimoire de sorcellerie en français : ${SPELLS.length} sorts détaillés, ${RIT.length} rituels, les 8 sabbats, la lune du jour, le tarot, les correspondances et l’histoire des sorcières.`,
-  ld: [{ "@context": "https://schema.org", "@type": "WebSite", name: "Le Grimoire de Minuit", url: SITE + "/", inLanguage: "fr", description: "Grimoire de sorcellerie en ligne : sorts, rituels, sabbats et histoire." }],
+  ld: [{ "@context": "https://schema.org", "@type": "WebSite", name: "Le Grimoire de Minuit", url: SITE + "/", ...(SOCIAL.length ? { sameAs: SOCIAL.map(([, u]) => u) } : {}), inLanguage: "fr", description: "Grimoire de sorcellerie en ligne : sorts, rituels, sabbats et histoire." }],
   body: `<section class="hero">
 <div><p class="label">Grimoire complet · histoire, rituels &amp; sortilèges</p>
 <h1 style="margin-top:14px">Le Grimoire de Minuit<em>un Livre des Ombres à feuilleter, des bûchers d’hier aux sorcières d’aujourd’hui</em></h1>

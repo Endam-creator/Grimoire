@@ -649,3 +649,4 @@ dl.herb dt a:hover{color:var(--gold)}
   main::after{content:"Le Grimoire de Minuit · grimoire.endam-digital.com";display:block;text-align:center;font-family:var(--fell);font-style:italic;font-size:10pt;color:#6b5540!important;margin-top:8mm;border-top:1px solid #bba88a;padding-top:3mm}
   a{text-decoration:none!important}
 }
+.socials{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.socials a{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid rgba(217,169,91,.4);padding:6px 10px;border-radius:3px}.socials a:hover{background:var(--gold-soft)}
