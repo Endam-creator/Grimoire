@@ -650,3 +650,7 @@ dl.herb dt a:hover{color:var(--gold)}
   a{text-decoration:none!important}
 }
 .socials{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.socials a{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid rgba(217,169,91,.4);padding:6px 10px;border-radius:3px}.socials a:hover{background:var(--gold-soft)}
+.tallycard{background:var(--parch);background-image:radial-gradient(ellipse at 10% 10%,rgba(255,255,255,.45),transparent 50%),radial-gradient(ellipse at 100% 100%,rgba(140,95,40,.2),transparent 55%);border-radius:4px;padding:26px 30px;max-width:760px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.tallycard iframe{display:block;border:0;width:100%;min-height:820px}
+@media (max-width:600px){.tallycard{padding:16px 14px}}
+.ask{margin:22px 0 0;font-size:15px;color:var(--mute);font-style:italic}.ask a{color:var(--gold)}

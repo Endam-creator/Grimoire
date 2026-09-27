@@ -147,13 +147,15 @@ const SOCIAL = [
   ["Pinterest", "https://www.pinterest.fr/grimoiredeminuit/"],
 ].filter(([, u]) => u);
 const SOCIALHTML = SOCIAL.length ? `<p class="socials">${SOCIAL.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener me">${n}</a>`).join("")}</p>` : "";
+const TALLY = "PdK7EV"; // formulaire « Une idée pour le grimoire ? »
+const ASK = (url, what) => TALLY ? `<p class="ask">Une remarque sur ${what} ? <a href="/contact/?page=${encodeURIComponent(url)}">Écris au grimoire</a></p>` : "";
 function footer() {
   const col = (t, l) => `<div><h2>${t}</h2><ul>${l.map(([h, x]) => `<li><a href="${h}">${x}</a></li>`).join("")}</ul></div>`;
   return `<footer class="site-foot">
 <div><a class="brand" href="/">${MOONICON}<span>Le Grimoire de Minuit</span></a>${SOCIALHTML}<p>Un grimoire en ligne de sorcellerie : histoire, sorts, rituels et traditions, rassemblés et réécrits en français. Contenu à visée culturelle. Un projet <a href="https://endam-digital.com" style="color:var(--gold)">Endam Digital</a>.</p></div>
 ${col("Pratiquer", [["/livre-des-ombres/", "Livre des Ombres"], ["/sorts/", "Tous les sorts"], ["/atelier/", "Atelier du sorcier"], ["/rituels/", "Rituels"], ["/sabbats/", "Roue de l’année"]])}
 ${col("Savoir", [["/outils/", "Outils"], ["/recettes/", "Recettes"], ["/divination/", "Divination & tarot"], ["/correspondances/", "Correspondances"], ["/ingredients/", "Plantes & pierres"]])}
-${col("Culture", [["/dossiers/toussaint/", "Toussaint et jour des morts"], ["/dossiers/", "Tous les dossiers"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"], ["/lettre/", "La lettre du samedi"], ["/mentions-legales/", "Mentions légales"]])}
+${col("Culture", [["/dossiers/toussaint/", "Toussaint et jour des morts"], ["/dossiers/", "Tous les dossiers"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"], ["/lettre/", "La lettre du samedi"], ["/contact/", "Une idée ? Écris-nous"], ["/mentions-legales/", "Mentions légales"]])}
 </footer>`;
 }
 function crumbs(list) {
@@ -287,6 +289,7 @@ for (const s of ORDER) {
     body: `${crumbs(cr)}<section class="chap first" style="border-bottom:0">
 <div class="book-stage solo"><div class="book"><div class="ribbon" aria-hidden="true"></div><div class="spread" id="spread"></div></div></div>
 <div class="prevnext" id="prevnext"></div>
+${ASK(url, "ce sort")}
 <div class="related"><h2 class="t26" id="related-t" style="font-size:26px;margin-bottom:16px"></h2><div class="linkgrid" id="related"></div></div>
 ${(INGBYSPELL[s.id] || []).length ? `<div class="related"><h2 class="t26" style="font-size:26px;margin-bottom:14px">Les ingrédients de ce sort</h2><div class="ingchips">${INGBYSPELL[s.id].map((i) => `<a href="/ingredients/${i.slug}/">${esc(i.n)}</a>`).join("")}</div></div>` : ""}
 <div class="cta-line"><a class="btn" href="/livre-des-ombres/#sort-${s.id}">Ouvrir dans le Livre des Ombres</a><a class="btn ghost" href="/atelier/">Composer mon propre sort</a></div>${NL()}</section>` });
@@ -310,7 +313,7 @@ for (const r of RIT) {
   const url = `/rituels/${r.slug}/`, cr = [["/", "Accueil"], ["/rituels/", "Rituels"], [null, r.n]];
   add({ url, page: "rituel", id: r.id, type: "article", title: `${r.n} — rituel de sorcellerie pas à pas | Le Grimoire de Minuit`, desc: clip(r.intro),
     ld: [howto(r.n, r.intro, r.kit, r.steps.map((s) => s[0] + " : " + s[1] + (s[2] ? " « " + s[2] + " »" : "")), url), crumbsLD(Object.assign([["/", "Accueil"], ["/rituels/", "Rituels"], [url, r.n]], { url }))],
-    body: `${crumbs(cr)}<section class="chap first" style="border-bottom:0"><div id="rit-panel"></div><div class="prevnext" id="prevnext" style="margin-top:48px"></div><div class="cta-line"><button class="btn" type="button" data-print>Imprimer ce rituel</button><a class="btn ghost" href="/rituels/">Tous les rituels</a><a class="btn ghost" href="/livre-des-ombres/">Le Livre des Ombres</a></div></section>` });
+    body: `${crumbs(cr)}<section class="chap first" style="border-bottom:0"><div id="rit-panel"></div><div class="prevnext" id="prevnext" style="margin-top:48px"></div>${ASK(url, "ce rituel")}<div class="cta-line"><button class="btn" type="button" data-print>Imprimer ce rituel</button><a class="btn ghost" href="/rituels/">Tous les rituels</a><a class="btn ghost" href="/livre-des-ombres/">Le Livre des Ombres</a></div></section>` });
 }
 
 add({ url: "/sabbats/", page: "sabbats", title: "La roue de l’année : les 8 sabbats des sorcières | Le Grimoire de Minuit", desc: "Samhain, Yule, Imbolc, Ostara, Beltane, Litha, Lughnasadh et Mabon : dates, histoire, correspondances, rituels et recettes des huit sabbats de la roue de l’année.",
@@ -383,7 +386,7 @@ for (const d of DOSSIERS) {
 <div class="dbody"><p class="dlede">${esc(d.lede)}</p>
 ${fig(((IMGPLACE.dossier || {})[d.slug] || [])[0])}
 ${d.sections.map((s, i) => `${i === 3 ? fig(((IMGPLACE.dossier || {})[d.slug] || [])[1]) : ""}<section class="dsec" id="${s.id}"><h2>${esc(s.h)}</h2>${s.body.map(block).join("\n")}</section>`).join("\n")}
-<section class="dsec"><h2>Sources</h2><ul class="sources" style="columns:1">${d.sources.map((x) => `<li><a href="${x[1]}" target="_blank" rel="noopener">${esc(x[0])}</a> — ${esc(x[2])}</li>`).join("")}</ul></section>
+${ASK(url, "ce dossier")}<section class="dsec"><h2>Sources</h2><ul class="sources" style="columns:1">${d.sources.map((x) => `<li><a href="${x[1]}" target="_blank" rel="noopener">${esc(x[0])}</a> — ${esc(x[2])}</li>`).join("")}</ul></section>
 <div class="cta-line">${other.map((o) => `<a class="btn" href="/dossiers/${o.slug}/">Lire aussi : ${esc(o.n)}</a>`).join("")}<a class="btn ghost" href="/histoire/">L’histoire de la sorcellerie</a></div>
 </div></div></article>` });
 }
@@ -423,6 +426,7 @@ add({ url: "/mentions-legales/", page: "legal", title: "Mentions légales | Le G
 <p>Contact : par le <a href="https://github.com/Endam-creator/Grimoire/issues" target="_blank" rel="noopener">formulaire de signalement du dépôt GitHub</a> du site.</p>
 <h2>Hébergement</h2><p>GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. <a href="https://github.com" target="_blank" rel="noopener">github.com</a></p>
 <h2>Statistiques de visite</h2><p>Le site mesure sa fréquentation avec <b>GoatCounter</b>, un outil qui ne dépose aucun cookie, n’enregistre pas d’adresse IP complète et ne suit pas les visiteurs d’un site à l’autre. Aucune bannière de consentement n’est donc nécessaire.</p>
+<h2>Formulaire de contact</h2><p>Les messages envoyés depuis la page <a href="/contact/">Une idée pour le grimoire ?</a> sont recueillis par le service <b>Tally</b>, une entreprise belge, qui stocke les données en Europe. L’adresse e-mail est facultative et ne sert qu’à te répondre. Tu peux demander la suppression de ton message par ce même formulaire.</p>
 <h2>Lettre d’information</h2><p>Si tu t’abonnes à la lettre du samedi, ton adresse e-mail est conservée par le service <b>Buttondown</b> uniquement pour t’envoyer la lettre. Tu peux te désabonner à tout moment par le lien présent dans chaque envoi. Conformément au RGPD, tu peux demander l’accès à tes données ou leur suppression en écrivant par le contact ci-dessus.</p>
 <h2>Polices et ressources</h2><p>Les polices de caractères sont hébergées sur le site lui-même : aucune donnée n’est transmise à un service tiers comme Google Fonts lors de la consultation.</p>
 <h2>Propriété intellectuelle</h2><p>Les textes du site sont rédigés pour Le Grimoire de Minuit à partir des sources citées sur la page <a href="/a-propos/">À propos</a>. Les illustrations sont des œuvres du domaine public, reproduites depuis Wikimedia Commons ; leurs références sont indiquées sous chaque image.</p>
@@ -438,6 +442,12 @@ add({ url: "/lettre/", page: "lettre", title: "La lettre du samedi : archives | 
 <p class="subintro" id="lettre-vide"${LSORTED.some((l) => l.date <= TODAY) ? " hidden" : ""}>La première lettre part bientôt. Abonne-toi pour la recevoir.</p>
 ${LSORTED.map((l) => { const sp = SPELLS.find((x) => x.id === l.sort); return `<article class="lettre" id="${l.slug}" data-date="${l.date}"${l.date > TODAY ? " hidden" : ""}><p class="label">Lettre du ${frDate(l.date)}</p><h2>${esc(l.sujet)}</h2>${l.corps.map((c) => `<p${c.startsWith("« ") ? ' class="lincant"' : ""}>${esc(c).replace(/https:\/\/grimoire\.endam-digital\.com(\/[^\s<]*[^\s<.,])/g, '<a href="$1">grimoire.endam-digital.com$1</a>')}</p>`).join("")}${sp ? `<p><a class="btn small" href="/sorts/${sp.slug}/">Le sort complet : ${esc(sp.n)} →</a></p>` : ""}</article>`; }).join("\n")}
 </div></section>` });
+
+/* ---------- contact ---------- */
+if (TALLY) add({ url: "/contact/", page: "contact", title: "Une idée pour le grimoire ? Suggestions et contact | Le Grimoire de Minuit", desc: "Suggérer une amélioration, signaler une erreur, proposer un sort ou une tradition de ta région : écris au Grimoire de Minuit.",
+  body: `${crumbs([["/", "Accueil"], [null, "Une idée ?"]])}<section class="chap first" style="border-bottom:0">${head("Le Courrier", "Une idée pour le grimoire ?", "Un sort de ta grand-mère, une tradition de ta région, une erreur repérée, une page qui manque : écris-nous. Chaque message est lu, et les meilleures propositions entreront dans le grimoire.")}
+<div class="body-col"><div class="tallycard"><iframe id="tally" data-form="${TALLY}" src="https://tally.so/embed/${TALLY}?alignLeft=1&amp;hideTitle=1&amp;transparentBackground=1" title="Formulaire : une idée pour le grimoire" loading="lazy" width="100%" height="820" frameborder="0"></iframe></div>
+<p class="subintro" style="margin-top:18px">Ton adresse e-mail est facultative : elle ne sert qu’à te répondre. <a href="/mentions-legales/">Données personnelles</a>.</p></div></section>` });
 
 add({ url: "/404.html", page: "404", title: "Page introuvable | Le Grimoire de Minuit", desc: "Cette page s’est évaporée comme une fumée d’encens.", noindex: true,
   body: `<section class="lost"><p class="label">Erreur 404</p><h1>Cette page s’est évaporée</h1><p>Comme une fumée d’encens, la page que tu cherches a disparu. Le sort a peut-être été déplacé dans un autre chapitre.</p><div class="hero-links" style="justify-content:center"><a class="btn" href="/">Retour à l’accueil</a><a class="btn ghost" href="/sorts/">Tous les sorts</a></div></section>` });
