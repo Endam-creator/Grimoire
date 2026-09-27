@@ -446,7 +446,7 @@ ${LSORTED.map((l) => { const sp = SPELLS.find((x) => x.id === l.sort); return `<
 /* ---------- contact ---------- */
 if (TALLY) add({ url: "/contact/", page: "contact", title: "Une idée pour le grimoire ? Suggestions et contact | Le Grimoire de Minuit", desc: "Suggérer une amélioration, signaler une erreur, proposer un sort ou une tradition de ta région : écris au Grimoire de Minuit.",
   body: `${crumbs([["/", "Accueil"], [null, "Une idée ?"]])}<section class="chap first" style="border-bottom:0">${head("Le Courrier", "Une idée pour le grimoire ?", "Un sort de ta grand-mère, une tradition de ta région, une erreur repérée, une page qui manque : écris-nous. Chaque message est lu, et les meilleures propositions entreront dans le grimoire.")}
-<div class="body-col"><div class="tallycard"><iframe id="tally" data-form="${TALLY}" src="https://tally.so/embed/${TALLY}?alignLeft=1&amp;hideTitle=1&amp;transparentBackground=1" title="Formulaire : une idée pour le grimoire" loading="lazy" width="100%" height="820" frameborder="0"></iframe></div>
+<div class="body-col"><div class="tallybox"><iframe id="tally" data-form="${TALLY}" data-tally-src="https://tally.so/embed/${TALLY}?alignLeft=1&amp;hideTitle=1&amp;dynamicHeight=1" title="Formulaire : une idée pour le grimoire" loading="lazy" width="100%" height="700" frameborder="0" marginheight="0" marginwidth="0"></iframe></div>
 <p class="subintro" style="margin-top:18px">Ton adresse e-mail est facultative : elle ne sert qu’à te répondre. <a href="/mentions-legales/">Données personnelles</a>.</p></div></section>` });
 
 add({ url: "/404.html", page: "404", title: "Page introuvable | Le Grimoire de Minuit", desc: "Cette page s’est évaporée comme une fumée d’encens.", noindex: true,

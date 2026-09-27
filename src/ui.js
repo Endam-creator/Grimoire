@@ -19,7 +19,7 @@ var sc=$("#srch-close");if(sc)sc.addEventListener("click",close);
 if(ov){ov.addEventListener("click",function(e){if(e.target===ov)close()});inp.addEventListener("input",run)}
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&ov&&!ov.hidden)close();if((e.key==="/"||(e.key==="k"&&(e.ctrlKey||e.metaKey)))&&ov&&ov.hidden&&!/INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||"")){e.preventDefault();open()}});
 /* formulaire : transmet la page d'origine au champ caché « page » */
-var tf=$("#tally");if(tf){var pg=new URLSearchParams(location.search).get("page")||"";tf.src="https://tally.so/embed/"+tf.getAttribute("data-form")+"?alignLeft=1&hideTitle=1&transparentBackground=1"+(pg?"&page="+encodeURIComponent(pg):"")}
+var tf=$("#tally");if(tf){tf.removeAttribute("src");document.querySelectorAll('script[src*="tally.so/widgets"]').forEach(function(x){x.remove()});var pg=new URLSearchParams(location.search).get("page")||"";tf.setAttribute("data-tally-src","https://tally.so/embed/"+tf.getAttribute("data-form")+"?alignLeft=1&hideTitle=1&dynamicHeight=1"+(pg?"&page="+encodeURIComponent(pg):""));var ts=document.createElement("script");ts.src="https://tally.so/widgets/embed.js";ts.async=true;ts.onload=function(){window.Tally&&Tally.loadEmbeds()};ts.onerror=function(){tf.src=tf.getAttribute("data-tally-src")};document.body.appendChild(ts)}
 /* impression */
 document.addEventListener("click",function(e){if(e.target.closest("[data-print]")){e.preventDefault();window.print()}});
 /* lettres : n'afficher qu'à partir de la date d'envoi */
