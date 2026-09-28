@@ -677,3 +677,13 @@ html,body{overflow-x:clip}
 .nav a{font-family:var(--display);font-size:15px;letter-spacing:.02em;text-transform:none;padding:5px 9px 6px}
 .crumbs{font-family:var(--display);font-size:14px;letter-spacing:.03em;text-transform:none}
 @media (max-width:1100px){.topbar .nav a,.topbar.open .nav a{font-size:16px}}
+/* illustrations des chapitres */
+.chapcard.hasimg{overflow:hidden}
+.chapcard .chthumb{grid-column:1/-1;display:block;width:calc(100% + 32px);max-width:none;margin:-16px -16px 2px;aspect-ratio:16/9;height:auto;object-fit:cover;object-position:center 30%;filter:saturate(.8) brightness(.78);transition:filter .25s}
+.chapcard:hover .chthumb,.chapcard:focus-visible .chthumb{filter:saturate(1) brightness(1)}
+.chapcards .chapcard.season .chthumb{aspect-ratio:4/1;object-position:center 45%}
+.idx-head{display:grid;grid-template-columns:140px 1fr;gap:24px;align-items:center;margin-bottom:6px}
+.idx-img{display:block;width:140px;height:175px;object-fit:cover;object-position:center 30%;border:5px solid #efe4c8;border-radius:2px;box-shadow:0 12px 30px rgba(0,0,0,.45)}
+@media (max-width:560px){.idx-head{grid-template-columns:84px 1fr;gap:14px}.idx-img{width:84px;height:105px;border-width:3px}.idx-head .subintro{font-size:15px}}
+.chap-intro::after{content:"";display:block;clear:both}
+.ci-img{float:left;width:62px;height:78px;object-fit:cover;object-position:center 30%;margin:3px 12px 2px 0;border:2px solid rgba(90,66,48,.35);filter:sepia(.3)}

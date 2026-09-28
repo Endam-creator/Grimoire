@@ -1,3 +1,5 @@
 node_modules/
 build-raw/
 produits/
+__pycache__/
+images-src/candidats/

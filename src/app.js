@@ -13,6 +13,8 @@ var CH={};CHAPTERS.forEach(function(c,i){c.idx=i;CH[c.id]=c});
 var DLINK={"Salem":"/dossiers/salem/","Tituba":"/dossiers/salem/#tituba","Marie Laveau":"/dossiers/vaudou/#louisiane"};
 function imgHTML(key,cls){var I=window.IMG||{},im=I[key];if(!im)return"";return'<figure class="'+(cls||"plate")+'"><img src="'+im.src2+'" srcset="'+im.src2+' 700w, '+im.src+' '+im.w+'w" sizes="(max-width: 760px) 100vw, 700px" width="'+im.w+'" height="'+im.h+'" loading="lazy" decoding="async" alt="'+esc(im.cap)+'"><figcaption>'+esc(im.cap)+' <a href="'+im.page+'" target="_blank" rel="noopener">Domaine public, Wikimedia Commons</a></figcaption></figure>'}
 var PLACE=window.IMGPLACE||{hist:{},fig:{}};
+function chIm(id){var k=(PLACE.ch||{})[id];return k?(window.IMG||{})[k]:null}
+function chImg(id,cls){var im=chIm(id);return im?'<img class="'+cls+'" src="'+im.src2+'" width="'+im.w+'" height="'+im.h+'" loading="lazy" decoding="async" alt="" title="'+esc(im.cap)+'">':""}
 var LVL=["","Novice","Initiée","Adepte"];
 function stars(n){return "✦".repeat(n)+"✧".repeat(3-n)}
 var ORDER=SPELLS.slice().sort(function(a,b){return CH[a.ch].idx-CH[b.ch].idx});
@@ -63,7 +65,7 @@ var ORN='<svg class="orn" viewBox="0 0 120 120" aria-hidden="true"><g fill="none
 function spreadSpell(s,o){
   o=o||{};var c=CH[s.ch],pl=o.folio||(ORDER.indexOf(s)+1)*2+1,T=o.h1?"h1":"h3";
   var L='<div class="page left"><div class="rh"><span>Livre des Ombres</span><span>Chapitre '+c.r+' · '+esc(c.n)+'</span></div>'
-   +(o.first?'<div class="chap-intro"><b>Chapitre '+c.r+' — '+esc(c.n)+'</b>'+esc(c.i)+'</div>':'')
+   +(o.first?'<div class="chap-intro">'+chImg(c.id,'ci-img')+'<b>Chapitre '+c.r+' — '+esc(c.n)+'</b>'+esc(c.i)+'</div>':'')
    +'<'+T+'>'+esc(s.n)+'</'+T+'><p class="sub">'+esc(s.sub)+'</p>'
    +(s.m?'<p class="marg">'+esc(s.m)+'</p>':'')
    +'<div class="meta4"><div><span>Lune</span><b>'+esc(s.moon)+'</b></div><div><span>Jour</span><b>'+esc(s.day)+'</b></div><div><span>Durée</span><b>'+esc(s.dur)+'</b></div><div><span>Niveau</span><b><i class="lvl" aria-hidden="true">'+stars(s.lvl)+'</i> '+LVL[s.lvl]+'</b></div></div>'
@@ -199,12 +201,12 @@ var R={
   renderMoon();
   $("#hero-count").innerHTML='<span><b>'+SPELLS.length+'</b>sorts</span><span><b>'+CHAPTERS.length+'</b>chapitres</span><span><b>'+RIT.length+'</b>rituels</span><span><b>8</b>sabbats</span><span><b>'+RECIPES.length+'</b>recettes</span>';
   var cs=CHAPTERS.filter(function(c){return c.id==="samhain"}).concat(CHAPTERS.filter(function(c){return c.id!=="samhain"}));
-  $("#chapcards").innerHTML=cs.map(function(c){var n=SPELLS.filter(function(s){return s.ch===c.id}).length,se=c.id==="samhain";return'<a class="chapcard'+(se?' season':'')+'" href="'+(se?'/sabbats/samhain/':'/sorts/#'+c.id)+'"><i style="background:'+c.c+'">'+c.r+'</i><span><b>'+esc(c.n)+'</b><span>'+(se?'De saison · '+n+' sorts pour la nuit du 31 octobre':n+' sorts')+'</span></span></a>'}).join("");
+  $("#chapcards").innerHTML=cs.map(function(c){var n=SPELLS.filter(function(s){return s.ch===c.id}).length,se=c.id==="samhain";return'<a class="chapcard'+(se?' season':'')+(chIm(c.id)?' hasimg':'')+'" href="'+(se?'/sabbats/samhain/':'/sorts/#'+c.id)+'">'+chImg(c.id,'chthumb')+'<i style="background:'+c.c+'">'+c.r+'</i><span><b>'+esc(c.n)+'</b><span>'+(se?'De saison · '+n+' sorts pour la nuit du 31 octobre':n+' sorts')+'</span></span></a>'}).join("");
   var ns=nextSabbat();$("#sabteaser").innerHTML='<div><p class="label">Prochain sabbat</p><h3>'+esc(ns.sb.n)+'</h3></div><p>'+esc(ns.sb.when)+(ns.days>0?" · dans "+ns.days+" jour"+(ns.days>1?"s":""):" · aujourd’hui")+'. '+esc(ns.sb.t[0])+'</p><a class="btn" href="/sabbats/'+ns.sb.slug+'/">Préparer '+esc(ns.sb.n)+'</a>';
  },
  livre:initBook,
  sorts:function(){
-  $("#spell-index").innerHTML=CHAPTERS.map(function(c){return'<div class="idx-ch" id="'+c.id+'"><h2 class="t26"><i>'+c.r+'</i>'+esc(c.n)+'</h2><p class="subintro" style="margin:0 0 16px">'+esc(c.i)+'</p><div class="linkgrid">'+ORDER.filter(function(s){return s.ch===c.id}).map(function(s){return'<a class="lcard" href="'+spellUrl(s)+'"><b>'+esc(s.n)+'</b><span>'+esc(s.sub)+'</span><em>'+stars(s.lvl)+' · '+esc(s.moon)+' · '+esc(s.dur)+'</em></a>'}).join("")+'</div></div>'}).join("");
+  $("#spell-index").innerHTML=CHAPTERS.map(function(c){return'<div class="idx-ch" id="'+c.id+'">'+(chIm(c.id)?'<div class="idx-head">'+chImg(c.id,'idx-img')+'<div>':'<div>')+'<h2 class="t26"><i>'+c.r+'</i>'+esc(c.n)+'</h2><p class="subintro" style="margin:0 0 16px">'+esc(c.i)+'</p></div>'+(chIm(c.id)?'</div>':'')+'<div class="linkgrid">'+ORDER.filter(function(s){return s.ch===c.id}).map(function(s){return'<a class="lcard" href="'+spellUrl(s)+'"><b>'+esc(s.n)+'</b><span>'+esc(s.sub)+'</span><em>'+stars(s.lvl)+' · '+esc(s.moon)+' · '+esc(s.dur)+'</em></a>'}).join("")+'</div></div>'}).join("");
  },
  sort:function(){
   var s=byId(SPELLS,PID),k=ORDER.indexOf(s),c=CH[s.ch];

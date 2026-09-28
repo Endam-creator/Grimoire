@@ -151,5 +151,113 @@
   "title": "Catherine Deshayes, femme Monvoisin, dite la Voisin. G.38607",
   "date": "Unknown date",
   "license": "CC0"
+ },
+ "ch-protection": {
+  "file": "ch-protection.jpg",
+  "commons": "File:Knight, Death and the Devil MET DP159049.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Knight,_Death_and_the_Devil_MET_DP159049.jpg",
+  "artist": "Albrecht Dürer",
+  "title": "German: Der Reiter (Ritter, Tod und Teufel) Knight, Death, and the Deviltitle QS",
+  "date": "1513date QS:P571,+1513-00-00T00:00:00Z/9",
+  "license": "CC0"
+ },
+ "ch-purification": {
+  "file": "ch-purification.jpg",
+  "commons": "File:Saint Anthony Tormented by Demons MET DP213862.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Saint_Anthony_Tormented_by_Demons_MET_DP213862.jpg",
+  "artist": "Martin Schongauer",
+  "title": "Saint Anthony Tormented by Demons",
+  "date": "circa 1470date QS:P571,+1470-00-00T00:00",
+  "license": "CC0"
+ },
+ "ch-liaison": {
+  "file": "ch-liaison.jpg",
+  "commons": "File:Waterhouse, Circe Invidiosa, detail.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Waterhouse,_Circe_Invidiosa,_detail.jpg",
+  "artist": "John William Waterhouse",
+  "title": "Waterhouse, Circe Invidiosa, detail",
+  "date": "1892date QS:P571,+1892-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "ch-amour": {
+  "file": "ch-amour.jpg",
+  "commons": "File:Evelyn De Morgan - The Love Potion (1903) - Google Cultural Institute.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Evelyn_De_Morgan_-_The_Love_Potion_(1903)_-_Google_Cultural_Institute.jpg",
+  "artist": "Evelyn De Morgan",
+  "title": "The Love Potion title QS:P1476,en:\"The Love Potion \"label QS:Len,\"The Love Potio",
+  "date": "1903",
+  "license": "Public domain"
+ },
+ "ch-prosperite": {
+  "file": "ch-prosperite.jpg",
+  "commons": "File:Massysm Quentin — The Moneylender and his Wife — 1514.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Massysm_Quentin_%E2%80%94_The_Moneylender_and_his_Wife_%E2%80%94_1514.jpg",
+  "artist": "Quinten Metsys",
+  "title": "The Moneylender and his Wife",
+  "date": "1514",
+  "license": "Public domain"
+ },
+ "ch-bienetre": {
+  "file": "ch-bienetre.jpg",
+  "commons": "File:Dictamnus Hortus 1491.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Dictamnus_Hortus_1491.jpg",
+  "artist": "Unknown authorUnknown author",
+  "title": "Dictamnus Hortus 1491",
+  "date": "1491",
+  "license": "Public domain"
+ },
+ "ch-reves": {
+  "file": "ch-reves.jpg",
+  "commons": "File:Johann Heinrich Füssli - The Nightmare 55.5.A-d1-2019-04-15.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Johann_Heinrich_F%C3%BCssli_-_The_Nightmare_55.5.A-d1-2019-04-15.jpg",
+  "artist": "Henry Fuseli",
+  "title": "The Nightmare",
+  "date": "1781date QS:P571,+1781-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "ch-divination": {
+  "file": "ch-divination.jpg",
+  "commons": "File:John William Waterhouse - The Crystal Ball (cropped).JPG",
+  "page": "https://commons.wikimedia.org/wiki/File:John_William_Waterhouse_-_The_Crystal_Ball_(cropped).JPG",
+  "artist": "John William Waterhouse",
+  "title": "The Crystal Ball",
+  "date": "1902date QS:P571,+1902-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "ch-glamour": {
+  "file": "ch-glamour.jpg",
+  "commons": "File:Dante Gabriel Rossetti - Lady Lilith.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Dante_Gabriel_Rossetti_-_Lady_Lilith.jpg",
+  "artist": "Dante Gabriel Rossetti",
+  "title": "Lady Lilith",
+  "date": "1866 (altered 1872-73)",
+  "license": "Public domain"
+ },
+ "ch-elements": {
+  "file": "ch-elements.jpg",
+  "commons": "File:Arcimboldo, Giuseppe ~ Autumn, 1573, oil on canvas, Musée du Louvre, Paris.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Arcimboldo,_Giuseppe_~_Autumn,_1573,_oil_on_canvas,_Mus%C3%A9e_du_Louvre,_Paris.jpg",
+  "artist": "Giuseppe Arcimboldo",
+  "title": "French: L'Automne Autumntitle QS:P1476,fr:\"L'Automne \"label QS:Lfr,\"L'Automne \"l",
+  "date": "1573date QS:P571,+1573-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "ch-lune": {
+  "file": "ch-lune.jpg",
+  "commons": "File:Friedrich - Two Men Contemplating the Moon.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Friedrich_-_Two_Men_Contemplating_the_Moon.jpg",
+  "artist": "Caspar David Friedrich",
+  "title": "Two Men Contemplating the Moon title QS:P1476,en:\"Two Men Contemplating the Moon",
+  "date": "circa from 1825 until 1830date QS:P,+185",
+  "license": "Public domain"
+ },
+ "ch-sceaux": {
+  "file": "ch-sceaux.jpg",
+  "commons": "File:Albrecht Dürer - Melencolia I - Google Art Project (427760).jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Albrecht_D%C3%BCrer_-_Melencolia_I_-_Google_Art_Project_(427760).jpg",
+  "artist": "Albrecht Dürer",
+  "title": "Melencolia I title QS:P1476,en:\"Melencolia I \"label QS:Len,\"Melencolia I \"label ",
+  "date": "1514",
+  "license": "Public domain"
  }
 }
