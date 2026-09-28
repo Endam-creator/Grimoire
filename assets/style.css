@@ -653,3 +653,27 @@ dl.herb dt a:hover{color:var(--gold)}
 .tallybox{max-width:760px;border-radius:10px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.45)}
 .tallybox iframe{display:block;border:0;width:100%;min-height:500px;color-scheme:normal}
 .ask{margin:22px 0 0;font-size:15px;color:var(--mute);font-style:italic}.ask a{color:var(--gold)}
+
+/* ---- retouches esthétiques (sept. 2026) ---- */
+html,body{overflow-x:clip}
+/* héros illustré : Goya en fond, fondu dans la nuit */
+.hero-art{position:relative;isolation:isolate}
+.hero-art::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;right:calc(50% - 50vw);width:min(64vw,900px);background:url(/assets/img/goya-vol.webp) 30% 18%/cover no-repeat;opacity:.7;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 45%),linear-gradient(0deg,transparent 0,#000 22%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 45%),linear-gradient(0deg,transparent 0,#000 22%);mask-composite:intersect}
+.hero-art .moon-card{background:rgba(21,18,29,.9);border-color:rgba(217,169,91,.28);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.hero-art .lede,.hero-art h1{text-shadow:0 1px 18px rgba(21,18,29,.9)}
+.hero-credit{position:absolute;right:0;bottom:10px;margin:0;font-family:var(--fell);font-size:12.5px;color:var(--mute)}
+@media (max-width:860px){
+  .hero-art::before{width:auto;left:calc(50% - 50vw);height:560px;bottom:auto;background-image:url(/assets/img/goya-vol-700.webp);background-position:center 18%;opacity:.42;-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 55%);mask-image:linear-gradient(0deg,transparent 0,#000 55%)}
+  .hero-credit{position:static;margin-top:14px;text-align:right}
+}
+/* nom du site visible sur mobile */
+@media (max-width:760px){.brand span{display:inline;font-size:16px}}
+@media (max-width:350px){.brand span{display:none}}
+/* chiffres de l'accueil : grille régulière sur mobile */
+@media (max-width:560px){.hero-count{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 12px}}
+/* boutons, menu et fil d'Ariane dans la police du grimoire */
+.btn{font-family:var(--display);font-size:16px;letter-spacing:.03em;text-transform:none;padding:10px 18px 11px}
+.btn.small{font-size:14.5px;padding:7px 12px 8px}
+.nav a{font-family:var(--display);font-size:15px;letter-spacing:.02em;text-transform:none;padding:5px 9px 6px}
+.crumbs{font-family:var(--display);font-size:14px;letter-spacing:.03em;text-transform:none}
+@media (max-width:1100px){.topbar .nav a,.topbar.open .nav a{font-size:16px}}

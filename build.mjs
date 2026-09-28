@@ -232,19 +232,19 @@ const add = (p) => pages.push(p);
 
 add({ url: "/", page: "home", title: "Le Grimoire de Minuit — sorts, rituels et Livre des Ombres", desc: `Un grimoire de sorcellerie en français : ${SPELLS.length} sorts détaillés, ${RIT.length} rituels, les 8 sabbats, la lune du jour, le tarot, les correspondances et l’histoire des sorcières.`,
   ld: [{ "@context": "https://schema.org", "@type": "WebSite", name: "Le Grimoire de Minuit", url: SITE + "/", ...(SOCIAL.length ? { sameAs: SOCIAL.map(([, u]) => u) } : {}), inLanguage: "fr", description: "Grimoire de sorcellerie en ligne : sorts, rituels, sabbats et histoire." }],
-  body: `<section class="hero">
+  body: `<section class="hero hero-art">
 <div><p class="label">Grimoire complet · histoire, rituels &amp; sortilèges</p>
 <h1 style="margin-top:14px">Le Grimoire de Minuit<em>un Livre des Ombres à feuilleter, des bûchers d’hier aux sorcières d’aujourd’hui</em></h1>
 <p class="lede">Des tablettes de liaison grecques aux bouteilles de sorcière enterrées sous les seuils anglais, du Petit Albert des colporteurs à la Wicca de Gerald Gardner, ce grimoire rassemble ce que les sorcières ont écrit, pratiqué et transmis. Ouvre le Livre des Ombres, compose tes sorts, trace ton cercle et suis la roue de l’année.</p>
 <div class="hero-links"><a class="btn" href="/livre-des-ombres/">Ouvrir le Livre des Ombres</a><a class="btn ghost" href="/atelier/">Composer un sort</a><a class="btn ghost" href="/histoire/">Lire l’histoire</a></div>
 <div class="hero-count" id="hero-count"></div></div>
+<p class="hero-credit">Francisco de Goya, <i>Le Vol des sorcières</i>, 1798. Musée du Prado.</p>
 <aside class="moon-card" aria-labelledby="moon-title"><p class="label"><span id="moon-title">La lune, ce soir</span><span id="moon-date"></span></p>
 <div class="moon-fig"><svg id="moon-svg" viewBox="-4 -4 108 108" role="img" aria-label="Phase actuelle de la lune"></svg></div>
 <p class="moon-name" id="moon-name"></p><p class="moon-meta" id="moon-meta"></p><p class="moon-advice" id="moon-advice"></p><div class="tonight" id="tonight" aria-label="Sorts conseillés ce soir"></div></aside>
 </section>
 <section class="chap"><div class="chap-head"><p class="chap-num">Le Livre</p><div><h2>Treize chapitres de sorts</h2><p>Chaque sort a sa page : le moment, les ingrédients, le rituel pas à pas, l’incantation, les variantes et son histoire.</p></div></div>
 <div class="body-col"><div class="chapcards" id="chapcards"></div><div class="cta-line"><a class="btn" href="/livre-des-ombres/">Feuilleter le livre</a><a class="btn ghost" href="/sorts/">Voir tous les sorts</a></div></div></section>
-${fig(IMGPLACE.home, "plate wide")}
 <section class="chap"><div class="body-col" style="margin-left:0"><div class="sabteaser" id="sabteaser"></div></div></section>
 ${NL()}
 <section class="chap" style="border-bottom:0"><div class="chap-head"><p class="chap-num">Explorer</p><div><h2>Tout le grimoire</h2></div></div>
