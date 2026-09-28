@@ -2,7 +2,8 @@
 """Télécharge des œuvres anciennes du domaine public pour illustrer les 12 chapitres de sorts.
 
 Usage, depuis le dossier grimoire-site :
-    python3 tools/fetch_gravures.py
+    python3 tools/fetch_gravures.py          (chapitres de sorts)
+    python3 tools/fetch_gravures.py figures  (figures et dossier vaudou)
 
 Pour chaque chapitre, cherche l'œuvre visée sur Wikimedia Commons et garde jusqu'à
 3 candidates sous licence domaine public. Écrit :
@@ -33,6 +34,16 @@ WANT = {
     "sceaux":       ["Dürer Melencolia I engraving", "Melencolia I Albrecht Dürer"],
 }
 
+WANT_FIGURES = {
+    "medee":    ["Frederick Sandys Medea 1868", "Sandys Medea Birmingham Museum"],
+    "ceridwen": ["Christopher Williams Ceridwen 1910", "Ceridwen Christopher Williams painting"],
+    "endor":    ["Benjamin West Saul and the Witch of Endor", "Saul Witch of Endor Benjamin West 1777"],
+    "shipton":  ["Mother Shipton woodcut", "Mother Shipton engraving portrait"],
+    "befana":   ["Befana illustration", "La Befana 19th century"],
+    "laveau":   ["Marie Laveau portrait", "Marie Laveau painting Schneider"],
+    "vaudou":   ["Hector Hyppolite painting", "Vodou veve Legba", "Vodou Haiti engraving 19th century", "Hector Hyppolite"],
+}
+
 def get(url):
     for i in range(3):
         try:
@@ -54,19 +65,23 @@ def info(title):
     return (pg.get("imageinfo") or [None])[0]
 
 def main():
+    global OUT
+    want = WANT
+    if len(sys.argv) > 1 and sys.argv[1] == "figures":
+        want, OUT = WANT_FIGURES, OUT + "-figures"
     os.makedirs(OUT, exist_ok=True)
     meta = {}
-    for key, queries in WANT.items():
+    for key, queries in want.items():
         print(f"\n{key}")
         got, seen = [], set()
         for q in queries:
-            if len(got) >= 3: break
+            if len(got) >= (4 if key == "vaudou" else 3): break
             try:
                 hits = api(action="query", list="search", srsearch=q, srnamespace=6, srlimit=10)["query"]["search"]
             except Exception as e:
                 print("  recherche impossible :", e); continue
             for h in hits:
-                if len(got) >= 3: break
+                if len(got) >= (4 if key == "vaudou" else 3): break
                 t = h["title"]
                 if t in seen or not re.search(r"\.(jpe?g|png|tiff?)$", t, re.I): continue
                 seen.add(t)
@@ -93,7 +108,7 @@ def main():
         if not got: print("  (rien trouvé)")
     json.dump(meta, open(os.path.join(OUT, "candidats.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     total = sum(len(v) for v in meta.values())
-    print(f"\n{total} images enregistrées dans images-src/candidats/")
+    print(f"\n{total} images enregistrées dans {os.path.relpath(OUT, os.path.join(HERE, '..'))}/")
     return 0
 
 if __name__ == "__main__":

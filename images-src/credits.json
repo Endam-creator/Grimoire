@@ -259,5 +259,59 @@
   "title": "Melencolia I title QS:P1476,en:\"Melencolia I \"label QS:Len,\"Melencolia I \"label ",
   "date": "1514",
   "license": "Public domain"
+ },
+ "fig-medee": {
+  "file": "fig-medee.jpg",
+  "commons": "File:Frederick Sandys - Medea, 1866-1868.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Frederick_Sandys_-_Medea,_1866-1868.jpg",
+  "artist": "Frederick Sandys",
+  "title": "French: Médée Medeatitle QS:P1476,fr:\"Médée \"label QS:Lfr,\"Médée \"label QS:Lhe,\"",
+  "date": "1868",
+  "license": "Public domain"
+ },
+ "fig-ceridwen": {
+  "file": "fig-ceridwen.jpg",
+  "commons": "File:Ceridwen.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Ceridwen.jpg",
+  "artist": "Christopher Williams",
+  "title": "Ceridwen",
+  "date": "",
+  "license": "Public domain"
+ },
+ "fig-endor": {
+  "file": "fig-endor.jpg",
+  "commons": "File:BenjaminWest-Saul-and-the-Witch-of-Endor-1777.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:BenjaminWest-Saul-and-the-Witch-of-Endor-1777.jpg",
+  "artist": "Benjamin West",
+  "title": "Saul and the Witch of Endorlabel QS:Len,\"Saul and the Witch of Endor\"",
+  "date": "1777date QS:P571,+1777-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "fig-shipton": {
+  "file": "fig-shipton.jpg",
+  "commons": "File:Mother Shipton and Cardinal Wolsey.png",
+  "page": "https://commons.wikimedia.org/wiki/File:Mother_Shipton_and_Cardinal_Wolsey.png",
+  "artist": "Not determined",
+  "title": "Mother Shipton and Cardinal Wolsey",
+  "date": "print date1881, earlier dates are given",
+  "license": "Public domain"
+ },
+ "fig-laveau": {
+  "file": "fig-laveau.jpg",
+  "commons": "File:Portrait of a Creole Woman with Madras Tignon (Catlin) adjusted.png",
+  "page": "https://commons.wikimedia.org/wiki/File:Portrait_of_a_Creole_Woman_with_Madras_Tignon_(Catlin)_adjusted.png",
+  "artist": "See File:Portrait of a Creole Woman with Madras Tignon (Catlin).png",
+  "title": "Portrait of a Creole Woman with Madras Tignon (Catlin) adjusted",
+  "date": "circa 1937",
+  "license": "Public domain"
+ },
+ "doss-vaudou": {
+  "file": "doss-vaudou.jpg",
+  "commons": "File:Damballah La Flambeau.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Damballah_La_Flambeau.jpg",
+  "artist": "Hector Hyppolite",
+  "title": "Damballah La Flambeau",
+  "date": "between 1945 and 1948date QS:P,+1945-00-",
+  "license": "Public domain"
  }
 }

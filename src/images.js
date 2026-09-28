@@ -26,13 +26,19 @@ window.IMGMETA={
  "ch-glamour":{cap:"Dante Gabriel Rossetti, Lady Lilith, 1866–1873. Delaware Art Museum."},
  "ch-elements":{cap:"Giuseppe Arcimboldo, L’Automne, 1573. Musée du Louvre, Paris."},
  "ch-lune":{cap:"Caspar David Friedrich, Deux hommes contemplant la lune, vers 1825–1830. Metropolitan Museum of Art, New York."},
- "ch-sceaux":{cap:"Albrecht Dürer, Melencolia I, gravure, 1514. Son carré magique est l’un des plus célèbres de l’histoire."}
+ "ch-sceaux":{cap:"Albrecht Dürer, Melencolia I, gravure, 1514. Son carré magique est l’un des plus célèbres de l’histoire."},
+ "fig-medee":{cap:"Frederick Sandys, Médée, 1866–1868. Birmingham Museum and Art Gallery."},
+ "fig-ceridwen":{cap:"Christopher Williams, Ceridwen, 1910."},
+ "fig-endor":{cap:"Benjamin West, Saül et la sorcière d’Endor, 1777."},
+ "fig-shipton":{cap:"Mother Shipton prédisant la chute du cardinal Wolsey, gravure sur bois d’un livret populaire anglais (réimpression de 1881)."},
+ "fig-laveau":{cap:"Portrait d’une femme créole au tignon, traditionnellement présenté comme celui de Marie Laveau, d’après un tableau attribué à George Catlin."},
+ "doss-vaudou":{cap:"Hector Hyppolite, Damballah La Flambeau, vers 1945–1948. Hyppolite était à la fois peintre et houngan, prêtre vaudou."}
 };
 /* où placer chaque image (clé de la page ou de l'élément → image) */
 window.IMGPLACE={
  home:"goya-vol", sabbats:"goya-aquelarre", rituels:"magic-circle", samhain:"snap-apple",
  hist:{"Le Malleus Maleficarum":"malleus","North Berwick":"north-berwick","Les possédées de Loudun":"grandier","Salem":"salem","L’affaire des poisons":"la-voisin","Le « Witchfinder General »":"hopkins"},
- fig:{"Circé":"circe","Baba Yaga":"baba-yaga","Morgane":"morgan","Hécate":"hecate"},
+ fig:{"Circé":"circe","Baba Yaga":"baba-yaga","Morgane":"morgan","Hécate":"hecate","La Voisin":"la-voisin","Agnes Sampson":"north-berwick","Médée":"fig-medee","Cerridwen":"fig-ceridwen","La sorcière d’Endor":"fig-endor","Mother Shipton":"fig-shipton","Marie Laveau":"fig-laveau"},
  ch:{protection:"ch-protection",purification:"ch-purification",liaison:"ch-liaison",amour:"ch-amour",prosperite:"ch-prosperite",bienetre:"ch-bienetre",reves:"ch-reves",divination:"ch-divination",glamour:"ch-glamour",elements:"ch-elements",lune:"ch-lune",sceaux:"ch-sceaux",samhain:"snap-apple"},
- dossier:{toussaint:["snap-apple"],salem:["salem","salem-examination"],france:["la-voisin","grandier"],"magie-noire":["goya-aquelarre","la-voisin"]}
+ dossier:{toussaint:["snap-apple"],salem:["salem","salem-examination"],france:["la-voisin","grandier"],vaudou:["doss-vaudou"],"magie-noire":["goya-aquelarre","la-voisin"]}
 };

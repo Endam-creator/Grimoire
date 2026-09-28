@@ -698,3 +698,6 @@ html,body{overflow-x:clip}
 .dteaser:hover .dimg{filter:none}
 .dteaser .dimg-none{display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,rgba(217,169,91,.16),transparent 60%),var(--ink-2)}
 .dteaser .dimg-none svg{width:64px;height:64px;color:var(--gold);opacity:.7}
+.rit-vign{display:block;width:100%;height:auto;max-width:260px;margin-top:28px;border:6px solid #efe4c8;border-radius:2px;box-shadow:0 16px 40px rgba(0,0,0,.45);filter:saturate(.9)}
+@media (max-width:860px){.rit-vign{display:none}}
+.ritual>.steps{align-content:start;align-self:start}
