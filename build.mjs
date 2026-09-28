@@ -372,7 +372,7 @@ function block(bk) {
 }
 add({ url: "/dossiers/", page: "dossiers", title: "Dossiers : Toussaint, sorcellerie en France, Salem, vaudou, magie noire | Le Grimoire de Minuit", desc: "Les grands dossiers du Grimoire de Minuit : la Toussaint et la nuit des morts, la sorcellerie en France, des bûchers de Lorraine aux leveurs de sorts, l’affaire des sorcières de Salem en 1692, le vaudou, du Bénin à Haïti, et l’histoire de la magie noire.",
   body: `${crumbs([["/", "Accueil"], [null, "Dossiers"]])}<section class="chap first" style="border-bottom:0">${head("Les Dossiers", "Les grands dossiers", "Des enquêtes longues pour comprendre les affaires et les traditions qui ont façonné l’image de la sorcière.")}
-<div class="body-col dlist">${DOSSIERS.map((d) => `<a class="dteaser" href="/dossiers/${d.slug}/"><p class="label">${esc(d.kicker)}</p><h2>${esc(d.n)}</h2><p>${esc(d.dek)}</p><span class="btn small">Lire le dossier →</span></a>`).join("")}</div></section>` });
+<div class="body-col dlist">${DOSSIERS.map((d) => { const im = IMG[((IMGPLACE.dossier || {})[d.slug] || [])[0]]; return `<a class="dteaser" href="/dossiers/${d.slug}/">${im ? `<img class="dimg" src="${im.src2}" width="${im.w}" height="${im.h}" loading="lazy" decoding="async" alt="" title="${esc(im.cap)}">` : `<div class="dimg dimg-none" aria-hidden="true">${MOONICON}</div>`}<p class="label">${esc(d.kicker)}</p><h2>${esc(d.n)}</h2><p>${esc(d.dek)}</p><span class="btn small">Lire le dossier →</span></a>`; }).join("")}</div></section>` });
 for (const d of DOSSIERS) {
   const url = `/dossiers/${d.slug}/`, other = DOSSIERS.filter((x) => x !== d);
   add({ url, page: "dossier", id: d.slug, type: "article", title: `${d.title} | Le Grimoire de Minuit`, desc: d.desc,

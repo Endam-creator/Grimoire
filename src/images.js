@@ -34,5 +34,5 @@ window.IMGPLACE={
  hist:{"Le Malleus Maleficarum":"malleus","North Berwick":"north-berwick","Les possédées de Loudun":"grandier","Salem":"salem","L’affaire des poisons":"la-voisin","Le « Witchfinder General »":"hopkins"},
  fig:{"Circé":"circe","Baba Yaga":"baba-yaga","Morgane":"morgan","Hécate":"hecate"},
  ch:{protection:"ch-protection",purification:"ch-purification",liaison:"ch-liaison",amour:"ch-amour",prosperite:"ch-prosperite",bienetre:"ch-bienetre",reves:"ch-reves",divination:"ch-divination",glamour:"ch-glamour",elements:"ch-elements",lune:"ch-lune",sceaux:"ch-sceaux",samhain:"snap-apple"},
- dossier:{salem:["salem","salem-examination"],france:["la-voisin","grandier"],"magie-noire":["goya-aquelarre","la-voisin"]}
+ dossier:{toussaint:["snap-apple"],salem:["salem","salem-examination"],france:["la-voisin","grandier"],"magie-noire":["goya-aquelarre","la-voisin"]}
 };
