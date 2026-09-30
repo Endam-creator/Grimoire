@@ -653,6 +653,9 @@ server.close();
 
 /* ---------- fichiers GitHub Pages ---------- */
 write(path.join(OUT, "CNAME"), "grimoire.endam-digital.com\n");
+// Clé IndexNow (Bing, Yandex…) : le workflow .github/workflows/indexnow.yml l'utilise pour signaler les pages modifiées.
+const INDEXNOW_KEY = "f329665dc7719beb66bd7284954e3565";
+write(path.join(OUT, INDEXNOW_KEY + ".txt"), INDEXNOW_KEY);
 write(path.join(OUT, ".nojekyll"), "");
 write(path.join(OUT, "robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
 const prio = (u) => (u === "/" ? "1.0" : /^\/(livre-des-ombres|sorts|rituels|sabbats|dossiers)\/$/.test(u) || u.startsWith("/dossiers/") ? "0.9" : u.startsWith("/sorts/") ? "0.8" : "0.7");

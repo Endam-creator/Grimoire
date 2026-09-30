@@ -1,0 +1,58 @@
+name: Signalement IndexNow
+
+# À chaque mise en ligne du site (dossier docs/), signale à Bing, Yandex
+# et aux autres moteurs IndexNow les pages ajoutées ou modifiées.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupération du dépôt
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Liste des pages modifiées
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          git fetch -q --depth=1 origin "$BEFORE" 2>/dev/null || true
+          if [ -n "$BEFORE" ] && git cat-file -e "$BEFORE" 2>/dev/null; then
+            git diff --name-only --diff-filter=AMR "$BEFORE" HEAD -- docs/ > /tmp/fichiers.txt
+          else
+            # Lancement manuel ou historique indisponible : on signale tout le sitemap
+            grep -o '<loc>[^<]*</loc>' docs/sitemap.xml | sed 's#</\?loc>##g' > /tmp/urls.txt
+          fi
+          if [ -f /tmp/fichiers.txt ]; then
+            grep -E '\.html$' /tmp/fichiers.txt | grep -v '^docs/404\.html$' \
+              | sed -E 's#^docs/##; s#(^|/)index\.html$#\1#; s#^#https://grimoire.endam-digital.com/#' > /tmp/urls.txt || true
+          fi
+          sort -u /tmp/urls.txt | head -n 10000 > /tmp/urls_ok.txt
+          echo "$(wc -l < /tmp/urls_ok.txt) page(s) à signaler"
+          cat /tmp/urls_ok.txt
+
+      - name: Envoi à IndexNow
+        continue-on-error: true
+        run: |
+          if [ ! -s /tmp/urls_ok.txt ]; then echo "Aucune page HTML modifiée."; exit 0; fi
+          sleep 90   # laisse le temps à GitHub Pages de publier
+          node -e "
+            const urls = require('fs').readFileSync('/tmp/urls_ok.txt', 'utf8').split('\n').filter(Boolean);
+            const HOST = 'grimoire.endam-digital.com';
+            const KEY = 'f329665dc7719beb66bd7284954e3565';
+            fetch('https://api.indexnow.org/indexnow', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json; charset=utf-8' },
+              body: JSON.stringify({ host: HOST, key: KEY, keyLocation: 'https://' + HOST + '/' + KEY + '.txt', urlList: urls })
+            }).then(r => console.log('Réponse IndexNow : HTTP ' + r.status + ' (200 ou 202 = OK)'))
+              .catch(e => console.log('IndexNow injoignable : ' + e.message));
+          "
