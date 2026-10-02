@@ -223,6 +223,7 @@ window.MOONS=[
 ];
 
 window.GLOSS=[
+ ["Benandanti","« Bien-allants » du Frioul, aux XVIᵉ et XVIIᵉ siècles, qui disaient combattre en esprit les sorciers pour protéger les récoltes."],["Chaman","Mot evenk (Sibérie) : spécialiste qui entre en transe pour voyager chez les esprits, soigner et guider les morts."],["Transe","État de conscience modifié, obtenu par le tambour, le chant ou le jeûne, dans lequel le chaman « voyage »."],
  ["Akelarre","Mot basque désignant le sabbat, littéralement « la prairie du bouc »."],["Athamé","Couteau rituel à manche noir qui ne coupe jamais rien de matériel."],
  ["Autel","Surface consacrée où l’on pose les outils et les symboles de la saison."],["Baguette","Outil de l’Air (ou du Feu) qui dirige et invite l’énergie."],
  ["Bannissement","Sort qui éloigne une influence, une habitude ou une énergie."],["Besom","Balai rituel en paille."],

@@ -10,7 +10,7 @@ function copyText(txt,ok){try{navigator.clipboard.writeText(txt).then(function()
 var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 function on(sel,fn){var el=$(sel);if(el)fn(el)}
 var CH={};CHAPTERS.forEach(function(c,i){c.idx=i;CH[c.id]=c});
-var DLINK={"Salem":"/dossiers/salem/","Tituba":"/dossiers/salem/#tituba","Marie Laveau":"/dossiers/vaudou/#louisiane"};
+var DLINK={"Les benandanti":"/dossiers/sorciere-ou-chaman/#benandanti","Salem":"/dossiers/salem/","Tituba":"/dossiers/salem/#tituba","Marie Laveau":"/dossiers/vaudou/#louisiane"};
 function imgHTML(key,cls){var I=window.IMG||{},im=I[key];if(!im)return"";return'<figure class="'+(cls||"plate")+'"><img src="'+im.src2+'" srcset="'+im.src2+' 700w, '+im.src+' '+im.w+'w" sizes="(max-width: 760px) 100vw, 700px" width="'+im.w+'" height="'+im.h+'" loading="lazy" decoding="async" alt="'+esc(im.cap)+'"><figcaption>'+esc(im.cap)+' <a href="'+im.page+'" target="_blank" rel="noopener">Domaine public, Wikimedia Commons</a></figcaption></figure>'}
 var PLACE=window.IMGPLACE||{hist:{},fig:{}};
 function chIm(id){var k=(PLACE.ch||{})[id];return k?(window.IMG||{})[k]:null}

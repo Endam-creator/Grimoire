@@ -32,7 +32,9 @@ window.IMGMETA={
  "fig-endor":{cap:"Benjamin West, Saül et la sorcière d’Endor, 1777."},
  "fig-shipton":{cap:"Mother Shipton prédisant la chute du cardinal Wolsey, gravure sur bois d’un livret populaire anglais (réimpression de 1881)."},
  "fig-laveau":{cap:"Portrait d’une femme créole au tignon, traditionnellement présenté comme celui de Marie Laveau, d’après un tableau attribué à George Catlin."},
- "doss-vaudou":{cap:"Hector Hyppolite, Damballah La Flambeau, vers 1945–1948. Hyppolite était à la fois peintre et houngan, prêtre vaudou."}
+ "doss-vaudou":{cap:"Hector Hyppolite, Damballah La Flambeau, vers 1945–1948. Hyppolite était à la fois peintre et houngan, prêtre vaudou."},
+ "cine-melies-affiche":{cap:"Affiche du théâtre Robert-Houdin, dirigé par Georges Méliès, pour « Les Spectres et le Manoir du diable », 1896."},
+ "cine-chaudron":{cap:"Georges Méliès, Le Chaudron infernal, 1903, image coloriée à la main."}
 };
 /* où placer chaque image (clé de la page ou de l'élément → image) */
 window.IMGPLACE={
@@ -40,5 +42,5 @@ window.IMGPLACE={
  hist:{"Le Malleus Maleficarum":"malleus","North Berwick":"north-berwick","Les possédées de Loudun":"grandier","Salem":"salem","L’affaire des poisons":"la-voisin","Le « Witchfinder General »":"hopkins"},
  fig:{"Circé":"circe","Baba Yaga":"baba-yaga","Morgane":"morgan","Hécate":"hecate","La Voisin":"la-voisin","Agnes Sampson":"north-berwick","Médée":"fig-medee","Cerridwen":"fig-ceridwen","La sorcière d’Endor":"fig-endor","Mother Shipton":"fig-shipton","Marie Laveau":"fig-laveau"},
  ch:{protection:"ch-protection",purification:"ch-purification",liaison:"ch-liaison",amour:"ch-amour",prosperite:"ch-prosperite",bienetre:"ch-bienetre",reves:"ch-reves",divination:"ch-divination",glamour:"ch-glamour",elements:"ch-elements",lune:"ch-lune",sceaux:"ch-sceaux",samhain:"snap-apple"},
- dossier:{toussaint:["snap-apple"],salem:["salem","salem-examination"],france:["la-voisin","grandier"],vaudou:["doss-vaudou"],"magie-noire":["goya-aquelarre","la-voisin"]}
+ dossier:{toussaint:["snap-apple"],salem:["salem","salem-examination"],france:["la-voisin","grandier"],vaudou:["doss-vaudou"],"sorcellerie-au-cinema":["cine-melies-affiche","cine-chaudron"],"magie-noire":["goya-aquelarre","la-voisin"]}
 };

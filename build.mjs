@@ -255,7 +255,7 @@ ${NL()}
 <a href="/divination/"><b>La divination</b><span>Tarot, flamme, cire et feuilles de thé</span></a>
 <a href="/correspondances/"><b>Les correspondances</b><span>Jours, couleurs, plantes, pierres, lunes</span></a>
 <a href="/recettes/"><b>Les recettes</b><span>Sel noir, eau de lune, encens, huiles</span></a>
-<a href="/dossiers/"><b>Les dossiers</b><span>Toussaint, France, Salem, vaudou, magie noire</span></a>
+<a href="/dossiers/"><b>Les dossiers</b><span>Toussaint, Salem, magie noire, chamans, cinéma…</span></a>
 <a href="/histoire/"><b>L’histoire</b><span>Quatre mille ans de magie et de procès</span></a>
 <a href="/figures/"><b>Les figures</b><span>De Circé à Doreen Valiente</span></a>
 </div></div></section>` });
@@ -370,7 +370,7 @@ function block(bk) {
   if (bk.cards) return `<div class="dcards">${bk.cards.map((x) => `<div class="dcard"><h3>${esc(x[0])}</h3><p class="dsub">${esc(x[1])}</p><p>${esc(x[2])}</p></div>`).join("")}</div>`;
   return "";
 }
-add({ url: "/dossiers/", page: "dossiers", title: "Dossiers : Toussaint, sorcellerie en France, Salem, vaudou, magie noire | Le Grimoire de Minuit", desc: "Les grands dossiers du Grimoire de Minuit : la Toussaint et la nuit des morts, la sorcellerie en France, des bûchers de Lorraine aux leveurs de sorts, l’affaire des sorcières de Salem en 1692, le vaudou, du Bénin à Haïti, et l’histoire de la magie noire.",
+add({ url: "/dossiers/", page: "dossiers", title: "Dossiers : Toussaint, Salem, vaudou, magie noire, chamans, cinéma | Le Grimoire de Minuit", desc: "Les grands dossiers du Grimoire de Minuit : la Toussaint et la nuit des morts, la sorcellerie en France, des bûchers de Lorraine aux leveurs de sorts, l’affaire des sorcières de Salem en 1692, le vaudou, l’histoire de la magie noire, la différence entre sorcière et chaman, et les meilleurs films de sorcières.",
   body: `${crumbs([["/", "Accueil"], [null, "Dossiers"]])}<section class="chap first" style="border-bottom:0">${head("Les Dossiers", "Les grands dossiers", "Des enquêtes longues pour comprendre les affaires et les traditions qui ont façonné l’image de la sorcière.")}
 <div class="body-col dlist">${DOSSIERS.map((d) => { const im = IMG[((IMGPLACE.dossier || {})[d.slug] || [])[0]]; return `<a class="dteaser" href="/dossiers/${d.slug}/">${im ? `<img class="dimg" src="${im.src2}" width="${im.w}" height="${im.h}" loading="lazy" decoding="async" alt="" title="${esc(im.cap)}">` : `<div class="dimg dimg-none" aria-hidden="true">${MOONICON}</div>`}<p class="label">${esc(d.kicker)}</p><h2>${esc(d.n)}</h2><p>${esc(d.dek)}</p><span class="btn small">Lire le dossier →</span></a>`; }).join("")}</div></section>` });
 for (const d of DOSSIERS) {
@@ -511,7 +511,7 @@ for (const b of SAB) {
 }
 for (const d of DOSSIERS) {
   const im = ((IMGPLACE.dossier || {})[d.slug] || [])[0];
-  PINS.push({ key: "dossier-" + d.slug, url: `/dossiers/${d.slug}/`, prio: d.slug === "toussaint" || d.slug === "salem" ? 0 : d.slug === "magie-noire" ? 99 : 1, board: d.slug === "toussaint" ? "Samhain et Halloween" : "Histoire de la sorcellerie",
+  PINS.push({ key: "dossier-" + d.slug, url: `/dossiers/${d.slug}/`, prio: d.slug === "toussaint" || d.slug === "salem" ? 0 : ["magie-noire", "sorciere-ou-chaman", "sorcellerie-au-cinema"].includes(d.slug) ? 99 : 1, board: d.slug === "toussaint" ? "Samhain et Halloween" : "Histoire de la sorcellerie",
     k: d.kicker, t: d.n, sub: clip(d.dek, 150), img: im, lt: "En bref", defs: d.facts.slice(0, 4), cta: "Lire le dossier",
     title: clip(d.title, 100), desc: clip(`${d.dek} ${d.lede}`, 480), kw: ["histoire de la sorcellerie", "sorcières", d.n.toLowerCase(), "procès en sorcellerie"] });
 }

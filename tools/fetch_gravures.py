@@ -44,6 +44,11 @@ WANT_FIGURES = {
     "vaudou":   ["Hector Hyppolite painting", "Vodou veve Legba", "Vodou Haiti engraving 19th century", "Hector Hyppolite"],
 }
 
+WANT_DOSSIERS = {
+    "chaman":  ["Witsen shaman Tungus 1692", "Nicolaes Witsen shaman engraving", "Tungus shaman engraving 18th century", "Siberian shaman engraving"],
+    "cinema":  ["Georges Méliès Le Chaudron infernal 1903", "Méliès Le Manoir du diable 1896", "Georges Méliès film still witch", "Méliès sorcier"],
+}
+
 def get(url):
     for i in range(3):
         try:
@@ -69,19 +74,21 @@ def main():
     want = WANT
     if len(sys.argv) > 1 and sys.argv[1] == "figures":
         want, OUT = WANT_FIGURES, OUT + "-figures"
+    if len(sys.argv) > 1 and sys.argv[1] == "dossiers":
+        want, OUT = WANT_DOSSIERS, OUT + "-dossiers"
     os.makedirs(OUT, exist_ok=True)
     meta = {}
     for key, queries in want.items():
         print(f"\n{key}")
         got, seen = [], set()
         for q in queries:
-            if len(got) >= (4 if key == "vaudou" else 3): break
+            if len(got) >= (4 if key in ("vaudou", "chaman", "cinema") else 3): break
             try:
                 hits = api(action="query", list="search", srsearch=q, srnamespace=6, srlimit=10)["query"]["search"]
             except Exception as e:
                 print("  recherche impossible :", e); continue
             for h in hits:
-                if len(got) >= (4 if key == "vaudou" else 3): break
+                if len(got) >= (4 if key in ("vaudou", "chaman", "cinema") else 3): break
                 t = h["title"]
                 if t in seen or not re.search(r"\.(jpe?g|png|tiff?)$", t, re.I): continue
                 seen.add(t)

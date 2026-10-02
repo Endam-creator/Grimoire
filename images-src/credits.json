@@ -313,5 +313,23 @@
   "title": "Damballah La Flambeau",
   "date": "between 1945 and 1948date QS:P,+1945-00-",
   "license": "Public domain"
+ },
+ "cine-melies-affiche": {
+  "file": "cine-melies-affiche.jpg",
+  "commons": "File:Devils castle poster.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Devils_castle_poster.jpg",
+  "artist": "anonymous",
+  "title": "Les spectres et le Manoir du diable",
+  "date": "1896date QS:P571,+1896-00-00T00:00:00Z/9",
+  "license": "Public domain"
+ },
+ "cine-chaudron": {
+  "file": "cine-chaudron.jpg",
+  "commons": "File:Le Chaudron infernal.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Le_Chaudron_infernal.jpg",
+  "artist": "Georges Méliès",
+  "title": "Le Chaudron infernal",
+  "date": "1903",
+  "license": "Public domain"
  }
 }
