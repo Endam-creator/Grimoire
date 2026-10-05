@@ -42,5 +42,5 @@ window.IMGPLACE={
  hist:{"Le Malleus Maleficarum":"malleus","North Berwick":"north-berwick","Les possédées de Loudun":"grandier","Salem":"salem","L’affaire des poisons":"la-voisin","Le « Witchfinder General »":"hopkins"},
  fig:{"Circé":"circe","Baba Yaga":"baba-yaga","Morgane":"morgan","Hécate":"hecate","La Voisin":"la-voisin","Agnes Sampson":"north-berwick","Médée":"fig-medee","Cerridwen":"fig-ceridwen","La sorcière d’Endor":"fig-endor","Mother Shipton":"fig-shipton","Marie Laveau":"fig-laveau"},
  ch:{protection:"ch-protection",purification:"ch-purification",liaison:"ch-liaison",amour:"ch-amour",prosperite:"ch-prosperite",bienetre:"ch-bienetre",reves:"ch-reves",divination:"ch-divination",glamour:"ch-glamour",elements:"ch-elements",lune:"ch-lune",sceaux:"ch-sceaux",samhain:"snap-apple"},
- dossier:{toussaint:["snap-apple"],salem:["salem","salem-examination"],france:["la-voisin","grandier"],vaudou:["doss-vaudou"],"sorcellerie-au-cinema":["cine-melies-affiche","cine-chaudron"],"magie-noire":["goya-aquelarre","la-voisin"]}
+ dossier:{toussaint:["snap-apple"],salem:["salem","salem-examination"],france:["la-voisin","grandier"],vaudou:["doss-vaudou"],"sorcellerie-au-cinema":["cine-melies-affiche","cine-chaudron"],"magie-noire":["goya-aquelarre","la-voisin"],"et-les-sorciers":["malleus","grandier"]}
 };

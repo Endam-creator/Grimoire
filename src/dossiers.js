@@ -673,6 +673,63 @@ window.DOSSIERS=[
     ["/dossiers/france/","La sorcellerie en France","Loudun, la Voisin et les leveurs de sorts."],
     ["/sabbats/samhain/","Samhain","Tout pour préparer la nuit du 31 octobre."],
     ["/dossiers/sorciere-ou-chaman/","Sorcière ou chaman ?","Ce qui sépare vraiment les deux figures."]]}]}],
- sources:[["Le Manoir du diable","https://fr.wikipedia.org/wiki/Le_Manoir_du_diable","Wikipédia"],["Häxan","https://en.wikipedia.org/wiki/H%C3%A4xan","Wikipedia"],["The Witch (film, 2015)","https://en.wikipedia.org/wiki/The_Witch_(2015_film)","Wikipedia"],["Suspiria (1977)","https://en.wikipedia.org/wiki/Suspiria","Wikipedia"],["Day of Wrath","https://en.wikipedia.org/wiki/Day_of_Wrath","Wikipedia"],["Belladonna of Sadness","https://en.wikipedia.org/wiki/Belladonna_of_Sadness","Wikipedia"],["The Blair Witch Project","https://en.wikipedia.org/wiki/The_Blair_Witch_Project","Wikipedia"]]}
+ sources:[["Le Manoir du diable","https://fr.wikipedia.org/wiki/Le_Manoir_du_diable","Wikipédia"],["Häxan","https://en.wikipedia.org/wiki/H%C3%A4xan","Wikipedia"],["The Witch (film, 2015)","https://en.wikipedia.org/wiki/The_Witch_(2015_film)","Wikipedia"],["Suspiria (1977)","https://en.wikipedia.org/wiki/Suspiria","Wikipedia"],["Day of Wrath","https://en.wikipedia.org/wiki/Day_of_Wrath","Wikipedia"],["Belladonna of Sadness","https://en.wikipedia.org/wiki/Belladonna_of_Sadness","Wikipedia"],["The Blair Witch Project","https://en.wikipedia.org/wiki/The_Blair_Witch_Project","Wikipedia"]]},
+
+/* =========================================================== ET LES SORCIERS ? */
+{slug:"et-les-sorciers",title:"Et les sorciers ? Pourquoi la sorcellerie a été associée aux femmes",n:"Et les sorciers ?",kicker:"Dossier · les hommes oubliés des procès",
+ dek:"Quand on dit « sorcellerie », on pense « sorcière ». Pourtant, des milliers d’hommes ont été jugés et exécutés pour ce crime, et dans certaines régions d’Europe ils étaient même la majorité.",
+ desc:"Pourquoi parle-t-on toujours de sorcières et presque jamais de sorciers ? La part réelle des hommes dans les procès, l’Islande, la Normandie et la Russie, le Malleus Maleficarum, les bergers, les prêtres et les loups-garous, et comment la sorcière a éclipsé le sorcier.",
+ facts:[["≈ 80 %","des personnes jugées en Europe occidentale étaient des femmes"],["20 sur 22","des exécutés pour sorcellerie en Islande étaient des hommes"],["2 sur 3","des sorciers jugés en Normandie étaient des hommes"],["1486","le Malleus Maleficarum fait de la sorcellerie un crime de femmes"]],
+ lede:"Dans les contes, les films et les vitrines d’Halloween, la sorcellerie a un visage de femme. Ce n’est pas un hasard : lors de la grande chasse aux sorcières des XVIᵉ et XVIIᵉ siècles, la plupart des victimes étaient bien des femmes. Mais pas toutes, loin de là. Environ une sur cinq était un homme, et dans plusieurs régions d’Europe, les hommes ont été les premiers accusés. Ce dossier raconte qui étaient ces sorciers oubliés, pourquoi les juges ont surtout cherché des femmes, et comment, quatre siècles plus tard, la sorcière a fini par prendre toute la place.",
+ sections:[
+  {id:"chiffres",h:"Ce que disent les archives",body:[
+   {p:"Les historiens estiment qu’environ 40 000 à 60 000 personnes ont été exécutées pour sorcellerie en Europe entre le XVᵉ et le XVIIIᵉ siècle. Pendant la période la plus intense, de 1570 à 1660, les femmes représentent selon les régions de 71 à 92 % des personnes jugées et exécutées. En moyenne, en Europe occidentale, un accusé sur cinq est un homme."},
+   {p:"Derrière cette moyenne, la carte est très contrastée. Dans le comté d’Essex, en Angleterre, les hommes ne forment que 5 % des accusés. À Lausanne, ils sont 42 %. Et dans plusieurs régions, ils sont majoritaires."},
+   {cards:[
+    ["Islande","1625–1685","Sur les 22 personnes exécutées pour sorcellerie, 20 étaient des hommes. Sur l’île, la magie passait par des livres de signes et de runes, une affaire de lettrés, donc d’hommes."],
+    ["Normandie","XVIIᵉ siècle","Environ deux sorciers jugés sur trois étaient des hommes, souvent des bergers, soupçonnés de voler des hosties pour fabriquer des poisons destinés aux troupeaux. En 1670, Louis XIV commue les peines de mort d’un groupe de condamnés normands."],
+    ["Russie","1622–1700","68 % des accusés étaient des hommes. Les procès y visaient surtout des clercs, des fonctionnaires et leur entourage : une affaire politique plus que religieuse."],
+    ["Estonie","XVIIᵉ siècle","Sur 206 accusés dont on connaît le sexe, 60 % étaient des hommes, souvent soupçonnés d’avoir nui à leurs voisins sous la forme d’un loup."],
+    ["Parlement de Paris","1565–1640","L’historien Alfred Soman a dépouillé les appels de procès de sorcellerie : un peu plus de la moitié des appelants étaient des hommes."],
+    ["Alpes","1424–1448","Dans les premiers grands procès du Dauphiné, les hommes représentent 28 % des quelque 250 accusés. La sorcière n’était pas encore devenue l’image unique."]]}]},
+  {id:"malleus",h:"Le Marteau des sorcières",body:[
+   {p:"En 1486, l’inquisiteur dominicain Heinrich Kramer publie le « Malleus Maleficarum », le Marteau des sorcières. Le titre lui-même choisit son camp : en latin, « maleficarum » est un féminin. Ce sont les malfaisantes qu’il faut frapper."},
+   {p:"Le livre consacre tout un chapitre à expliquer pourquoi la sorcellerie se trouve « surtout chez les femmes ». Elles seraient plus crédules, plus bavardes, plus faibles dans la foi et plus soumises à la chair. Kramer va jusqu’à inventer une étymologie : « femina » viendrait de « fe », la foi, et « minus », moins."},
+   {quote:"Toute sorcellerie vient du désir charnel, qui chez les femmes est insatiable.","by":"Malleus Maleficarum, 1486, première partie, question 6"},
+   {p:"Le Malleus n’a pas été suivi partout, et l’Église l’a regardé avec méfiance. Mais réimprimé des dizaines de fois, il a fixé dans l’esprit de nombreux juges l’idée qu’un sorcier est d’abord une sorcière. Un juge qui cherche une femme finit par en trouver."}]},
+  {id:"village",h:"Le soupçon naît au village",body:[
+   {p:"Les procès ne commençaient presque jamais chez les savants, mais entre voisins. Une vache meurt, un enfant dépérit, la grêle détruit une récolte : on cherche qui a pu jeter un sort. Or les femmes s’occupaient de tout ce qui peut mal tourner : les accouchements, les remèdes, la cuisine, le lait, les soins aux bêtes et aux malades."},
+   {p:"La cible typique était une femme âgée, veuve, pauvre, qui vivait seule et demandait l’aumône. Quand on lui refusait un peu de lait ou de pain, elle repartait en marmonnant. Si un malheur arrivait ensuite, la culpabilité de celui qui avait refusé se retournait contre elle."},
+   {p:"Une fois l’accusation lancée, la mécanique judiciaire faisait le reste. Sous la torture, les accusées nommaient d’autres complices, souvent des femmes de leur entourage. Les chasses en chaîne ont ainsi multiplié les victimes féminines, surtout dans les terres d’Empire, où les procès furent les plus meurtriers."}]},
+  {id:"hommes",h:"Qui étaient les sorciers ?",body:[
+   {p:"Quand les hommes étaient accusés, c’était souvent pour d’autres raisons, et sous d’autres visages."},
+   {cards:[
+    ["Les bergers","Normandie, Brie, Berry","Seuls dans les champs, à la nuit tombée, savants en remèdes pour les bêtes : les bergers inquiétaient. On les disait capables de faire périr un troupeau ou de lier un loup."],
+    ["Les prêtres","Aix, Loudun, Louviers","Au XVIIᵉ siècle, les grandes affaires de possession visent des hommes d’Église : Louis Gaufridy, brûlé en 1611, Urbain Grandier en 1634, Thomas Boullé en 1647."],
+    ["Les loups-garous","Franche-Comté, Baltique","En 1573, à Dole, Gilles Garnier est brûlé pour avoir dévoré des enfants sous la forme d’un loup. Le loup-garou était le plus souvent un homme."],
+    ["Les bons sorciers","Frioul, 1575–1675","Les benandanti qui disaient combattre les sorciers en esprit pour sauver les récoltes étaient presque tous des hommes. L’Inquisition les a jugés à leur tour."],
+    ["Les hommes de Salem","Massachusetts, 1692","Sur les 19 pendus, 5 étaient des hommes, dont l’ancien pasteur George Burroughs. Giles Corey, 80 ans, mourut écrasé sous des pierres."],
+    ["Les maris et les fils","Partout","Beaucoup d’hommes ont été accusés parce qu’ils étaient le mari, le fils ou le frère d’une sorcière déjà condamnée. Le soupçon suivait les familles."]]}]},
+  {id:"mots",h:"Mage ou sorcier : deux mots, deux magies",body:[
+   {p:"La langue elle-même a séparé les deux. Un homme qui pratique la magie savante, avec des livres, des cercles, de l’astrologie et des invocations, on l’appelle mage, magicien ou enchanteur. Merlin, le docteur Faust ou Cornelius Agrippa, auteur en 1533 d’une célèbre « Philosophie occulte », appartiennent à ce monde-là. Il est inquiétant, mais prestigieux."},
+   {p:"La sorcellerie populaire, faite de gestes, de formules et de plantes, transmise à l’oral, est celle de la sorcière. Elle n’a ni livres ni titres. Un mage peut être un savant égaré, une sorcière est une voisine dangereuse."},
+   {p:"En anglais, la frontière est encore plus nette : « wizard » ou « warlock » pour l’homme, « witch » pour la femme, même si « witch » s’appliquait aussi aux hommes dans les procès. En français, « sorcier » a fini par désigner surtout le magicien des contes. Le premier Harry Potter s’intitule « à l’école des sorciers », pas des sorcières."},
+   {note:"Fait curieux : la plus vieille image appelée « sorcier » en France est une gravure d’environ 15 000 ans, dans la grotte des Trois-Frères, en Ariège. Un homme-animal à bois de cerf, que l’abbé Breuil a baptisé « le Sorcier ». Rien ne dit qu’il en soit un, mais le nom est resté."}]},
+  {id:"memoire",h:"Comment la sorcière a éclipsé le sorcier",body:[
+   {p:"Si la sorcière occupe aujourd’hui toute la place, c’est aussi parce qu’elle a été réhabilitée. Le sorcier, lui, n’a jamais eu ce destin."},
+   {timeline:[
+    ["1862","La Sorcière de Michelet","L’historien Jules Michelet fait de la sorcière une héroïne : une femme du peuple, guérisseuse et rebelle, persécutée par l’Église et les seigneurs. Le livre façonne l’image romantique de la sorcière."],
+    ["1893","Les « 9 millions »","La féministe américaine Matilda Joslyn Gage avance le chiffre de neuf millions de victimes. Il est faux, les historiens parlent plutôt de 40 000 à 60 000 exécutions, mais il se répand pendant tout le XXᵉ siècle."],
+    ["1954","La Wicca","Gerald Gardner publie « Witchcraft Today ». Dans la Wicca, hommes et femmes se disent « witches », mais la grande prêtresse occupe la première place."],
+    ["1968","W.I.T.C.H.","À New York, le soir d’Halloween, des militantes féministes déguisées en sorcières vont « jeter un sort » à Wall Street. La sorcière devient un symbole politique."],
+    ["2018","Sorcières de Mona Chollet","L’essai de Mona Chollet, « Sorcières. La puissance invaincue des femmes », devient un best-seller et relance en France la figure de la sorcière comme modèle de liberté."]]},
+   {p:"Le résultat est paradoxal. La sorcière est née d’une accusation lancée contre des femmes, elle est devenue l’emblème de leur émancipation. Et les milliers d’hommes brûlés ou pendus pour le même crime ont presque disparu de la mémoire collective."}]},
+  {id:"grimoire",h:"Pour aller plus loin",body:[
+   {links:[
+    ["/dossiers/france/","La sorcellerie en France","Les juges, les possédées de Loudun et les leveurs de sorts."],
+    ["/dossiers/sorciere-ou-chaman/","Sorcière ou chaman ?","Les benandanti, ces bons sorciers du Frioul."],
+    ["/dossiers/salem/","Les sorcières de Salem","Les 19 pendus de 1692, femmes et hommes."],
+    ["/histoire/","L’histoire de la sorcellerie","Du Malleus Maleficarum aux grandes chasses."]]}]}],
+ sources:[["Witch Trials, Europe","https://www.encyclopedia.com/social-sciences/encyclopedias-almanacs-transcripts-and-maps/witch-trials-europe","Encyclopedia.com"],["Chasse aux sorcières","https://fr.wikipedia.org/wiki/Chasse_aux_sorci%C3%A8res","Wikipédia"],["Les procès de sorcellerie au Parlement de Paris (1565-1640)","https://www.cambridge.org/core/journals/annales-histoire-sciences-sociales/article/abs/les-proces-de-sorcellerie-au-parlement-de-paris-15651640/07CED01A61BC9AE5417E8557357241FC","Alfred Soman, Annales, 1977"],["Witch trials in Iceland","https://en.wikipedia.org/wiki/Witch_trials_in_Iceland","Wikipedia"],["Normandy witch trials","https://en.wikipedia.org/wiki/Normandy_witch_trials","Wikipedia"],["Witch trials in Russia","https://en.wikipedia.org/wiki/Witch_trials_in_Russia","Wikipedia"],["Witch trials in Latvia and Estonia","https://en.wikipedia.org/wiki/Witch_trials_in_Latvia_and_Estonia","Wikipedia"]]}
 
 ];
