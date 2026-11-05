@@ -701,3 +701,14 @@ html,body{overflow-x:clip}
 .rit-vign{display:block;width:100%;height:auto;max-width:260px;margin-top:28px;border:6px solid #efe4c8;border-radius:2px;box-shadow:0 16px 40px rgba(0,0,0,.45);filter:saturate(.9)}
 @media (max-width:860px){.rit-vign{display:none}}
 .ritual>.steps{align-content:start;align-self:start}
+
+/* Fil des nouveautés */
+.news{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.news li{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line)}
+.news time{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--gold);text-transform:uppercase}
+.news a{text-decoration:none;color:var(--bone)}
+.news a b{display:block;font-family:var(--fell);font-weight:400;font-size:20px;color:var(--bone)}
+.news a:hover b{color:var(--gold)}
+.news a span{display:block;color:var(--bone-dim);font-size:15px;margin-top:2px}
+.news-wrap .cta-line{margin-top:18px}
+@media (max-width:560px){.news li{grid-template-columns:1fr;gap:4px}}

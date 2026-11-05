@@ -155,7 +155,7 @@ function footer() {
 <div><a class="brand" href="/">${MOONICON}<span>Le Grimoire de Minuit</span></a>${SOCIALHTML}<p>Un grimoire en ligne de sorcellerie : histoire, sorts, rituels et traditions, rassemblés et réécrits en français. Contenu à visée culturelle. Un projet <a href="https://endam-digital.com" style="color:var(--gold)">Endam Digital</a> · <a href="https://endam-digital.com/soutenir/" style="color:var(--gold)">Soutenir</a>.</p></div>
 ${col("Pratiquer", [["/livre-des-ombres/", "Livre des Ombres"], ["/sorts/", "Tous les sorts"], ["/atelier/", "Atelier du sorcier"], ["/rituels/", "Rituels"], ["/sabbats/", "Roue de l’année"]])}
 ${col("Savoir", [["/outils/", "Outils"], ["/recettes/", "Recettes"], ["/divination/", "Divination & tarot"], ["/correspondances/", "Correspondances"], ["/ingredients/", "Plantes & pierres"]])}
-${col("Culture", [["/dossiers/toussaint/", "Toussaint et jour des morts"], ["/dossiers/", "Tous les dossiers"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"], ["/lettre/", "La lettre du samedi"], ["/contact/", "Une idée ? Écris-nous"], ["/mentions-legales/", "Mentions légales"]])}
+${col("Culture", [["/dossiers/toussaint/", "Toussaint et jour des morts"], ["/dossiers/", "Tous les dossiers"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"], ["/lettre/", "La lettre du samedi"], ["/nouveautes/", "Nouveautés"], ["/contact/", "Une idée ? Écris-nous"], ["/mentions-legales/", "Mentions légales"]])}
 </footer>`;
 }
 function crumbs(list) {
@@ -230,6 +230,21 @@ const howto = (name, desc, supplies, steps, url) => ({ "@context": "https://sche
 const pages = [];
 const add = (p) => pages.push(p);
 
+// Fil des nouveautés : ajoute une ligne en haut à chaque mise à jour du site (la plus récente en premier).
+const NEWS = [
+  ["2026-10-28", "/dossiers/salem/#serie", "La série « Salem » : vrai ou faux ?", "Mary Sibley, John Alden, les Mather, Tituba : ce que la série invente et ce qui est vrai."],
+  ["2026-10-05", "/dossiers/et-les-sorciers/", "Dossier : Et les sorciers ?", "Pourquoi la sorcellerie a un visage de femme, et les milliers d’hommes oubliés des procès."],
+  ["2026-10-02", "/dossiers/sorcellerie-au-cinema/", "Dossier : Les sorcières au cinéma", "De Méliès à The Witch, et notre classement des 15 meilleurs films."],
+  ["2026-10-02", "/dossiers/sorciere-ou-chaman/", "Dossier : Sorcière ou chaman ?", "La transe, le sabbat et les benandanti, ces bons sorciers du Frioul."],
+  ["2026-09-28", "/dossiers/magie-noire/", "Dossier : La magie noire", "Histoire d’une accusation, des Templiers aux messes noires de la cour de Louis XIV."],
+  ["2026-09-27", "/contact/", "Écris au grimoire", "Une idée de sort, une question, une erreur repérée ? Le formulaire est ouvert."],
+  ["2026-09-26", "/sabbats/samhain/", "Opération Samhain", "Huit nouveaux sorts et une page enrichie pour la nuit du 31 octobre."],
+  ["2026-09-26", "/dossiers/salem/", "Dossiers : Salem et le vaudou", "Les vingt victimes de 1692, et le vaudou loin des clichés d’Hollywood."],
+  ["2026-09-26", "/lettre/", "La lettre du samedi", "Chaque samedi, un sort de saison et une histoire du grimoire."],
+];
+const NEWS_DATE = (d) => new Date(d + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+const newsList = (items) => `<ol class="news">${items.map(([d, u, t, x]) => `<li><time datetime="${d}">${NEWS_DATE(d)}</time><a href="${u}"><b>${t}</b><span>${x}</span></a></li>`).join("")}</ol>`;
+
 add({ url: "/", page: "home", title: "Le Grimoire de Minuit — sorts, rituels et Livre des Ombres", desc: `Un grimoire de sorcellerie en français : ${SPELLS.length} sorts détaillés, ${RIT.length} rituels, les 8 sabbats, la lune du jour, le tarot, les correspondances et l’histoire des sorcières.`,
   ld: [{ "@context": "https://schema.org", "@type": "WebSite", name: "Le Grimoire de Minuit", url: SITE + "/", ...(SOCIAL.length ? { sameAs: SOCIAL.map(([, u]) => u) } : {}), inLanguage: "fr", description: "Grimoire de sorcellerie en ligne : sorts, rituels, sabbats et histoire." }],
   body: `<section class="hero hero-art">
@@ -243,6 +258,8 @@ add({ url: "/", page: "home", title: "Le Grimoire de Minuit — sorts, rituels e
 <div class="moon-fig"><svg id="moon-svg" viewBox="-4 -4 108 108" role="img" aria-label="Phase actuelle de la lune"></svg></div>
 <p class="moon-name" id="moon-name"></p><p class="moon-meta" id="moon-meta"></p><p class="moon-advice" id="moon-advice"></p><div class="tonight" id="tonight" aria-label="Sorts conseillés ce soir"></div></aside>
 </section>
+<section class="chap news-wrap"><div class="chap-head"><p class="chap-num">Nouveau</p><div><h2>Dernières mises à jour</h2></div></div>
+<div class="body-col">${newsList(NEWS.slice(0, 4))}<div class="cta-line"><a class="btn ghost small" href="/nouveautes/">Toutes les nouveautés</a></div></div></section>
 <section class="chap"><div class="chap-head"><p class="chap-num">Le Livre</p><div><h2>Treize chapitres de sorts</h2><p>Chaque sort a sa page : le moment, les ingrédients, le rituel pas à pas, l’incantation, les variantes et son histoire.</p></div></div>
 <div class="body-col"><div class="chapcards" id="chapcards"></div><div class="cta-line"><a class="btn" href="/livre-des-ombres/">Feuilleter le livre</a><a class="btn ghost" href="/sorts/">Voir tous les sorts</a></div></div></section>
 <section class="chap"><div class="body-col" style="margin-left:0"><div class="sabteaser" id="sabteaser"></div></div></section>
@@ -419,6 +436,10 @@ ${i.recipes.length ? `<h2 class="sub" style="font-size:30px;margin:48px 0 18px">
 }
 
 /* ---------- mentions légales ---------- */
+add({ url: "/nouveautes/", page: "nouveautes", title: "Nouveautés du grimoire | Le Grimoire de Minuit", desc: "Toutes les mises à jour du Grimoire de Minuit : nouveaux dossiers, sorts, rituels et pages, de la plus récente à la plus ancienne.",
+  body: `${crumbs([["/", "Accueil"], [null, "Nouveautés"]])}<section class="chap first" style="border-bottom:0">${head("Nouveau", "Les nouveautés du grimoire", "Chaque ajout au site, du plus récent au plus ancien.")}
+<div class="body-col">${newsList(NEWS)}</div></section>` });
+
 add({ url: "/mentions-legales/", page: "legal", title: "Mentions légales | Le Grimoire de Minuit", desc: "Mentions légales, hébergement, statistiques et données personnelles du site Le Grimoire de Minuit.",
   body: `${crumbs([["/", "Accueil"], [null, "Mentions légales"]])}<section class="chap first" style="border-bottom:0">${head("Mentions", "Mentions légales", "")}
 <div class="body-col dbody legal">
