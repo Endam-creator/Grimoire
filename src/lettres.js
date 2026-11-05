@@ -36,5 +36,37 @@ window.LETTRES=[
    "« Vous qui étiez à notre table, merci d’être revenus ce soir. Repartez en paix vers votre rivage, nous vous gardons dans nos mémoires. »",
    "Avec des enfants, dix minutes de silence au début du repas suffisent, puis chacun raconte un souvenir.",
    "La lune de la semaine : elle décroît depuis la pleine lune de lundi, jusqu’au dernier quartier dimanche 1er novembre à 21 h 28. C’est la lune des adieux : si tu as une chose à laisser partir avec l’année qui s’achève, écris-la et brûle-la dans le chaudron.",
-   "Merci d’avoir suivi ce mois d’octobre avec le Grimoire de Minuit. La lettre continue en novembre, le mois des morts, puis sur la route de Yule, la nuit la plus longue de l’année. Rendez-vous samedi prochain. Bonne Samhain."]}
+   "Merci d’avoir suivi ce mois d’octobre avec le Grimoire de Minuit. La lettre continue en novembre, le mois des morts, puis sur la route de Yule, la nuit la plus longue de l’année. Rendez-vous samedi prochain. Bonne Samhain."]},
+
+ {date:"2026-11-07",slug:"2026-11-07-lettre-lune-noire",sujet:"Novembre, le mois noir : la lettre de la lune noire",sort:"lunenoire",
+  corps:["Samhain est passée, la nouvelle année des sorcières a commencé. Bienvenue en novembre, le mois des morts.",
+   "En breton, novembre se dit « miz Du », le mois noir. Décembre, lui, s’appelle « miz Kerzu » : le mois très noir. Les jours raccourcissent, la nature se retire sous terre, et c’est exactement ce que la tradition conseille de faire : ralentir, faire le tri, préparer en secret ce qui germera au printemps. En Bretagne, les âmes des morts, l’Anaon, rôdaient encore autour des maisons pendant tout le mois.",
+   "Le sort de la semaine se fait à la nouvelle lune, la « lune noire », celle qu’on ne voit pas : la lettre de la lune noire. Éteins toutes les lumières et allume une bougie. Écris pendant trois minutes, sans t’arrêter, tout ce qui t’encombre la tête, puis déchire la feuille. Sur une feuille neuve, écris trois intentions pour le mois qui vient, pas une de plus, au présent. Lis-les à voix haute :",
+   "« Lune cachée, lune nouvelle, je te confie ce qui m’appelle. Quand tu reviendras ronde et pleine, que ma récolte soit certaine. »",
+   "Glisse la feuille et une graine dans une enveloppe, ferme-la, et ne l’ouvre qu’à la pleine lune.",
+   "La lune de la semaine : nouvelle lune lundi 9 novembre à 8 h 02. Fais ta lettre dimanche soir ou lundi soir, et ouvre l’enveloppe à la pleine lune du mardi 24 novembre."]},
+
+ {date:"2026-11-14",slug:"2026-11-14-garde-du-seuil",sujet:"La lune du castor : garder le seuil",sort:"seuil",
+  corps:["Cette semaine, on s’occupe de la maison. Les nuits sont longues, on rentre tôt : autant que le foyer soit bien gardé.",
+   "La pleine lune de novembre porte un nom venu des almanachs américains : la lune du castor. C’était le moment de poser les pièges avant que les marais ne gèlent, et celui où les castors finissent leurs barrages pour l’hiver. Dans la tradition des sorcières, c’est la lune du foyer : on calfeutre, on range, on protège.",
+   "Le sort de la semaine, à faire un samedi, le jour de Saturne, gardien des limites : la garde du seuil. Lave ton pas de porte à l’eau salée, avec un brin de romarin en guise de goupillon. Trace du bout des doigts, à l’eau salée, une étoile invisible sur la porte. Accroche au-dessus, côté intérieur, un clou en fer ou un fer à cheval, pointes vers le haut pour que la chance ne s’écoule pas. Puis touche les deux montants de la porte et dis :",
+   "« Fer qui ne plie, sel qui ne ment, gardez ma porte du couchant au levant. Entre l’ami, passe le voisin, restent dehors le mal et le malin. »",
+   "Pourquoi le fer ? Dans tout le folklore européen, les fées et les mauvais esprits le craignent. C’est de là que vient le fer à cheval porte-bonheur.",
+   "La lune de la semaine : elle croît, jusqu’au premier quartier mardi 17 novembre à 12 h 47. Une lune croissante, c’est le bon moment pour faire entrer quelque chose de nouveau chez soi : une plante, un objet, une habitude."]},
+
+ {date:"2026-11-21",slug:"2026-11-21-sainte-catherine-arbre",sujet:"À la Sainte-Catherine, tout bois prend racine",sort:"ancrage",
+  corps:["Mercredi, c’est la Sainte-Catherine. Un proverbe des jardiniers dit : « À la Sainte-Catherine, tout bois prend racine. » Fin novembre, la terre est encore douce et humide : c’est le meilleur moment pour planter un arbre.",
+   "La Sainte-Catherine, c’est aussi la fête des « catherinettes », les jeunes femmes de 25 ans encore célibataires. Dans les ateliers de couture parisiens, elles portaient ce jour-là un chapeau extravagant, jaune et vert, fabriqué par leurs collègues. La tradition existe toujours chez les modistes.",
+   "Le sort de la semaine prend le proverbe au mot, mais pour toi : l’arbre intérieur, le premier exercice qu’on apprend en sorcellerie. Pose les pieds bien à plat, une pierre ou un simple caillou dans la main gauche. Respire en comptant jusqu’à quatre, retiens jusqu’à quatre, expire jusqu’à six. Imagine des racines qui sortent de tes pieds et descendent profondément dans la terre. À chaque expiration, envoie-leur ce qui t’agite. À chaque inspiration, fais remonter une énergie calme et chaude. Puis dis :",
+   "« Racines en bas, branches en haut, je suis l’arbre, je suis l’eau. Le vent peut souffler, je ne tombe pas, la terre me tient, la terre est là. »",
+   "Cinq minutes suffisent. Refais-le chaque fois que novembre te pèse.",
+   "La lune de la semaine : pleine lune mardi 24 novembre à 15 h 53, la lune du castor. Si tu as écrit ta lettre de la lune noire, c’est le moment d’ouvrir l’enveloppe et de voir ce qui a commencé à pousser."]},
+
+ {date:"2026-11-28",slug:"2026-11-28-route-de-yule-cannelle",sujet:"Sur la route de Yule : le souffle de cannelle",sort:"cannelle",
+  corps:["Demain, dimanche 29 novembre, c’est le premier dimanche de l’Avent. Le compte à rebours commence : dans un peu plus de trois semaines, ce sera Yule, la nuit la plus longue de l’année.",
+   "Le solstice d’hiver tombera le lundi 21 décembre à 21 h 50. Pour les peuples du Nord, c’était la nuit où le soleil renaissait : à partir de là, les jours rallongent. Le sapin, la bûche, les bougies et les couronnes de l’Avent viennent tous, de près ou de loin, de ces fêtes de la lumière au cœur de l’hiver. Jusqu’à Yule, chaque lettre sera une étape sur sa route.",
+   "Le sort de la semaine se fait mardi matin, le 1er décembre : le souffle de cannelle. Le premier jour du mois, pose-toi à ta porte d’entrée ouverte, une pincée de cannelle au creux de la main droite. Dis :",
+   "« Quand cette cannelle soufflera, la prospérité viendra. Quand cette cannelle s’envolera, l’abondance ici restera. »",
+   "Puis souffle la cannelle vers l’intérieur de la maison, jamais vers l’extérieur, et ne balaie pas le seuil avant le soir. La cannelle est l’épice de la chaleur et du soleil : la parfaite invitée pour le mois de Yule.",
+   "La lune de la semaine : elle décroît depuis la pleine lune de mardi, jusqu’au dernier quartier mardi 1er décembre à 7 h 08. Une lune décroissante pour finir novembre : range, donne, jette ce dont tu ne veux pas emporter dans l’hiver."]}
 ];
