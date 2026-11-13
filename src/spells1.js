@@ -20,7 +20,7 @@ window.SPELLS=[
  steps:["Trace le cercle et allume la bougie noire. Pose tous les ingrédients devant toi.","Mets d’abord les objets pointus dans la bouteille, un par un, en disant pour chacun : « Toi, tu perces ce qui vient me blesser. »","Ajoute le sel et le romarin, qui purifient et gardent.","Ajoute tes cheveux et ton ongle : ils font de la bouteille ton double, celui qui recevra les coups à ta place.","Remplis de vinaigre (autrefois, on utilisait de l’urine), en récitant l’incantation.","Ferme et scelle le couvercle avec la cire de la bougie noire.","Enterre la bouteille près de la porte d’entrée, sous une dalle ou dans un pot de terre à l’entrée. Elle ne doit jamais être ouverte ni cassée."],
  inc:"Pointe et clou, sel et vinaigre,\nce qui vient m’atteindre ici s’enferre.\nPrisonnier du verre et de la terre,\nle mal ne passe pas ma barrière.",
  var:["En appartement : cache-la au fond d’un placard près de l’entrée ou dans une jardinière du balcon.","Version douce : remplace les objets pointus par des épines de rosier et le vinaigre par de l’eau de mer."],
- note:"Les archéologues ont retrouvé plus de deux cents bouteilles de sorcière en Angleterre, surtout en East Anglia. La plus ancienne mention écrite date de 1681. Au XVIIᵉ siècle, on utilisait des cruches en grès ornées d’un visage barbu, les « Bellarmines ». Une bouteille encore scellée, découverte à Greenwich en 2004, contenait des clous tordus, une épingle, des cheveux et de l’urine.",
+ note:"Les archéologues ont retrouvé plus de deux cents bouteilles de sorcière en Angleterre, surtout en East Anglia. La plus ancienne mention écrite date de 1681. Au XVIIᵉ siècle, on utilisait des cruches en grès ornées d’un visage barbu, les « Bellarmines ». Une bouteille encore scellée, découverte à Greenwich en 2004, contenait des clous tordus, des épingles, des cheveux et de l’urine.",
  after:"On ne défait pas une bouteille de sorcière. Si tu déménages, fais-en une nouvelle et laisse l’ancienne en place.",
  m:"Le sort le plus documenté de toute l’archéologie."},
 
@@ -206,7 +206,7 @@ window.SPELLS=[
  steps:["La veille de l’entretien, grave ton nom et le nom de l’entreprise sur la bougie.","Enduis-la d’huile de bas en haut (pour attirer), puis roule-la dans le romarin écrasé.","Pose-la sur l’annonce. Allume-la.","Relis l’annonce et imagine l’appel qui t’annonce que tu es pris, en détail.","Récite l’incantation, puis prépare vraiment ton entretien pendant qu’elle brûle.","Le jour J, glisse une feuille de laurier dans ta chaussure droite et la cornaline dans ta poche."],
  inc:"Laurier de la victoire,\nromarin de la mémoire,\nque je parle clair et droit,\nque ce poste soit pour moi.",
  var:["Pour un examen, remplace l’annonce par ta convocation et le laurier par de la menthe.","Pour une augmentation, travaille un jeudi avec une bougie verte."],
- note:"Le laurier couronnait les vainqueurs des jeux pythiques en l’honneur d’Apollon. Le romarin était l’herbe du souvenir : les étudiants grecs en portaient des couronnes pendant les examens.",
+ note:"Le laurier couronnait les vainqueurs des jeux pythiques en l’honneur d’Apollon. Le romarin est l’herbe du souvenir : on raconte que les étudiants grecs en portaient des couronnes pour aider leur mémoire.",
  after:"Garde la feuille de laurier en souvenir si tu obtiens le poste.",
  m:"La magie aide ceux qui préparent."},
 
@@ -215,7 +215,7 @@ window.SPELLS=[
  steps:["Un soir de pleine lune, remplis un bol d’eau et place-le là où la lune s’y reflète.","Mets les pièces dans l’eau.","Passe tes mains au-dessus du bol comme pour ramasser la lumière.","Récite l’incantation.","Le lendemain matin, sèche les pièces et garde-les dans ton portefeuille pendant un mois."],
  inc:"Belle lune, je te montre ma bourse,\nqu’elle soit pleine à la fin de ta course.\nComme tu grandis et reviens toujours,\nque l’argent revienne, jour après jour.",
  var:["Retourne les pièces dans ta poche à la vue de la nouvelle lune.","Arrose tes plantes avec l’eau du bol."],
- note:"En Angleterre et en France, la coutume de retourner l’argent de sa poche en voyant la première lune du mois est attestée depuis des siècles dans le folklore.",
+ note:"Dans les îles Britanniques, la coutume de retourner l’argent dans sa poche en voyant la nouvelle lune est attestée depuis des siècles dans le folklore.",
  after:"Dépense les pièces au bout d’un mois, l’argent doit circuler.",
  m:"L’argent doit circuler."},
 
@@ -224,7 +224,7 @@ window.SPELLS=[
  steps:["Place chaque ingrédient dans la fiole en le nommant.","Ferme et tiens la fiole au soleil de midi en récitant l’incantation.","Porte-la en collier ou garde-la dans ta poche.","Quand quelque chose de bon arrive, touche-la et dis merci."],
  inc:"Trèfle des prés, soleil de midi,\nque la chance soit ma compagnie.\nAu hasard des routes et des jeux,\nque le sort me soit heureux.",
  var:["Remplace le trèfle par une feuille de laurier si tu n’en trouves pas.","Les joueurs de cartes frottaient autrefois leurs mains de camomille avant de jouer."],
- note:"Le trèfle à quatre feuilles est l’un des porte-bonheur les plus connus d’Europe. En Irlande, on dit que ses quatre feuilles sont la foi, l’espoir, l’amour et la chance.",
+ note:"Le trèfle à quatre feuilles est l’un des porte-bonheur les plus connus d’Europe. Selon la tradition, ses quatre feuilles sont la foi, l’espoir, l’amour et la chance.",
  after:"Si la fiole se casse, c’est qu’elle a épuisé sa chance : fais-en une nouvelle.",
  m:"Touche-la et dis merci."},
 

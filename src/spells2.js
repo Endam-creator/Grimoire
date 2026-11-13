@@ -61,7 +61,7 @@ window.SPELLS=window.SPELLS.concat([
  steps:["Tiens la chaîne entre le pouce et l’index, le coude posé sur la table, le pendule immobile.","Demande-lui : « Montre-moi oui. » Observe son mouvement (souvent un cercle ou un va-et-vient). Puis : « Montre-moi non. »","Pose une question qui se répond par oui ou par non. Garde l’esprit neutre, sans espérer une réponse.","Récite l’incantation avant la première question.","Remercie le pendule à la fin et range-le dans un sachet."],
  inc:"Pendule de fil, pendule d’argent,\ndis-moi le vrai, simplement.\nNi mon désir ni ma crainte,\nseulement la réponse sans feinte.",
  var:["Au-dessus d’une carte, il sert à chercher un objet perdu : c’est la radiesthésie."],
- note:"Les sourciers utilisent des baguettes et des pendules pour chercher l’eau depuis au moins le XVIᵉ siècle. Les scientifiques expliquent le mouvement par l’effet idéomoteur : de minuscules gestes inconscients de la main.",
+ note:"Les sourciers cherchent l’eau avec des baguettes depuis au moins le XVIᵉ siècle, et le pendule les a rejointes plus tard. Les scientifiques expliquent le mouvement par l’effet idéomoteur : de minuscules gestes inconscients de la main.",
  after:"Aucun reste.",
  m:"Garde l’esprit neutre."},
 
@@ -80,7 +80,7 @@ window.SPELLS=window.SPELLS.concat([
  steps:["Après ta toilette, regarde-toi dans le miroir.","Vaporise l’eau de rose ou le parfum sur tes poignets et à la base de ton cou.","Tiens ton bijou dans ta main et imagine une lumière dorée qui l’entoure puis t’enveloppe tout entier.","Récite l’incantation en mettant le bijou.","Chaque fois que tu le touches dans la journée, le charme se réactive."],
  inc:"Lumière d’or, voile de soie,\nque l’on voie en moi ce que je vois.\nQue ma présence soit claire et belle,\ndu matin jusqu’à la chandelle.",
  var:["Avant un rendez-vous important, ajoute un pétale de rose dans ta poche.","En hiver, utilise de l’huile d’orange douce diluée."],
- note:"En écossais ancien, « glamour » voulait dire un sort qui trompe les yeux. Walter Scott a fait passer le mot dans l’anglais courant au XIXᵉ siècle, avec le sens de charme séduisant.",
+ note:"En écossais ancien, « glamour » voulait dire un sort qui trompe les yeux. Walter Scott a fait passer le mot dans l’anglais courant au XIXᵉ siècle, où il a pris peu à peu le sens de charme séduisant.",
  after:"Le soir, en enlevant le bijou, remercie-le.",
  m:"Le charme se réactive au toucher."},
 
@@ -98,7 +98,7 @@ window.SPELLS=window.SPELLS.concat([
  steps:["Nettoie la pierre en la posant une nuit sur du sel.","Allume la bougie. Tiens la pierre et rappelle-toi en détail un moment où tu as été fier de toi.","Pendant que tu revis ce souvenir, serre la pierre : tu y ranges cette sensation.","Récite l’incantation trois fois.","Porte-la sur toi. Quand tu as besoin de courage, serre-la et laisse remonter la sensation."],
  inc:"Pierre de feu, pierre de soleil,\ngarde ma force quand je sommeille.\nQuand je doute, rends-la-moi,\nque je me tienne droit.",
  var:["Recharge-la au soleil de midi une fois par mois.","Les psychologues appellent un peu la même chose un « ancrage » émotionnel."],
- note:"La cornaline était portée par les soldats de l’Antiquité, notamment en Égypte et à Rome, pour le courage. On la gravait souvent pour en faire des sceaux.",
+ note:"Dans l’Antiquité, notamment en Égypte et à Rome, la cornaline passait pour donner du courage. On la gravait souvent pour en faire des sceaux.",
  after:"Aucun reste.",
  m:"Tu y ranges ta propre force."},
 
@@ -126,7 +126,7 @@ window.SPELLS=window.SPELLS.concat([
  steps:["Quand un orage éclate, pose le bocal sur un rebord de fenêtre, un balcon ou dans le jardin, sans t’exposer toi-même.","Récite l’incantation depuis l’intérieur.","Rentre le bocal quand l’orage est passé. Ferme-le et note la date et l’heure.","Utilise-la pour les sorts qui ont besoin d’énergie : courage, bannissement, relancer un projet bloqué."],
  inc:"Pluie d’éclair, eau de tonnerre,\nremplis mon bocal de ta colère.\nQue ta force serve mon bon droit,\net qu’elle obéisse à ma voix.",
  var:["L’eau d’une pluie douce de printemps sert au contraire aux sorts de fertilité et de croissance."],
- note:"L’eau d’orage est un ingrédient apprécié de la sorcellerie moderne. Dans le folklore, l’eau de la première pluie de mai était réputée embellir le teint.",
+ note:"L’eau d’orage est un ingrédient apprécié de la sorcellerie moderne. Dans le folklore, c’est la rosée du matin du 1ᵉʳ mai qui était réputée embellir le teint.",
  after:"Verse l’eau inutilisée au pied d’un arbre.",
  warn:"Ne sors jamais pendant un orage. Cette eau ne se boit pas.",
  m:"Reste toujours à l’abri."},
@@ -156,7 +156,7 @@ window.SPELLS=window.SPELLS.concat([
  steps:["Éteins toutes les lumières. Allume la bougie.","Écris pendant trois minutes sans t’arrêter tout ce qui t’encombre la tête. Déchire la feuille.","Sur une nouvelle feuille, écris trois intentions maximum pour ce cycle, au présent et positives.","Relis-les à voix haute, puis récite l’incantation.","Glisse le papier et la graine dans l’enveloppe, dépose une goutte d’eau de lune sur le rabat et ferme.","Ouvre l’enveloppe à la pleine lune suivante pour voir ce qui a commencé à pousser."],
  inc:"Lune cachée, lune nouvelle,\nje te confie ce qui m’appelle.\nQuand tu reviendras ronde et pleine,\nque ma récolte soit certaine.",
  var:["Tiens un carnet de lunes : une page par cycle."],
- note:"La nouvelle lune n’est pas visible : les Anciens guettaient le premier mince croissant du soir pour commencer le mois. C’est encore le cas des calendriers musulman et juif.",
+ note:"La nouvelle lune n’est pas visible : les Anciens guettaient le premier mince croissant du soir pour commencer le mois. C’est encore le principe du calendrier musulman, et c’était celui de l’ancien calendrier juif.",
  after:"Au bout du cycle, brûle la lettre et plante la graine.",
  m:"Trois intentions, pas plus."},
 
@@ -203,7 +203,7 @@ window.SPELLS=window.SPELLS.concat([
  steps:["Face à la porte ou à la fenêtre à protéger, trempe ton doigt dans l’eau salée.","Trace dans l’air ou sur la surface un pentagramme : en partant de la pointe du haut, descends vers le bas à gauche, remonte vers la droite, traverse vers la gauche, descends vers le bas à droite et remonte au sommet.","C’est le pentagramme « d’invocation de la Terre ». Pour bannir, la tradition le trace en partant du bas à gauche vers le haut.","Entoure-le d’un cercle en tournant dans le sens des aiguilles d’une montre.","Récite l’incantation et touche le centre de l’étoile."],
  inc:"Cinq pointes et un cercle d’or,\nTerre, Air, Feu, Eau, Esprit, dehors comme dedans,\nque rien ne passe sans mon accord,\nici je trace, ici je défends.",
  var:["Trace-le au-dessus de ta tête avant de dormir, ou sur ton sac avant de partir."],
- note:"Le pentagramme était déjà un symbole de protection chez les pythagoriciens. Dans le poème arthurien « Sire Gauvain et le Chevalier vert » (XIVᵉ siècle), il orne le bouclier de Gauvain. La Wicca en a fait son emblème : quatre éléments dominés par l’esprit.",
+ note:"Le pentagramme était déjà un signe de reconnaissance et de santé chez les pythagoriciens. Dans le poème arthurien « Sire Gauvain et le Chevalier vert » (XIVᵉ siècle), il orne le bouclier de Gauvain. La Wicca en a fait son emblème : quatre éléments dominés par l’esprit.",
  after:"Aucun reste.",
  m:"Pointe du haut = esprit."}
 ]);
