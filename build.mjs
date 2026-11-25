@@ -65,6 +65,37 @@ async function writeTarot(dest) {
   mk(path.join(dest, "assets/img/tarot"));
   for (const n of Object.keys(TAROTIMG)) { const k = String(n).padStart(2, "0"); await sharp(path.join(TAROTDIR, k + ".jpg")).resize({ width: 240 }).webp({ quality: 80 }).toFile(path.join(dest, `assets/img/tarot/${k}.webp`)); }
 }
+/* ---------- les livres (Amazon KDP) ---------- */
+// Prix à mettre à jour ici si tu les changes sur KDP.
+const AMZ = (asin) => `https://www.amazon.fr/dp/${asin}`;
+const BOOKS = {
+  livre: { slug: "livre-des-ombres", n: "Livre des Ombres", sub: "57 sorts, rituels et correspondances, et des pages pour écrire les tiens", cover: "livre-des-ombres", pages: 194,
+    buy: [["Livre broché", "24,99 €", AMZ("B0HSVBQ56P"), "amazon-livre-broche"], ["Ebook Kindle", "7,99 €", AMZ("B0HB2FLVQ1"), "amazon-livre-kindle"]],
+    spreads: [["livre-chapitre", "L’ouverture d’un chapitre : une gravure ancienne et ses sorts"], ["livre-sort", "Un sort sur une double page : moment, ingrédients, rituel, incantation, histoire et notes"]] },
+  cal: { slug: "calendrier-lunaire-2027", n: "Calendrier lunaire 2027", sub: "Les lunes, les sabbats et les gestes de l’année, à l’heure de Paris", cover: "calendrier-lunaire-2027", pages: 30,
+    buy: [["Livre broché", "13,99 €", AMZ("B0HSQCQVX4"), "amazon-calendrier-broche"]],
+    spreads: [["calendrier-janvier", "Janvier : la lune du loup, ses quatre phases, le mois jour par jour et tes intentions"]] },
+};
+const BOOKAUTHOR = "Théo Lunel";
+const BKDIR = path.join(IMGSRC, "boutique");
+async function writeBooks(dest) {
+  mk(path.join(dest, "assets/livres"));
+  for (const f of fs.existsSync(BKDIR) ? fs.readdirSync(BKDIR).filter((x) => x.endsWith(".jpg")) : []) {
+    const k = f.replace(/\.jpg$/, ""), src = path.join(BKDIR, f), md = await sharp(src).metadata();
+    const big = md.width > md.height ? 1400 : 640, small = md.width > md.height ? 760 : 320;
+    await sharp(src).resize({ width: big }).webp({ quality: 82 }).toFile(path.join(dest, `assets/livres/${k}.webp`));
+    await sharp(src).resize({ width: small }).webp({ quality: 80 }).toFile(path.join(dest, `assets/livres/${k}-sm.webp`));
+  }
+}
+const bkCover = (b, cls = "bk-cv", lazy = true) => `<img class="${cls}" src="/assets/livres/${b.cover}-sm.webp" srcset="/assets/livres/${b.cover}-sm.webp 320w, /assets/livres/${b.cover}.webp 640w" sizes="(max-width:760px) 45vw, 320px" width="640" height="905" ${lazy ? 'loading="lazy" ' : ""}decoding="async" alt="Couverture du livre « ${esc(b.n)} »">`;
+const bkBtns = (b, small = false) => b.buy.map(([f, pr, u, ev], i) => `<a class="btn${i ? " ghost" : ""}${small ? " small" : ""}" href="${u}" target="_blank" rel="noopener" data-goatcounter-click="${ev}" data-goatcounter-title="${esc(b.n + " · " + f)}">${f} · ${pr}</a>`).join("");
+// encart publicitaire réutilisable
+function bookAd(key, kicker, title, text) {
+  const b = BOOKS[key];
+  return `<aside class="bk-ad" aria-label="${esc(b.n)} : le livre"><a class="bk-ad-cv" href="/livres/#${b.slug}">${bkCover(b)}</a><div><p class="label">${kicker}</p><h2>${title}</h2><p>${text}</p><div class="bk-btns">${bkBtns(b, true)}<a class="bk-more" href="/livres/#${b.slug}">Feuilleter un extrait →</a></div></div></aside>`;
+}
+const AD_LIVRE = (lead) => bookAd("livre", "Le grimoire en vrai livre", lead || "Ce sort, et les 56 autres, dans un vrai Livre des Ombres", "Une édition illustrée de 194 pages en couleur : chaque sort sur une double page avec des lignes pour tes notes, les tables de correspondances, les huit sabbats, et des pages pour écrire tes propres sorts.");
+const AD_CAL = () => bookAd("cal", "Pour suivre la lune en 2027", "Le Calendrier lunaire 2027", "Les douze lunes et leurs phases à l’heure de Paris, les huit sabbats, un geste et un sort par mois, et de la place pour noter tes intentions. Illustré de gravures anciennes.");
 const IMGPUB = Object.fromEntries(Object.entries(IMG).map(([k, v]) => [k, { src: v.src, src2: v.src2, w: v.w, h: v.h, cap: v.cap, page: v.page }]));
 
 /* ---------- ingrédients : sorts qui les utilisent ---------- */
@@ -118,7 +149,7 @@ const NAV = [
   ["/livre-des-ombres/", "Livre des Ombres", "livre", true], ["/sorts/", "Sorts", "sorts"], ["/atelier/", "Atelier", "atelier"],
   ["/rituels/", "Rituels", "rituels"], ["/sabbats/", "Sabbats", "sabbats"], ["/outils/", "Outils", "outils"], ["/recettes/", "Recettes", "recettes"],
   ["/divination/", "Divination", "divination"], ["/correspondances/", "Correspondances", "correspondances"], ["/dossiers/", "Dossiers", "dossiers"], ["/histoire/", "Histoire", "histoire"],
-  ["/figures/", "Figures", "figures"], ["/glossaire/", "Glossaire", "glossaire"],
+  ["/figures/", "Figures", "figures"], ["/glossaire/", "Glossaire", "glossaire"], ["/livres/", "Les livres", "livres"],
 ];
 // rubriques secondaires : dans le menu déroulant sur ordinateur
 const NAVSEC = new Set(["atelier", "outils", "recettes", "correspondances", "figures", "glossaire"]);
@@ -153,7 +184,7 @@ function footer() {
   const col = (t, l) => `<div><h2>${t}</h2><ul>${l.map(([h, x]) => `<li><a href="${h}">${x}</a></li>`).join("")}</ul></div>`;
   return `<footer class="site-foot">
 <div><a class="brand" href="/">${MOONICON}<span>Le Grimoire de Minuit</span></a>${SOCIALHTML}<p>Un grimoire en ligne de sorcellerie : histoire, sorts, rituels et traditions, rassemblés et réécrits en français. Contenu à visée culturelle. Un projet <a href="https://endam-digital.com" style="color:var(--gold)">Endam Digital</a> · <a href="https://endam-digital.com/soutenir/" style="color:var(--gold)">Soutenir</a>.</p></div>
-${col("Pratiquer", [["/livre-des-ombres/", "Livre des Ombres"], ["/sorts/", "Tous les sorts"], ["/atelier/", "Atelier du sorcier"], ["/rituels/", "Rituels"], ["/sabbats/", "Roue de l’année"]])}
+${col("Pratiquer", [["/livres/", "Les livres (Amazon)"], ["/livre-des-ombres/", "Livre des Ombres"], ["/sorts/", "Tous les sorts"], ["/atelier/", "Atelier du sorcier"], ["/rituels/", "Rituels"], ["/sabbats/", "Roue de l’année"]])}
 ${col("Savoir", [["/outils/", "Outils"], ["/recettes/", "Recettes"], ["/divination/", "Divination & tarot"], ["/correspondances/", "Correspondances"], ["/ingredients/", "Plantes & pierres"]])}
 ${col("Culture", [["/dossiers/toussaint/", "Toussaint et jour des morts"], ["/dossiers/", "Tous les dossiers"], ["/histoire/", "Histoire"], ["/figures/", "Figures"], ["/glossaire/", "Glossaire"], ["/a-propos/", "À propos & sources"], ["/lettre/", "La lettre du samedi"], ["/nouveautes/", "Nouveautés"], ["/contact/", "Une idée ? Écris-nous"], ["/mentions-legales/", "Mentions légales"]])}
 </footer>`;
@@ -232,6 +263,7 @@ const add = (p) => pages.push(p);
 
 // Fil des nouveautés : ajoute une ligne en haut à chaque mise à jour du site (la plus récente en premier).
 const NEWS = [
+  ["2026-11-25", "/livres/", "Le Livre des Ombres et le Calendrier lunaire 2027 en vrais livres", "L’édition illustrée du grimoire (194 pages) et le calendrier des lunes et des sabbats de 2027, sur Amazon."],
   ["2026-10-28", "/dossiers/salem/#serie", "La série « Salem » : vrai ou faux ?", "Mary Sibley, John Alden, les Mather, Tituba : ce que la série invente et ce qui est vrai."],
   ["2026-10-05", "/dossiers/et-les-sorciers/", "Dossier : Et les sorciers ?", "Pourquoi la sorcellerie a un visage de femme, et les milliers d’hommes oubliés des procès."],
   ["2026-10-02", "/dossiers/sorcellerie-au-cinema/", "Dossier : Les sorcières au cinéma", "De Méliès à The Witch, et notre classement des 15 meilleurs films."],
@@ -260,6 +292,8 @@ add({ url: "/", page: "home", title: "Le Grimoire de Minuit — sorts, rituels e
 </section>
 <section class="chap news-wrap"><div class="chap-head"><p class="chap-num">Nouveau</p><div><h2>Dernières mises à jour</h2></div></div>
 <div class="body-col">${newsList(NEWS.slice(0, 4))}<div class="cta-line"><a class="btn ghost small" href="/nouveautes/">Toutes les nouveautés</a></div></div></section>
+<section class="chap bk-home"><div class="chap-head"><p class="chap-num">En librairie</p><div><h2>Le grimoire, en vrai livre</h2><p>Deux livres illustrés, imprimés en couleur, pour garder le grimoire près de l’autel.</p></div></div>
+<div class="body-col"><div class="bk-duo">${Object.values(BOOKS).map((b) => `<div class="bk-mini"><a href="/livres/#${b.slug}">${bkCover(b)}</a><div><h3>${b.n}</h3><p>${esc(b.sub)}</p><div class="bk-btns">${bkBtns(b, true)}</div></div></div>`).join("")}</div><div class="cta-line"><a class="btn ghost small" href="/livres/">Feuilleter les extraits</a></div></div></section>
 <section class="chap"><div class="chap-head"><p class="chap-num">Le Livre</p><div><h2>Treize chapitres de sorts</h2><p>Chaque sort a sa page : le moment, les ingrédients, le rituel pas à pas, l’incantation, les variantes et son histoire.</p></div></div>
 <div class="body-col"><div class="chapcards" id="chapcards"></div><div class="cta-line"><a class="btn" href="/livre-des-ombres/">Feuilleter le livre</a><a class="btn ghost" href="/sorts/">Voir tous les sorts</a></div></div></section>
 <section class="chap"><div class="body-col" style="margin-left:0"><div class="sabteaser" id="sabteaser"></div></div></section>
@@ -277,6 +311,24 @@ ${NL()}
 <a href="/figures/"><b>Les figures</b><span>De Circé à Doreen Valiente</span></a>
 </div></div></section>` });
 
+add({ url: "/livres/", page: "livres", title: "Les livres du Grimoire de Minuit : Livre des Ombres et Calendrier lunaire 2027", desc: "Le Livre des Ombres illustré (57 sorts, 194 pages en couleur) et le Calendrier lunaire 2027 du Grimoire de Minuit, en livre broché et en ebook Kindle sur Amazon.",
+  ld: Object.values(BOOKS).map((b) => ({ "@context": "https://schema.org", "@type": "Book", name: b.n, alternativeHeadline: b.sub, author: { "@type": "Person", name: BOOKAUTHOR }, inLanguage: "fr", numberOfPages: b.pages, image: `${SITE}/assets/livres/${b.cover}.webp`, url: `${SITE}/livres/#${b.slug}`,
+    offers: b.buy.map(([f, pr, u]) => ({ "@type": "Offer", name: f, price: pr.replace(/[^0-9,]/g, "").replace(",", "."), priceCurrency: "EUR", availability: "https://schema.org/InStock", url: u })) })),
+  body: `${crumbs([["/", "Accueil"], [null, "Les livres"]])}<section class="chap first" style="border-bottom:0">${head("Les Livres", "Le grimoire, en vrai livre", "Pour garder le grimoire sur une étagère, l’annoter au crayon et l’emporter près de l’autel. Deux livres illustrés, imprimés en couleur et disponibles sur Amazon.")}
+<div class="body-col">
+<article class="bk" id="${BOOKS.livre.slug}"><div class="bk-art">${bkCover(BOOKS.livre, "bk-cv", false)}</div><div class="bk-txt"><p class="label">Édition illustrée · ${BOOKS.livre.pages} pages en couleur</p><h2>${BOOKS.livre.n}</h2><p class="bk-sub">${esc(BOOKS.livre.sub)}</p>
+<p>Un vrai Livre des Ombres illustré, à garder, à compléter et à transmettre. Les 57 sorts du grimoire, tirés de la magie populaire européenne, de la Wicca et de la sorcellerie moderne, classés en 13 chapitres. Chaque sort tient sur une double page : le moment conseillé, les ingrédients, le rituel pas à pas, l’incantation, les variantes, son histoire, et des lignes pour tes notes.</p>
+<ul class="bk-list"><li>Les tables de correspondances : jours, couleurs, plantes, pierres, flamme, formes et les 22 arcanes du tarot</li><li>Les huit sabbats de la roue de l’année</li><li>10 pages pour écrire tes propres sorts et 12 pages de journal des lunes</li><li>Des gravures et peintures anciennes : Dürer, Schongauer, Füssli, Waterhouse, Goya…</li></ul>
+<p class="bk-spec">Broché grand format 21,6 × 27,9 cm · ebook Kindle · par ${BOOKAUTHOR}</p><div class="bk-btns">${bkBtns(BOOKS.livre)}</div></div></article>
+<div class="bk-spreads">${BOOKS.livre.spreads.map(([k, c]) => `<figure><img src="/assets/livres/${k}-sm.webp" srcset="/assets/livres/${k}-sm.webp 760w, /assets/livres/${k}.webp 1400w" sizes="(max-width:760px) 100vw, 560px" width="1400" height="991" loading="lazy" decoding="async" alt="${esc(c)}"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div>
+<article class="bk" id="${BOOKS.cal.slug}"><div class="bk-art">${bkCover(BOOKS.cal)}</div><div class="bk-txt"><p class="label">Calendrier illustré · ${BOOKS.cal.pages} pages en couleur</p><h2>${BOOKS.cal.n}</h2><p class="bk-sub">${esc(BOOKS.cal.sub)}</p>
+<p>Douze lunes, huit sabbats, une année de magie. Chaque mois s’ouvre sur une double page : une gravure ancienne, le nom traditionnel de la lune, ses quatre phases à la minute près, le sabbat du mois, un geste de saison et le sort conseillé ; puis le mois jour par jour, avec des cadres pour noter tes intentions et ce que la lune t’a montré.</p>
+<ul class="bk-list"><li>Un guide des phases : quoi commencer, quoi lâcher, quand</li><li>Les huit sabbats de 2027, avec les dates exactes des équinoxes et des solstices</li><li>L’année entière sur une seule page</li><li>Les grands rendez-vous du ciel : l’éclipse de Soleil du 2 août, les deux nouvelles lunes d’août</li></ul>
+<p class="bk-spec">Broché grand format 21,6 × 27,9 cm · par ${BOOKAUTHOR}</p><div class="bk-btns">${bkBtns(BOOKS.cal)}</div></div></article>
+<div class="bk-spreads one">${BOOKS.cal.spreads.map(([k, c]) => `<figure><img src="/assets/livres/${k}-sm.webp" srcset="/assets/livres/${k}-sm.webp 760w, /assets/livres/${k}.webp 1400w" sizes="(max-width:760px) 100vw, 760px" width="1400" height="991" loading="lazy" decoding="async" alt="${esc(c)}"><figcaption>${esc(c)}</figcaption></figure>`).join("")}</div>
+<aside class="dnote" style="margin-top:48px">Le grimoire en ligne reste entièrement gratuit. Acheter un livre, c’est aussi la meilleure façon de soutenir le site et de lui permettre de grandir.</aside>
+</div></section>` });
+
 add({ url: "/livre-des-ombres/", page: "livre", title: "Le Livre des Ombres — grimoire de sorts à feuilleter | Le Grimoire de Minuit", desc: `Feuillette un Livre des Ombres de ${SPELLS.length} sorts : protection, amour, prospérité, bannissement, divination, magie lunaire. Recherche par ingrédient, lune ou niveau.`,
   body: `<section class="chap first" id="livre" style="border-bottom:0">
 ${head("Le Livre", "Le Livre des Ombres", "Treize chapitres, près de soixante sorts tirés de la magie populaire européenne, de la Wicca et de la sorcellerie moderne américaine. Feuillette-le page par page, ou cherche dans l’index.")}
@@ -290,7 +342,7 @@ ${RULES}
 <div id="bookview"><div class="book-stage"><div class="tabs" id="tabs" aria-label="Chapitres du livre"></div>
 <div class="book" id="book" tabindex="0" aria-label="Livre des Ombres, utilise les flèches pour tourner les pages"><div class="ribbon" aria-hidden="true"></div><div class="spread" id="spread" aria-live="polite"></div></div></div>
 <div class="booknav"><button class="btn ghost small" type="button" id="prev">← Page précédente</button><span class="pos" id="pos"></span><button class="btn small" type="button" id="next">Page suivante →</button></div></div>
-<div id="idxview" hidden></div></section>` });
+<div id="idxview" hidden></div>${AD_LIVRE("Le Livre des Ombres existe aussi en vrai livre")}</section>` });
 
 add({ url: "/sorts/", page: "sorts", title: `Tous les sorts de sorcellerie (${SPELLS.length}) — index par chapitre | Le Grimoire de Minuit`, desc: `Index des ${SPELLS.length} sorts du Livre des Ombres : protection, purification, liens, amour, prospérité, bien-être, rêves, divination, glamour, éléments, lune et sceaux.`,
   ld: [crumbsLD(Object.assign([["/", "Accueil"], ["/sorts/", "Sorts"]], { url: "/sorts/" }))],
@@ -309,6 +361,7 @@ for (const s of ORDER) {
 ${ASK(url, "ce sort")}
 <div class="related"><h2 class="t26" id="related-t" style="font-size:26px;margin-bottom:16px"></h2><div class="linkgrid" id="related"></div></div>
 ${(INGBYSPELL[s.id] || []).length ? `<div class="related"><h2 class="t26" style="font-size:26px;margin-bottom:14px">Les ingrédients de ce sort</h2><div class="ingchips">${INGBYSPELL[s.id].map((i) => `<a href="/ingredients/${i.slug}/">${esc(i.n)}</a>`).join("")}</div></div>` : ""}
+${AD_LIVRE()}
 <div class="cta-line"><a class="btn" href="/livre-des-ombres/#sort-${s.id}">Ouvrir dans le Livre des Ombres</a><a class="btn ghost" href="/atelier/">Composer mon propre sort</a></div>${NL()}</section>` });
 }
 
@@ -336,12 +389,12 @@ for (const r of RIT) {
 add({ url: "/sabbats/", page: "sabbats", title: "La roue de l’année : les 8 sabbats des sorcières | Le Grimoire de Minuit", desc: "Samhain, Yule, Imbolc, Ostara, Beltane, Litha, Lughnasadh et Mabon : dates, histoire, correspondances, rituels et recettes des huit sabbats de la roue de l’année.",
   body: `${crumbs([["/", "Accueil"], [null, "Sabbats"]])}<section class="chap first" style="border-bottom:0">${head("Les Sabbats", "La roue de l’année", "Huit fêtes rythment l’année des sorcières : les solstices et équinoxes, et les quatre grandes fêtes celtiques entre eux. Le trait doré marque aujourd’hui (dates de l’hémisphère nord).")}
 <div class="wheel-grid body-col"><div class="wheel" id="wheel"><svg viewBox="0 0 400 400" aria-hidden="true" id="wheel-svg"></svg><div class="wheel-center"><div><span class="label">Aujourd’hui</span><b id="today-label"></b></div></div></div><div class="sab-detail" id="sab-detail" aria-live="polite"></div></div>
-<div class="body-col"><nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav>${fig(IMGPLACE.sabbats)}</div></section>` });
+<div class="body-col"><nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav>${fig(IMGPLACE.sabbats)}${AD_CAL()}</div></section>` });
 for (const sb of SAB) {
   const url = `/sabbats/${sb.slug}/`;
   add({ url, page: "sabbat", id: sb.id, type: "article", title: sb.more ? `${sb.n} 2026 : rituels de la nuit du 31 octobre, sorts et histoire d’Halloween | Le Grimoire de Minuit` : `${sb.n} (${sb.when.replace(/ · .*/, "")}) — histoire, rituels et recette | Le Grimoire de Minuit`, desc: sb.more ? "Comment célébrer Samhain le 31 octobre : la nuit heure par heure, 8 sorts traditionnels (bougie à la fenêtre, repas muet, noix dans le feu, miroir de minuit), l’histoire d’Halloween et les recettes." : clip(`${sb.n}, ${sb.alias.toLowerCase()} : ${sb.t[0]}`),
     ld: [{ "@context": "https://schema.org", "@type": "Article", headline: `${sb.n} : histoire, correspondances et rituels`, inLanguage: "fr", url: SITE + url, image: SITE + "/assets/og.png", author: { "@type": "Organization", name: "Endam Digital" } }, crumbsLD(Object.assign([["/", "Accueil"], ["/sabbats/", "Sabbats"], [url, sb.n]], { url }))],
-    body: `${crumbs([["/", "Accueil"], ["/sabbats/", "Sabbats"], [null, sb.n]])}<section class="chap first" style="border-bottom:0"><div class="body-col" style="margin-left:0;max-width:900px"><div class="sab-detail solo" id="sab-detail"></div>${sb.more ? `<div class="cta-line"><a class="btn" href="/dossiers/toussaint/">En France : la Toussaint et la nuit des âmes →</a><a class="btn ghost" href="/dossiers/france/">La sorcellerie en France</a></div>` : ""}<nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav></div>${NL()}</section>` });
+    body: `${crumbs([["/", "Accueil"], ["/sabbats/", "Sabbats"], [null, sb.n]])}<section class="chap first" style="border-bottom:0"><div class="body-col" style="margin-left:0;max-width:900px"><div class="sab-detail solo" id="sab-detail"></div>${sb.more ? `<div class="cta-line"><a class="btn" href="/dossiers/toussaint/">En France : la Toussaint et la nuit des âmes →</a><a class="btn ghost" href="/dossiers/france/">La sorcellerie en France</a></div>` : ""}<nav class="sabrow" id="sabrow" aria-label="Les huit sabbats"></nav>${AD_CAL()}</div>${NL()}</section>` });
 }
 
 const simple = (url, page, crumb, title, desc, inner) => add({ url, page, title, desc, body: `${crumbs([["/", "Accueil"], [null, crumb]])}<section class="chap first" style="border-bottom:0">${inner}</section>` });
@@ -363,7 +416,7 @@ simple("/correspondances/", "correspondances", "Correspondances", "Tables de cor
 <div class="block"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Les couleurs des bougies</h2><div class="swatches" id="colors"></div></div>
 <div class="block corr-grid"><div><h2 class="sub" style="font-size:30px;margin-bottom:22px">L’herbier</h2><dl class="herb" id="herbs"></dl></div><div><h2 class="sub" style="font-size:30px;margin-bottom:22px">Les pierres</h2><dl class="herb" id="stones"></dl></div></div>
 <div class="block"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Les phases de la lune</h2><div class="phases" id="phases"></div></div>
-<div class="block"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Les pleines lunes de l’année</h2><p class="subintro">Les noms traditionnels de l’almanach nord-américain, que les sorcières utilisent pour leurs esbats.</p><div class="moons" id="moons"></div></div></div>`);
+<div class="block"><h2 class="sub" style="font-size:30px;margin-bottom:22px">Les pleines lunes de l’année</h2><p class="subintro">Les noms traditionnels de l’almanach nord-américain, que les sorcières utilisent pour leurs esbats.</p><div class="moons" id="moons"></div></div>${AD_CAL()}</div>`);
 simple("/histoire/", "histoire", "Histoire", "Histoire de la sorcellerie : de l’Antiquité à la Wicca | Le Grimoire de Minuit", "Code d’Hammurabi, Malleus Maleficarum, procès de North Berwick, Pendle, Salem, affaire des poisons, Anna Göldi, Gerald Gardner : quatre mille ans d’histoire de la sorcellerie.",
   `${head("L’Histoire", "Une histoire de la sorcellerie", "Quatre mille ans de magie, de peur et de renouveau. Pendant des siècles, la sorcière a été à la fois une guérisseuse de village, une figure de légende et une accusée.")}
 <div class="body-col"><div class="stat-row" aria-label="La chasse aux sorcières en chiffres"><div class="stat"><b>≈ 1450–1750</b><span>les trois siècles des grands procès en Europe</span></div><div class="stat"><b>40 à 60 000</b><span>exécutions selon les estimations d’historiens les plus citées</span></div><div class="stat"><b>≈ 80 %</b><span>de femmes parmi les personnes condamnées</span></div></div><div id="eras"></div></div>`);
@@ -443,7 +496,7 @@ add({ url: "/nouveautes/", page: "nouveautes", title: "Nouveautés du grimoire |
 add({ url: "/mentions-legales/", page: "legal", title: "Mentions légales | Le Grimoire de Minuit", desc: "Mentions légales, hébergement, statistiques et données personnelles du site Le Grimoire de Minuit.",
   body: `${crumbs([["/", "Accueil"], [null, "Mentions légales"]])}<section class="chap first" style="border-bottom:0">${head("Mentions", "Mentions légales", "")}
 <div class="body-col dbody legal">
-<h2>Éditeur</h2><p>Le site <b>grimoire.endam-digital.com</b> est un projet personnel et non commercial publié sous la marque <b>Endam Digital</b>. Conformément à l’article 6, III, 2 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique, l’éditeur, qui agit à titre non professionnel, a choisi de ne pas publier ses coordonnées personnelles ; son identité a été communiquée à l’hébergeur.</p>
+<h2>Éditeur</h2><p>Le site <b>grimoire.endam-digital.com</b> est un projet personnel publié sous la marque <b>Endam Digital</b>. Le site est gratuit ; il présente aussi des livres de l’auteur, vendus sur Amazon. Conformément à l’article 6, III, 2 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique, l’éditeur, qui agit à titre non professionnel, a choisi de ne pas publier ses coordonnées personnelles ; son identité a été communiquée à l’hébergeur.</p>
 <p>Contact : par le <a href="https://github.com/Endam-creator/Grimoire/issues" target="_blank" rel="noopener">formulaire de signalement du dépôt GitHub</a> du site.</p>
 <h2>Hébergement</h2><p>GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. <a href="https://github.com" target="_blank" rel="noopener">github.com</a></p>
 <h2>Statistiques de visite</h2><p>Le site mesure sa fréquentation avec <b>GoatCounter</b>, un outil qui ne dépose aucun cookie, n’enregistre pas d’adresse IP complète et ne suit pas les visiteurs d’un site à l’autre. Aucune bannière de consentement n’est donc nécessaire.</p>
@@ -574,6 +627,7 @@ VER = crypto.createHash("md5").update(dataSrc + appSrc + uiSrc + styleSrc + JSON
 buildFonts(RAW);
 await writeImages(RAW);
 await writeTarot(RAW);
+await writeBooks(RAW);
 write(path.join(RAW, "assets/data.js"), dataSrc + "\nwindow.IMG=" + JSON.stringify(IMGPUB) + ";\nwindow.INGLINK=" + JSON.stringify(Object.fromEntries(INGREDIENTS.map((i) => [nrm(i.n), i.slug]))) + ";\nwindow.TAROTIMG=" + JSON.stringify(TAROTIMG) + ";");
 write(path.join(RAW, "assets/app.js"), appSrc);
 write(path.join(RAW, "assets/ui.js"), uiSrc);
